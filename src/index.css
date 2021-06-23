@@ -1,13 +1,66 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+p,
+a,
+li,
+span,
+label,
+small,
+button {
+  @apply font-content;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-heading;
+}
+
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-3xl;
+}
+
+h3 {
+  @apply text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+h5,
+h6 {
+  @apply text-lg;
+}
+
+:root {
+  --primary-text-color: #eff6ff;
+  --primary-bg-color: #1d4ed8;
+  --primary-bg-hover-color: #1e40af;
+  --secondary-text-color: #0f766e;
+  --secondary-bg-color: #ccfbf1;
+  --secondary-bg-hover-color: #99f6e4;
+  --warning-text-color: #fffbeb;
+  --warning-bg-color: #b45309;
+  --warning-bg-hover-color: #92400e;
+  --danger-text-color: #fef2f2;
+  --danger-bg-color: #b91c1c;
+  --danger-bg-hover-color: #991b1b;
+  --success-text-color: #dcfce7;
+  --success-bg-color: #15803d;
+  --success-bg-hover-color: #166534;
+  --info-text-color: #6d28d9;
+  --info-bg-color: #ede9fe;
+  --info-bg-hover-color: #e9d5ff;
+  --link-text-color: #1e3a8a;
+  --link-bg-color: transparent;
+  --link-bg-hover-color: transparent;
 }
