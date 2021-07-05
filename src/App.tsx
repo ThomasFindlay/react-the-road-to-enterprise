@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, lazy } from 'react'
 import logo from './logo.svg'
 import './App.css'
+
+export const loadView = (path: string) =>
+  lazy(() => import(`./components/${path}.tsx`))
+
+const Test = loadView('Test')
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="App">
+      <Test />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>

@@ -1,0 +1,10 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*cy.{ts,tsx,js,jsx}",
+    "viewportHeight": 500,
+    "viewportWidth": 700
+  },
+  "pluginsFile": "cypress/plugins/index.ts"
+}

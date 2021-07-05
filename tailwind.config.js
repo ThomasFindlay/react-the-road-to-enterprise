@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 const colors = require('tailwindcss/colors')
 
 module.exports = {

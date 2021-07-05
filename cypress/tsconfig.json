@@ -1,0 +1,19 @@
+{
+  // "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": [
+      "cypress",
+      "@testing-library/cypress",
+      "@cypress/vite-dev-server"
+    ],
+    "isolatedModules": false
+    // "baseUrl": "../"
+  },
+  "include": [
+    "../node_modules/cypress",
+    "../node_modules/@testing-library/cypress",
+    "../node_modules/@cypress/vite-dev-server",
+    "./**/*.ts"
+  ]
+}
