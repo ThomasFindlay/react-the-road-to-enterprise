@@ -8,7 +8,6 @@
   "include": [
     "../node_modules/cypress",
     "../node_modules/@testing-library/cypress",
-    "../node_modules/@cypress/vite-dev-server",
     "./**/*.ts"
   ]
 }
