@@ -24,8 +24,8 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix",
-    "*.{css,scss}": "stylelint --fix",
+    "*.{ts,tsx}": "eslint",
+    "*.{css,scss}": "stylelint",
     "**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier -w -u"
   },
   "eslintConfig": {
