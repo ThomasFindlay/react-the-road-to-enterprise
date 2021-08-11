@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-p,
+/* p,
 a,
 li,
 span,
@@ -63,4 +63,4 @@ h6 {
   --link-text-color: #1e3a8a;
   --link-bg-color: transparent;
   --link-bg-hover-color: transparent;
-}
+} */

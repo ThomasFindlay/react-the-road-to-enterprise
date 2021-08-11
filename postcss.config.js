@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 module.exports = {
   plugins: [
     require('stylelint')({
       configFile: 'stylelint.config.js',
     }),
+    require('postcss-import'),
     require('postcss-extend'),
     require('precss'),
     require('postcss-preset-env'),
