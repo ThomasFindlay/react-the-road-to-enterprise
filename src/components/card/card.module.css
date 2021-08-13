@@ -1,0 +1,21 @@
+.card {
+  @apply bg-white shadow-md rounded-lg border border-gray-300 mx-4 md:mx-0;
+}
+
+.cardTitle {
+  @apply p-6 text-xl font-medium block font-heading md:text-xl;
+}
+
+.cardContent {
+  @apply px-6 pb-6;
+}
+
+.cardText {
+  @apply px-6 pb-6;
+}
+
+.cardActions {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+  @apply pb-6 px-6 pt-2;
+}
