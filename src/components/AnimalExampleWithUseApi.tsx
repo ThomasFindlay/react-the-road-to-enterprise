@@ -16,6 +16,10 @@ const useFetchDog = () => {
     isSuccess: isFetchDogStatusSuccess,
   } = useApi(() => fetchDog().then((response) => response.data.message))
 
+  const { data } = useApi<string, TypeError>(() =>
+    fetchDog().then((response) => response.data.message)
+  )
+
   return {
     dog,
     fetchDogStatus,
