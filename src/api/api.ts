@@ -1,9 +1,10 @@
-import axios, { AxiosError, AxiosInstance } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosPromise } from 'axios'
 import {
   ApiRequestConfig,
   WithAbordFn,
   ApiExecutor,
   ApiExecutorArgs,
+  ApiError,
 } from './api.types'
 // Default config for the axios instance
 const axiosParams = {
@@ -51,19 +52,48 @@ const withAbort = <T>(fn: WithAbordFn) => {
   return executor
 }
 
+const withLogger = async <T>(promise: AxiosPromise<T>) =>
+  promise.catch((error: ApiError) => {
+    /*
+    Always log errors in dev environment
+    if (process.env.NODE_ENV !== 'development') throw error      
+  */
+    // Log error only if VUE_APP_DEBUG_API env is set to true
+    if (!process.env.REACT_APP_DEBUG_API) throw error
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest
+      // in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message)
+    }
+    console.log(error.config)
+
+    throw error
+  })
+
 // Main api function
 const api = (axios: AxiosInstance) => {
   return {
     get: <T>(url: string, config: ApiRequestConfig = {}) =>
-      withAbort<T>(axios.get)(url, config),
+      withLogger<T>(withAbort<T>(axios.get)(url, config)),
     delete: <T>(url: string, config: ApiRequestConfig = {}) =>
-      withAbort<T>(axios.delete)(url, config),
+      withLogger<T>(withAbort<T>(axios.delete)(url, config)),
     post: <T>(url: string, body: unknown, config: ApiRequestConfig = {}) =>
-      withAbort<T>(axios.post)(url, body, config),
+      withLogger<T>(withAbort<T>(axios.post)(url, body, config)),
     patch: <T>(url: string, body: unknown, config: ApiRequestConfig = {}) =>
-      withAbort<T>(axios.patch)(url, body, config),
+      withLogger<T>(withAbort<T>(axios.patch)(url, body, config)),
     put: <T>(url: string, body: unknown, config: ApiRequestConfig = {}) =>
-      withAbort<T>(axios.put)(url, body, config),
+      withLogger<T>(withAbort<T>(axios.put)(url, body, config)),
   }
 }
 export default api(axiosInstance)
