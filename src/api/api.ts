@@ -10,7 +10,7 @@ import {
 const axiosParams = {
   // Set different base URL based on the environment
   baseURL:
-    process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '/',
+    process.env.NODE_ENV === 'development' ? 'http://localhost:4000/api/' : '/',
 }
 
 // Create axios instance with default params
