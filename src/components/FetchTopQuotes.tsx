@@ -4,7 +4,7 @@ import { fetchTopQuotes, Quote } from '@/api/quoteApi'
 const FetchTopQuotes = () => {
   const {
     data: quotes,
-    isFetching,
+    isLoading,
     isSuccess,
     isError,
   } = useQuery<Quote[]>('top-quotes', fetchTopQuotes, {
@@ -13,14 +13,14 @@ const FetchTopQuotes = () => {
   return (
     <div className="py-8 max-w-2xl mx-auto">
       <div>
-        <h1 className="font-bold text-2xl mb-4">Top Quotes</h1>
+        <h2 className="font-bold text-2xl mb-4">Top Quotes</h2>
 
         {isError ? (
           <p className="text-red-900">
             There was a problem with fetching quotes
           </p>
         ) : null}
-        {isFetching ? <p>Fetching quotes</p> : null}
+        {isLoading ? <p>Fetching quotes</p> : null}
 
         {isSuccess ? (
           <div className="max-h-96 overflow-y-auto divide-y">

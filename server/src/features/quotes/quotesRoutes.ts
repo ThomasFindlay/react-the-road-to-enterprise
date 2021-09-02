@@ -3,7 +3,12 @@ import {
   FastifyPluginOptions,
   HookHandlerDoneFunction,
 } from 'fastify'
-import { getQuotes, getTopQuotes } from './quotesController'
+import {
+  getQuotes,
+  getTopQuotes,
+  createQuote,
+  resetQuotes,
+} from './quotesController'
 
 function quotesRoutes(
   fastify: FastifyInstance,
@@ -12,6 +17,8 @@ function quotesRoutes(
 ) {
   fastify.get('/top_quotes', getTopQuotes)
   fastify.get('/', getQuotes)
+  fastify.post('/', createQuote)
+  fastify.post('/reset', resetQuotes)
   done()
 }
 
