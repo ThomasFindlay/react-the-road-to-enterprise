@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { cancelRequestFactory } from '@/api/api'
 import { toast } from 'react-toastify'
+import { Canceler } from '@/api/api.types'
 
 type PromiseWithCancel<T> = Promise<T> & {
   cancel?: () => void
@@ -20,10 +21,14 @@ const QueryCancellation = () => {
   } = useQuery(
     'top-aborted-quotes',
     () => {
-      const { abort, cancelToken } = cancelRequestFactory()
-
+      // Temp variable to store the cancel method
+      // It is initialised with a noop, because of TypeScript Control Flow Analysis
+      // We can't assign the abort method on the `promise` variable directly, because
+      // it can't be accessed before it is fully initialised.
+      // That's why we need a temp variable
+      let cancel: Canceler = () => {}
       const promise = fetchTopQuotes({
-        cancelToken,
+        abort: (abort) => (cancel = abort),
       }) as PromiseWithCancel<Quote[]>
 
       promise.catch((error) => {
@@ -33,7 +38,7 @@ const QueryCancellation = () => {
         throw error
       })
 
-      promise.cancel = abort
+      promise.cancel = cancel
       return promise
     },
     {
@@ -49,7 +54,9 @@ const QueryCancellation = () => {
 
   const onFetchQuotes = () => {
     queryClient.refetchQueries('top-aborted-quotes')
-    shouldAbort && queryClient.cancelQueries('top-aborted-quotes')
+    setTimeout(() => {
+      shouldAbort && queryClient.cancelQueries('top-aborted-quotes')
+    }, 200)
   }
 
   return (
