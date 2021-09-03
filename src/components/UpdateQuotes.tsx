@@ -6,16 +6,21 @@ import { toast } from 'react-toastify'
 type UpdateQuotesProps = {}
 
 const UpdateQuotes = (props: UpdateQuotesProps) => {
+  // Get access to the QueryClient instance
   const queryClient = useQueryClient()
+  // Quotes mutations
   const createQuoteMutation = useMutation(postQuote)
   const resetQuotesMutation = useMutation(
     (e: React.MouseEvent<HTMLButtonElement>) => resetQuotes()
   )
+
+  // Form state
   const [form, setForm] = useState({
     author: '',
     quote: '',
   })
 
+  // Update the form state on change
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((_form) => ({
       ..._form,
@@ -23,6 +28,7 @@ const UpdateQuotes = (props: UpdateQuotesProps) => {
     }))
   }
 
+  // Validate the form and start create quote mutation
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { author, quote } = form
@@ -37,18 +43,16 @@ const UpdateQuotes = (props: UpdateQuotesProps) => {
           author: '',
         })
         queryClient.invalidateQueries('top-quotes')
-        queryClient.invalidateQueries('quotes')
         toast.success('Quote created')
       },
     })
   }
 
+  // Reset the quotes to their original state on the server
   const onReset = (e: React.MouseEvent<HTMLButtonElement>) => {
     resetQuotesMutation.mutate(e, {
       onSuccess: () => {
         queryClient.invalidateQueries('top-quotes')
-        queryClient.invalidateQueries('quotes')
-
         toast.success('Quote resetted.')
       },
     })
