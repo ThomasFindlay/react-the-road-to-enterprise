@@ -1,6 +1,7 @@
 import { postQuote, resetQuotes } from '@/api/quoteApi'
 import React, { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
+import { toast } from 'react-toastify'
 
 type UpdateQuotesProps = {}
 
@@ -36,7 +37,8 @@ const UpdateQuotes = (props: UpdateQuotesProps) => {
           author: '',
         })
         queryClient.invalidateQueries('top-quotes')
-        alert('Quote created')
+        queryClient.invalidateQueries('quotes')
+        toast.success('Quote created')
       },
     })
   }
@@ -45,6 +47,9 @@ const UpdateQuotes = (props: UpdateQuotesProps) => {
     resetQuotesMutation.mutate(e, {
       onSuccess: () => {
         queryClient.invalidateQueries('top-quotes')
+        queryClient.invalidateQueries('quotes')
+
+        toast.success('Quote resetted.')
       },
     })
   }

@@ -1,10 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { nanoid } from 'nanoid'
 import quotesOriginal from './quotesOriginal.json'
 import fs from 'fs/promises'
 import path from 'path'
 const quotesFilePath = path.resolve(__dirname, './quotes.json')
 
-const sleep = (time = 100) =>
+const sleep = (time = 1000) =>
   new Promise((resolve) => setTimeout(resolve, time))
 
 const readQuotes = async () => {
@@ -14,6 +15,7 @@ const readQuotes = async () => {
 
 type QuotesData = {
   quotes: Array<{
+    id: string
     quote: string
     author: string
   }>
@@ -38,7 +40,6 @@ type GetQuotes = {
 }
 
 const getQuotesByPage = async (page: number, limit: number) => {
-  await sleep()
   const offset = page * limit
   const endIndex = offset + limit
   const quotesData = await readQuotes()
@@ -69,6 +70,8 @@ export const getQuotes = async (
     throw new Error(
       'Missing parameters. Please provide "page" or "cursor" parameter in the request query.'
     )
+  await sleep()
+
   const limit = 5
 
   if (page) return getQuotesByPage(parseInt(page), limit)
@@ -86,15 +89,17 @@ export const createQuote = async (request: FastifyRequest<CreateQuote>) => {
   const { quote, author } = request.body
   if (!quote || !author)
     throw new Error('Please provide author and quote text.')
+  await sleep()
   const quotesBuffer = await fs.readFile(quotesFilePath)
   const quotesJson = JSON.parse(quotesBuffer.toString()) as QuotesData
-  quotesJson.quotes.unshift({ quote, author })
-  console.log('path', quotesFilePath)
+  const id = nanoid()
+  quotesJson.quotes.unshift({ id, quote, author })
   await fs.writeFile(quotesFilePath, JSON.stringify(quotesJson), 'utf-8')
   return true
 }
 
 export const resetQuotes = async (request: FastifyRequest) => {
+  await sleep()
   await fs.writeFile(quotesFilePath, JSON.stringify(quotesOriginal), 'utf-8')
   return true
 }

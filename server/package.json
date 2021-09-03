@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "fastify": "^3.20.2",
-    "fastify-cors": "^6.0.2"
+    "fastify-cors": "^6.0.2",
+    "nanoid": "^3.1.25"
   },
   "devDependencies": {
     "@types/node": "^16.7.6",

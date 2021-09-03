@@ -20,6 +20,15 @@ const didAbort = (error: AxiosError) => axios.isCancel(error)
 
 const getCancelSource = () => axios.CancelToken.source()
 
+export const cancelRequestFactory = () => {
+  const CancelToken = axios.CancelToken
+  const source = CancelToken.source()
+  return {
+    abort: source.cancel,
+    cancelToken: source.token,
+  }
+}
+
 const withAbort = <T>(fn: WithAbordFn) => {
   const executor: ApiExecutor<T> = async (...args: ApiExecutorArgs) => {
     const originalConfig = args[args.length - 1] as ApiRequestConfig
@@ -31,6 +40,7 @@ const withAbort = <T>(fn: WithAbordFn) => {
     if (typeof abort === 'function') {
       const { cancel, token } = getCancelSource()
       config.cancelToken = token
+      console.log('GOT ABORT PROPERTY')
       abort(cancel)
     }
 
