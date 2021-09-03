@@ -1,5 +1,5 @@
 import { fetchTopQuotes, Quote } from '@/api/quoteApi'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 import { Canceler } from '@/api/api.types'
@@ -14,7 +14,6 @@ const QueryCancellation = () => {
   const {
     data: quotes,
     isSuccess,
-    isFetching,
     isLoading,
     isError,
   } = useQuery(
@@ -45,11 +44,6 @@ const QueryCancellation = () => {
       enabled: false,
     }
   )
-
-  useEffect(() => {
-    if (!isFetching || !shouldAbort) return
-    queryClient.cancelQueries('top-aborted-quotes')
-  }, [isFetching])
 
   const onFetchQuotes = () => {
     queryClient.refetchQueries('top-aborted-quotes')
