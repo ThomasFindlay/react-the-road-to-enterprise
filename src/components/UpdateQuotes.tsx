@@ -3,9 +3,7 @@ import React, { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
-type UpdateQuotesProps = {}
-
-const UpdateQuotes = (props: UpdateQuotesProps) => {
+const UpdateQuotes = () => {
   // Get access to the QueryClient instance
   const queryClient = useQueryClient()
   // Quotes mutations
