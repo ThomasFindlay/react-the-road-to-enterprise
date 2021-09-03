@@ -14,7 +14,7 @@ const InfiniteScrollQuotes = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<QuotesDataWithCursor>(
-    ['quotes'],
+    'quotes',
     ({ pageParam = 0 }) => fetchQuotesByCursor(pageParam),
     {
       getNextPageParam: (lastPage, pages) => {

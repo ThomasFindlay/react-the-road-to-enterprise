@@ -80,7 +80,7 @@ const PaginatedQuotes = () => {
                 Next
               </button>
             </div>
-            {isFetching ? <span> Loading...</span> : null}
+            {isFetching ? <span>Loading...</span> : null}
           </div>
         ) : null}
       </div>

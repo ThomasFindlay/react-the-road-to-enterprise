@@ -27,10 +27,8 @@ export const resetQuotes = () => api.post('quotes/reset', {})
 export const fetchQuotesByPage = (page: number) =>
   api.get<QuotesData>('quotes', { params: { page } }).then((res) => res.data)
 
-export type QuoteWithCursor = Quote & { nextCursor: number | null }
-
 export type QuotesDataWithCursor = {
-  quotes: QuoteWithCursor[]
+  quotes: Quote[]
   nextCursor: number | null
 }
 
