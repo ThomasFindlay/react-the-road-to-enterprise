@@ -1,7 +1,6 @@
 import { fetchTopQuotes, Quote } from '@/api/quoteApi'
 import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import { cancelRequestFactory } from '@/api/api'
 import { toast } from 'react-toastify'
 import { Canceler } from '@/api/api.types'
 
