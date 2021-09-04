@@ -1,0 +1,11 @@
+.formBlock {
+  @apply flex flex-col mb-6;
+}
+
+.formLabel {
+  @apply mb-3 font-semibold;
+}
+
+.formInput {
+  @apply border border-gray-50 shadow p-4;
+}
