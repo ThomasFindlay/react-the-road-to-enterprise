@@ -1,10 +1,17 @@
-import { useGlobalSpinnerContext } from '@/context/GlobalSpinnerContext'
+// @ts-ignore
+import {
+  GlobalSpinnerContext,
+  GlobalSpinnerContextValue,
+} from '@/context/GlobalSpinnerContext_Initial'
 import clsx from 'clsx'
+import { useContext } from 'react'
 
 type GlobalSpinnerProps = {}
 
 const GlobalSpinner = (props: GlobalSpinnerProps) => {
-  const { isSpinnerVisible } = useGlobalSpinnerContext()
+  const { isSpinnerVisible } = useContext(
+    GlobalSpinnerContext
+  ) as GlobalSpinnerContextValue
 
   return (
     <div className="relative">

@@ -21,11 +21,13 @@ const [useGlobalSpinnerActionsContext, GlobalSpinnerActionsContext] =
 
 export { useGlobalSpinnerContext, useGlobalSpinnerActionsContext }
 
-interface Props {
+type GlobalSpinnerContextProviderProps = {
   children: React.ReactNode
 }
 
-const GlobalSpinnerContextProvider = (props: Props) => {
+const GlobalSpinnerContextProvider = (
+  props: GlobalSpinnerContextProviderProps
+) => {
   const { children } = props
   const {
     state: isSpinnerVisible,
@@ -54,7 +56,7 @@ const GlobalSpinnerContextProvider = (props: Props) => {
     <GlobalSpinnerContext.Provider value={values}>
       <GlobalSpinnerActionsContext.Provider value={actions}>
         {children}
-        <GlobalSpinner show={isSpinnerVisible} />
+        <GlobalSpinner />
       </GlobalSpinnerActionsContext.Provider>
     </GlobalSpinnerContext.Provider>
   )
