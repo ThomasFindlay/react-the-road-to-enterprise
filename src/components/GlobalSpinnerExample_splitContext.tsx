@@ -1,18 +1,9 @@
-import {
-  useGlobalSpinnerActionsContext,
-  useGlobalSpinnerContext,
-} from '@/context/GlobalSpinnerContext'
+import { useGlobalSpinnerActionsContext } from '@/context/GlobalSpinnerContext'
 
 type GlobalSpinnerExampleProps = {}
 
 const GlobalSpinnerExample = (props: GlobalSpinnerExampleProps) => {
-  const { showSpinner, hideSpinner } = useGlobalSpinnerContext((ctx) => {
-    const { showSpinner, hideSpinner } = ctx
-    return {
-      showSpinner,
-      hideSpinner,
-    }
-  })
+  const { showSpinner, hideSpinner } = useGlobalSpinnerActionsContext()
 
   const onShowSpinner = () => {
     showSpinner()

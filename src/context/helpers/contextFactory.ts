@@ -1,15 +1,21 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContextSelector } from 'use-context-selector'
 
-export const contextFactory = <A extends unknown | null>() => {
+type ContextSelector<A, T> = (value: A | undefined) => T
+
+export const contextFactory = <A>() => {
   const context = createContext<A | undefined>(undefined)
-  const useCtx = () => {
-    const ctx = useContext(context)
-    if (ctx === undefined) {
-      throw new Error(
-        'useContext must be used inside of a Provider with a value.'
-      )
+
+  function selectWholeContext<T>(state: A | undefined) {
+    return state as unknown as T
+  }
+
+  const useCtx = <T>(contextSelector?: ContextSelector<A, T>) => {
+    const selectorFn = contextSelector || selectWholeContext
+    const selector: ContextSelector<A, T> = (state: A | undefined) => {
+      if (state === undefined) return state
+      return selectorFn(state)
     }
-    return ctx
+    return useContextSelector<A | undefined, T>(context, selector)
   }
 
   return [useCtx, context] as const
