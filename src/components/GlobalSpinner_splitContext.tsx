@@ -1,4 +1,4 @@
-import { useGlobalSpinnerContext } from '@/context/GlobalSpinnerContext'
+import { useGlobalSpinnerContext } from '@/context/GlobalSpinnerContext_splitContext'
 import clsx from 'clsx'
 
 type GlobalSpinnerProps = {}

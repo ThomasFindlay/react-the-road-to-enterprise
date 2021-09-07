@@ -1,22 +1,39 @@
-import { createContext, useContextSelector } from 'use-context-selector'
+import {
+  createContext,
+  useContext,
+  useContextSelector,
+} from 'use-context-selector'
 
-type ContextSelector<A, T> = (value: A | undefined) => T
+export const contextFactory = <CtxState>() => {
+  const context = createContext<CtxState | undefined>(undefined)
 
-export const contextFactory = <A>() => {
-  const context = createContext<A | undefined>(undefined)
+  const useCtx = () => {
+    const ctx = useContext(context)
+    if (ctx === undefined)
+      throw new Error(
+        'useContextSelector must be used within a context provider'
+      )
 
-  function selectWholeContext<T>(state: A | undefined) {
-    return state as unknown as T
+    return ctx
   }
 
-  const useCtx = <T>(contextSelector?: ContextSelector<A, T>) => {
-    const selectorFn = contextSelector || selectWholeContext
-    const selector: ContextSelector<A, T> = (state: A | undefined) => {
-      if (state === undefined) return state
-      return selectorFn(state)
+  type ContextSelector<Selected, CtxState> = (ctxState: CtxState) => Selected
+
+  const useCtxSelector = <Selected>(
+    contextSelector: ContextSelector<Selected, CtxState>
+  ) => {
+    const selector = (state: CtxState | undefined) => {
+      if (state === undefined)
+        throw new Error('useContext must be used within a context provider')
+
+      return contextSelector(state)
     }
-    return useContextSelector<A | undefined, T>(context, selector)
+
+    return useContextSelector<
+      CtxState | undefined,
+      ReturnType<typeof selector>
+    >(context, selector)
   }
 
-  return [useCtx, context] as const
+  return [context, useCtx, useCtxSelector] as const
 }

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import GlobalSpinner from '@/components/GlobalSpinner'
-import { contextFactory } from './helpers/contextFactory'
+import { contextFactory } from './helpers/contextFactory_splitContext'
 import { useToggleState } from '@/hooks/useToggleState'
 
 type GlobalSpinnerValues = {

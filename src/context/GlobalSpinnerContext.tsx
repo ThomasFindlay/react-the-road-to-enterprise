@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import GlobalSpinner from '@/components/GlobalSpinner'
 import { contextFactory } from './helpers/contextFactory'
 import { useToggleState } from '@/hooks/useToggleState'
@@ -9,10 +8,13 @@ type GlobalSpinnerValues = {
   toggleSpinner: () => void
 }
 
-const [useGlobalSpinnerContext, GlobalSpinnerContext] =
-  contextFactory<GlobalSpinnerValues>()
+const [
+  GlobalSpinnerContext,
+  useGlobalSpinnerContext,
+  useGlobalSpinnerContextSelector,
+] = contextFactory<GlobalSpinnerValues>()
 
-export { useGlobalSpinnerContext }
+export { useGlobalSpinnerContext, useGlobalSpinnerContextSelector }
 
 type GlobalSpinnerContextProviderProps = {
   children: React.ReactNode

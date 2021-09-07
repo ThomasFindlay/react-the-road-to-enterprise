@@ -1,10 +1,12 @@
-import { useGlobalSpinnerContext } from '@/context/GlobalSpinnerContext'
+import { useGlobalSpinnerContextSelector } from '@/context/GlobalSpinnerContext'
 import clsx from 'clsx'
 
 type GlobalSpinnerProps = {}
 
 const GlobalSpinner = (props: GlobalSpinnerProps) => {
-  const { isSpinnerVisible } = useGlobalSpinnerContext()
+  const isSpinnerVisible = useGlobalSpinnerContextSelector(
+    (ctx) => ctx.isSpinnerVisible
+  )
 
   return (
     <div className="relative">
@@ -37,7 +39,6 @@ const GlobalSpinner = (props: GlobalSpinnerProps) => {
           </svg>
         </div>
       </div>
-      <slot />
     </div>
   )
 }

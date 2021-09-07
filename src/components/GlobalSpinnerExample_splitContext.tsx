@@ -1,4 +1,4 @@
-import { useGlobalSpinnerActionsContext } from '@/context/GlobalSpinnerContext'
+import { useGlobalSpinnerActionsContext } from '@/context/GlobalSpinnerContext_splitContext'
 
 type GlobalSpinnerExampleProps = {}
 
@@ -14,13 +14,6 @@ const GlobalSpinnerExample = (props: GlobalSpinnerExampleProps) => {
 
   return (
     <div className="py-8 max-w-2xl mx-auto space-y-4">
-      <div className="leading-loose">
-        The{' '}
-        <code className="bg-gray-200 p-1">{'<GlobalSpinnerProvider />'}</code>{' '}
-        component is used in the App.tsx component. Thanks to that, the{' '}
-        <code className="bg-gray-200 p-1">useGlobalSpinnerActionsContext</code>{' '}
-        method can be imported and used anywhere in the application.
-      </div>
       <button
         className="bg-blue-600 text-blue-100 px-4 py-3"
         onClick={onShowSpinner}
