@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { useImmer } from 'use-immer'
 import { boardData } from '../boardData'
 
 type TasksBoardProps = {}
 
 const TasksBoard = (props: TasksBoardProps) => {
-  const [board, setBoard] = useImmer(boardData)
+  const [board, setBoard] = useState(boardData)
   const [selectedTask, setSelectedTask] = useState<{
     columnIdx: number
     taskIdx: number
@@ -23,7 +22,30 @@ const TasksBoard = (props: TasksBoardProps) => {
     const { columnIdx, taskIdx } = selectedTask
 
     setBoard((board) => {
-      board.columns[columnIdx].tasks[taskIdx].name = e.target.value
+      return {
+        ...board,
+        columns: [
+          ...board.columns.map((column, _columnIdx) => {
+            if (columnIdx !== _columnIdx) {
+              return column
+            }
+
+            return {
+              ...column,
+              tasks: column.tasks.map((task, _taskIdx) => {
+                if (taskIdx !== _taskIdx) {
+                  return task
+                }
+
+                return {
+                  ...task,
+                  name: e.target.value,
+                }
+              }),
+            }
+          }),
+        ],
+      }
     })
   }
 
