@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/pino": "^6.3.11",
     "fastify": "^3.20.2",
     "fastify-cors": "^6.0.2",
-    "nanoid": "^3.1.25"
+    "nanoid": "^3.1.25",
+    "pino": "^6.13.2"
   },
   "devDependencies": {
     "@types/node": "^16.7.6",
