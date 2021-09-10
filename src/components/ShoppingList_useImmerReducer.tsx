@@ -1,16 +1,88 @@
-import { useShoppingListContextSelector } from '@/context/helpers/ShoppingListContext'
 import React from 'react'
-import { DeleteItem, UpdateItem } from './ShoppingList.types'
-import ShoppingListHeader from './ShoppingListHeader'
+import { useImmerReducer } from 'use-immer'
+import ShoppingListHeader from './ShoppingListHeader_Initial'
 import ShoppingListRow from './ShoppingListRow'
 
 const getUuid = () => '_' + Math.random().toString(36).substr(2, 9)
 
+export type ShoppingListItem = {
+  id: string
+  name: string
+}
+
+type ShoppingListState = {
+  newShoppingItemName: string
+  items: ShoppingListItem[]
+}
+
+export type UpdateItem = (payload: {
+  index: number
+  item: ShoppingListItem
+}) => void
+
+export type DeleteItem = (payload: { index: number }) => void
+
+const shoppingItems: ShoppingListState = {
+  newShoppingItemName: '',
+  items: [
+    {
+      id: '1',
+      name: 'Sea Salt',
+    },
+    {
+      id: '2',
+      name: 'Apples',
+    },
+    {
+      id: '3',
+      name: 'Chicken breasts',
+    },
+  ],
+}
+
+type ReducerAction<T, P> = {
+  type: T
+  payload: P
+}
+
+type ShoppingListActions =
+  | ReducerAction<'ADD_ITEM', ShoppingListItem>
+  | ReducerAction<
+      'UPDATE_ITEM',
+      {
+        index: number
+        item: ShoppingListItem
+      }
+    >
+  | ReducerAction<'DELETE_ITEM', { index: number }>
+  | ReducerAction<'UPDATE_NEW_SHOPPING_ITEM_NAME', string>
+
+const reducer = (
+  state: ShoppingListState,
+  action: ShoppingListActions
+): ShoppingListState => {
+  switch (action.type) {
+    case 'UPDATE_NEW_SHOPPING_ITEM_NAME':
+      state.newShoppingItemName = action.payload
+      break
+    case 'ADD_ITEM':
+      state.newShoppingItemName = ''
+      state.items.push(action.payload)
+      break
+    case 'UPDATE_ITEM':
+      state.items.splice(action.payload.index, 1, action.payload.item)
+      break
+    case 'DELETE_ITEM':
+      state.items.splice(action.payload.index, 1)
+      break
+  }
+  return state
+}
+
 type ShoppingListProps = {}
 
 const ShoppingList = (props: ShoppingListProps) => {
-  const shoppingList = useShoppingListContextSelector((ctx) => ctx[0])
-  const dispatch = useShoppingListContextSelector((ctx) => ctx[1])
+  const [shoppingList, dispatch] = useImmerReducer(reducer, shoppingItems)
 
   const addItem = () => {
     if (!shoppingList.newShoppingItemName) return
@@ -49,7 +121,7 @@ const ShoppingList = (props: ShoppingListProps) => {
   return (
     <div className="py-8 max-w-4xl mx-auto text-left">
       <div className="max-w-xs">
-        <ShoppingListHeader />
+        <ShoppingListHeader shoppingList={shoppingList.items} />
         <div className="space-y-3 mb-6">
           {shoppingList.items.map((item, index) => {
             return (

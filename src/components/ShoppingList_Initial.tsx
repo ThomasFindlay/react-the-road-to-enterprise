@@ -1,16 +1,73 @@
-import { useShoppingListContextSelector } from '@/context/helpers/ShoppingListContext'
-import React from 'react'
-import { DeleteItem, UpdateItem } from './ShoppingList.types'
-import ShoppingListHeader from './ShoppingListHeader'
+import React, { useReducer } from 'react'
+import {
+  DeleteItem,
+  ShoppingListActions,
+  ShoppingListState,
+  UpdateItem,
+} from './ShoppingList.types'
+import ShoppingListHeader from './ShoppingListHeader_Initial'
 import ShoppingListRow from './ShoppingListRow'
 
 const getUuid = () => '_' + Math.random().toString(36).substr(2, 9)
 
+const shoppingItems: ShoppingListState = {
+  newShoppingItemName: '',
+  items: [
+    {
+      id: '1',
+      name: 'Sea Salt',
+    },
+    {
+      id: '2',
+      name: 'Apples',
+    },
+    {
+      id: '3',
+      name: 'Chicken breasts',
+    },
+  ],
+}
+
+const reducer = (
+  state: ShoppingListState,
+  action: ShoppingListActions
+): ShoppingListState => {
+  switch (action.type) {
+    case 'UPDATE_NEW_SHOPPING_ITEM_NAME':
+      return {
+        ...state,
+        newShoppingItemName: action.payload,
+      }
+    case 'ADD_ITEM':
+      return {
+        ...state,
+        newShoppingItemName: '',
+        items: [...state.items, action.payload],
+      }
+    case 'UPDATE_ITEM':
+      return {
+        ...state,
+        items: state.items.map((item, idx) => {
+          if (idx === action.payload.index) {
+            return action.payload.item
+          }
+          return item
+        }),
+      }
+    case 'DELETE_ITEM':
+      return {
+        ...state,
+        items: state.items.filter((_, idx) => idx !== action.payload.index),
+      }
+    default:
+      return state
+  }
+}
+
 type ShoppingListProps = {}
 
 const ShoppingList = (props: ShoppingListProps) => {
-  const shoppingList = useShoppingListContextSelector((ctx) => ctx[0])
-  const dispatch = useShoppingListContextSelector((ctx) => ctx[1])
+  const [shoppingList, dispatch] = useReducer(reducer, shoppingItems)
 
   const addItem = () => {
     if (!shoppingList.newShoppingItemName) return
@@ -49,7 +106,7 @@ const ShoppingList = (props: ShoppingListProps) => {
   return (
     <div className="py-8 max-w-4xl mx-auto text-left">
       <div className="max-w-xs">
-        <ShoppingListHeader />
+        <ShoppingListHeader shoppingList={shoppingList.items} />
         <div className="space-y-3 mb-6">
           {shoppingList.items.map((item, index) => {
             return (

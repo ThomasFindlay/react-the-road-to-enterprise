@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
-import { ShoppingListItem } from './ShoppingList'
+import { DeleteItem, ShoppingListItem, UpdateItem } from './ShoppingList.types'
 
 type ShoppingListRowProps = {
   item: ShoppingListItem
-  deleteItem: (item: ShoppingListItem) => void
-  updateItem: (item: ShoppingListItem) => void
+  index: number
+  deleteItem: DeleteItem
+  updateItem: UpdateItem
 }
 
 const useEditShoppingItem = (
-  props: Pick<ShoppingListRowProps, 'item' | 'updateItem'>
+  props: Omit<ShoppingListRowProps, 'deleteItem'>
 ) => {
-  const { item, updateItem } = props
+  const { item, updateItem, index } = props
   const [name, setName] = useState(item.name)
   const [isEditing, setIsEditing] = useState(false)
   useEffect(() => {
@@ -19,8 +20,11 @@ const useEditShoppingItem = (
 
   const onSaveItem = () => {
     updateItem({
-      ...item,
-      name,
+      index,
+      item: {
+        ...item,
+        name,
+      },
     })
     setIsEditing(false)
   }
@@ -39,7 +43,7 @@ const useEditShoppingItem = (
 }
 
 const ShoppingListRow = (props: ShoppingListRowProps) => {
-  const { item, deleteItem } = props
+  const { item, deleteItem, index } = props
   const { name, isEditing, setName, onSaveItem, onEditItem } =
     useEditShoppingItem(props)
 
@@ -69,7 +73,10 @@ const ShoppingListRow = (props: ShoppingListRowProps) => {
           </button>
         )}
 
-        <button className="hover:underline" onClick={() => deleteItem(item)}>
+        <button
+          className="hover:underline"
+          onClick={() => deleteItem({ index })}
+        >
           Delete
         </button>
       </div>
