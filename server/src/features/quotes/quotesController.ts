@@ -1,8 +1,10 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { nanoid } from 'nanoid'
 import quotesOriginal from './quotesOriginal.json'
+import quotes from './quotes.json'
 import fs from 'fs/promises'
 import path from 'path'
+// Force ts to copy quotes to the build folder
 const quotesFilePath = path.resolve(__dirname, './quotes.json')
 
 const sleep = (time = 1000) =>
