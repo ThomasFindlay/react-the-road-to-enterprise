@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import type { ApiError, Canceler } from '@/api/api.types'
+import { isApiError } from '@/api/api'
+import type { Canceler } from '@/api/api.types'
 import { Meal, searchMeals } from '@/api/mealApi'
 import { toast } from 'react-toastify'
 
@@ -11,9 +12,8 @@ const useFetchMeals = () => {
   const [meals, setMeals] = useState<Meal[]>([])
   const abortRef = useRef<AbortRef>({})
 
-  const handleQuoteError = (error: ApiError) => {
-    console.error(error)
-    if (error.aborted) {
+  const handleQuoteError = (error: unknown) => {
+    if (isApiError(error) && error.aborted) {
       toast.error('Request aborted!')
     } else {
       toast.error('Oops, error!')
@@ -31,6 +31,7 @@ const useFetchMeals = () => {
       })
       setMeals(newMeals ?? [])
     } catch (error) {
+      console.error(error)
       handleQuoteError(error)
     }
   }

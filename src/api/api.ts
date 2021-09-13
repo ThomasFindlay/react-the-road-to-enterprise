@@ -4,6 +4,7 @@ import {
   WithAbordFn,
   ApiExecutor,
   ApiExecutorArgs,
+  ApiError,
 } from './api.types'
 // Default config for the axios instance
 const axiosParams = {
@@ -18,6 +19,10 @@ const axiosInstance = axios.create(axiosParams)
 const didAbort = (error: AxiosError) => axios.isCancel(error)
 
 const getCancelSource = () => axios.CancelToken.source()
+
+export const isApiError = (error: unknown): error is ApiError => {
+  return axios.isAxiosError(error)
+}
 
 const withAbort = <T>(fn: WithAbordFn) => {
   const executor: ApiExecutor<T> = async (...args: ApiExecutorArgs) => {
@@ -42,8 +47,15 @@ const withAbort = <T>(fn: WithAbordFn) => {
         return await fn<T>(url, config)
       }
     } catch (error) {
+      if (!isApiError(error)) throw error
+
       // Add "aborted" property to the error if the request was cancelled
-      didAbort(error) && (error.aborted = true)
+      if (didAbort(error)) {
+        error.aborted = true
+      } else {
+        error.aborted = false
+      }
+
       throw error
     }
   }
