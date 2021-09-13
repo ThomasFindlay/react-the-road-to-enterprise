@@ -1,7 +1,6 @@
 import { ToastContainer } from 'react-toastify'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.min.css'
-import SearchMealExample from '@/components/SearchMealExample'
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
         <h1 className="font-semibold text-2xl">
           React - The Road To Enterprise
         </h1>
-        <SearchMealExample />
       </div>
     </>
   )
