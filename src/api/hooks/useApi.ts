@@ -14,7 +14,7 @@ export function useApi<TData = unknown, TError = unknown>(
 ) {
   const { initialData } = config
   const [data, setData] = useState<TData | undefined>(initialData)
-  const [error, setError] = useState<TError>()
+  const [error, setError] = useState<TError | unknown>()
   const { status, setStatus, ...normalisedStatuses } = useApiStatus()
 
   const exec = async <A>(...args: A[]) => {
