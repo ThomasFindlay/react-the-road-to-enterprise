@@ -1,7 +1,7 @@
 type WithAsyncFn<T = unknown> = () => T | Promise<T>
 type WithAsyncReturn<TData, TError> = {
   response: TData | null
-  error: TError | null
+  error: TError | unknown
 }
 export async function withAsync<TData = unknown, TError = unknown>(
   fn: WithAsyncFn<TData>
