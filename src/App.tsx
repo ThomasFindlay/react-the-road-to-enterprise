@@ -1,7 +1,7 @@
 import './App.css'
 import ShoppingList from './components/ShoppingList'
 import TasksBoard from './components/TasksBoard'
-import ShoppingListContextProvider from './context/helpers/ShoppingListContext'
+import ShoppingListContextProvider from './context/ShoppingListContext'
 
 function App() {
   return (
