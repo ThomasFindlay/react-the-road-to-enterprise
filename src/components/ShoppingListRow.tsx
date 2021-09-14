@@ -33,9 +33,15 @@ const useEditShoppingItem = (
     setIsEditing(true)
   }
 
+  const cancelEdit = () => {
+    setIsEditing(false)
+    setName(props.item.name)
+  }
+
   return {
     name,
     isEditing,
+    cancelEdit,
     setName,
     onSaveItem,
     onEditItem,
@@ -44,7 +50,7 @@ const useEditShoppingItem = (
 
 const ShoppingListRow = (props: ShoppingListRowProps) => {
   const { item, deleteItem, index } = props
-  const { name, isEditing, setName, onSaveItem, onEditItem } =
+  const { name, isEditing, cancelEdit, setName, onSaveItem, onEditItem } =
     useEditShoppingItem(props)
 
   return (
@@ -64,21 +70,27 @@ const ShoppingListRow = (props: ShoppingListRowProps) => {
       </div>
       <div className="space-x-3">
         {isEditing ? (
-          <button className="hover:underline" onClick={onSaveItem}>
-            Save
-          </button>
+          <>
+            <button className="hover:underline" onClick={onSaveItem}>
+              Save
+            </button>
+            <button className="hover:underline" onClick={cancelEdit}>
+              Cancel
+            </button>
+          </>
         ) : (
-          <button className="hover:underline" onClick={onEditItem}>
-            Edit
-          </button>
+          <>
+            <button className="hover:underline" onClick={onEditItem}>
+              Edit
+            </button>
+            <button
+              className="hover:underline"
+              onClick={() => deleteItem({ index })}
+            >
+              Delete
+            </button>
+          </>
         )}
-
-        <button
-          className="hover:underline"
-          onClick={() => deleteItem({ index })}
-        >
-          Delete
-        </button>
       </div>
     </div>
   )

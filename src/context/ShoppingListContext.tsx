@@ -4,7 +4,7 @@ import {
 } from '@/components/ShoppingList.types'
 import React from 'react'
 import { useImmerReducer } from 'use-immer'
-import { contextFactory } from './contextFactory'
+import { contextFactory } from './helpers/contextFactory'
 
 const [
   ShoppingListContext,

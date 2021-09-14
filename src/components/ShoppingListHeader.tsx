@@ -1,4 +1,4 @@
-import { useShoppingListContextSelector } from '@/context/helpers/ShoppingListContext'
+import { useShoppingListContextSelector } from '@/context/ShoppingListContext'
 import { memo } from 'react'
 
 type ShoppingListHeaderProps = {}
