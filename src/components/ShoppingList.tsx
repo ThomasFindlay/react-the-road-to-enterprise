@@ -1,4 +1,4 @@
-import { useShoppingListContextSelector } from '@/context/helpers/ShoppingListContext'
+import { useShoppingListContextSelector } from '@/context/ShoppingListContext'
 import React from 'react'
 import { DeleteItem, UpdateItem } from './ShoppingList.types'
 import ShoppingListHeader from './ShoppingListHeader'
