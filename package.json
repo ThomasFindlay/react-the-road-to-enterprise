@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@craco/craco": "^6.2.0",
+    "@reduxjs/toolkit": "^1.6.1",
     "@tailwindcss/forms": "^0.3.3",
     "axios": "^0.21.1",
     "concurrently": "^6.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
