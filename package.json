@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
   "scripts": {
-    "start": "craco start",
+    "start": "concurrently \"craco start\" \"cd server && npm run start\"",
     "build": "craco build",
     "test:unit": "craco test",
     "test:e2e:open": "start-server-and-test start http-get://localhost:3000 cypress:open",
@@ -13,6 +13,7 @@
     "@craco/craco": "^6.2.0",
     "@tailwindcss/forms": "^0.3.3",
     "axios": "^0.21.1",
+    "concurrently": "^6.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
