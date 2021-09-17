@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import React, { useState } from 'react'
 import { addUser } from '../usersSlice'
 
@@ -13,12 +13,14 @@ const initialState = {
 
 const AddUsers = (props: AddUsersProps) => {
   const dispatch = useAppDispatch()
+  const addUserStatus = useAppSelector((state) => state.users.addUserStatus)
+  const isAddingUser = addUserStatus === 'pending'
   const [form, setForm] = useState(initialState)
 
-  const onAddUser = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onAddUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (!form.name || !form.email) return
-    dispatch(
+    await dispatch(
       addUser({
         id: createId(),
         ...form,
@@ -67,8 +69,9 @@ const AddUsers = (props: AddUsersProps) => {
         <button
           className="w-28 self-end bg-blue-700 text-blue-100 px-4 py-3"
           onClick={onAddUser}
+          disabled={isAddingUser}
         >
-          Add User
+          {isAddingUser ? 'Adding...' : 'Add User'}
         </button>
       </form>
     </div>
