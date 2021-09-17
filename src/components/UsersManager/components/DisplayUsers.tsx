@@ -1,12 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { removeUser, selectUser } from '../usersSlice'
 
 type DisplayUsersProps = {}
 
 const DisplayUsers = (props: DisplayUsersProps) => {
-  const dispatch = useDispatch()
-  const users = useSelector((state: RootState) => state.users.users)
+  const dispatch = useAppDispatch()
+  const users = useAppSelector((state) => state.users.users)
+
   return (
     <div>
       <h2 className="font-semibold text-xl mb-4">Users</h2>

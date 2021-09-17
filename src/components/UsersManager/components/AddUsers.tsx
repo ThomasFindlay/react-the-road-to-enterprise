@@ -1,5 +1,5 @@
+import { useAppDispatch } from '@/store/hooks'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { addUser } from '../usersSlice'
 
 type AddUsersProps = {}
@@ -12,7 +12,7 @@ const initialState = {
 }
 
 const AddUsers = (props: AddUsersProps) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [form, setForm] = useState(initialState)
 
   const onAddUser = (e: React.MouseEvent<HTMLButtonElement>) => {
