@@ -16,7 +16,7 @@ export type UsersState = {
   fetchUsersStatus: ApiStatus
   addUserStatus: ApiStatus
   deleteUserStatus: ApiStatus
-  deleteUserId: User['id'] | null
+  deletingUserId: User['id'] | null
 }
 
 const initialState: UsersState = {
@@ -25,7 +25,7 @@ const initialState: UsersState = {
   fetchUsersStatus: 'idle',
   addUserStatus: 'idle',
   deleteUserStatus: 'idle',
-  deleteUserId: null,
+  deletingUserId: null,
 }
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', listUsers)
@@ -87,18 +87,19 @@ export const usersSlice = createSlice({
       state.addUserStatus = 'error'
     })
     builder.addCase(removeUser.pending, (state, action) => {
-      console.log('in action remove user pending', action)
+      state.deletingUserId = action.meta.arg.id
       state.deleteUserStatus = 'pending'
     })
     builder.addCase(removeUser.fulfilled, (state, action) => {
       const user = action.payload
-      state.users.filter((_user) => _user.id !== user.id)
+      console.log('in fulfilled', action.payload)
+      state.users = state.users.filter((_user) => _user.id !== user.id)
       state.deleteUserStatus = 'success'
-      state.deleteUserId = null
+      state.deletingUserId = null
     })
     builder.addCase(removeUser.rejected, (state, action) => {
       state.deleteUserStatus = 'error'
-      state.deleteUserId = null
+      state.deletingUserId = null
     })
   },
 })

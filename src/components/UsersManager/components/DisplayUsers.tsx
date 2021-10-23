@@ -1,3 +1,4 @@
+import Spinner from '@/components/Spinner'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { removeUser, selectUser } from '../usersSlice'
 
@@ -6,7 +7,7 @@ type DisplayUsersProps = {}
 const DisplayUsers = (props: DisplayUsersProps) => {
   const dispatch = useAppDispatch()
   const users = useAppSelector((state) => state.users.users)
-
+  const deletingUserId = useAppSelector((state) => state.users.deletingUserId)
   return (
     <div>
       <h2 className="font-semibold text-xl mb-4">Users</h2>
@@ -20,7 +21,9 @@ const DisplayUsers = (props: DisplayUsersProps) => {
               >
                 {user.email}
               </button>
-              <button onClick={() => dispatch(removeUser(user))}>X</button>
+              <button onClick={() => dispatch(removeUser(user))}>
+                {deletingUserId === user.id ? <Spinner show size="sm" /> : 'X'}
+              </button>
             </li>
           )
         })}

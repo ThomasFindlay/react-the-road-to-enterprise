@@ -14,9 +14,5 @@ export const createUser = (user: User) => {
 }
 
 export const deleteUser = (id: string) => {
-  return api.delete('/user', {
-    params: {
-      id
-    }
-  })
+  return api.delete(`/user/${id}`)
 }

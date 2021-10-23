@@ -15,7 +15,7 @@ const UsersManager = (props: UsersManagerProps) => {
 
   useEffect(() => {
     dispatch(fetchUsers())
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="container py-8 mx-auto">
