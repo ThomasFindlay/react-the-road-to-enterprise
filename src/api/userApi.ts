@@ -12,3 +12,11 @@ export const createUser = (user: User) => {
     }>('/user', user)
     .then((res) => res.data)
 }
+
+export const deleteUser = (id: string) => {
+  return api.delete('/user', {
+    params: {
+      id
+    }
+  })
+}

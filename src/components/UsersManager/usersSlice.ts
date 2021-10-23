@@ -1,4 +1,4 @@
-import { listUsers, createUser } from '@/api/userApi'
+import { listUsers, createUser, deleteUser } from '@/api/userApi'
 import { RootState } from '@/store'
 import {
   createSlice,
@@ -8,18 +8,24 @@ import {
 } from '@reduxjs/toolkit'
 import { User } from './UsersManager.types'
 
+type ApiStatus = 'idle' | 'pending' | 'success' | 'error'
+
 export type UsersState = {
   users: User[]
-  selectedUserId?: User['id'] | null
-  fetchUsersStatus: 'idle' | 'pending' | 'success' | 'error'
-  addUserStatus: 'idle' | 'pending' | 'success' | 'error'
+  selectedUserId: User['id'] | null
+  fetchUsersStatus: ApiStatus
+  addUserStatus: ApiStatus
+  deleteUserStatus: ApiStatus
+  deleteUserId: User['id'] | null
 }
 
 const initialState: UsersState = {
   users: [],
-  selectedUserId: undefined,
+  selectedUserId: null,
   fetchUsersStatus: 'idle',
   addUserStatus: 'idle',
+  deleteUserStatus: 'idle',
+  deleteUserId: null,
 }
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', listUsers)
@@ -29,6 +35,15 @@ export const addUser = createAsyncThunk(
   async (userData: User) => {
     const user = await createUser(userData)
     return user
+  }
+)
+
+export const removeUser = createAsyncThunk(
+  'users/removeUser',
+  async (userData: User) => {
+    const result = await deleteUser(userData.id)
+    console.log('delete result', result)
+    return userData
   }
 )
 
@@ -42,9 +57,9 @@ export const usersSlice = createSlice({
     // addUser: (state, action: PayloadAction<User>) => {
     //   state.users.push(action.payload)
     // },
-    removeUser: (state, action: PayloadAction<User>) => {
-      state.users = state.users.filter((user) => user.id !== action.payload.id)
-    },
+    // removeUser: (state, action: PayloadAction<User>) => {
+    //   state.users = state.users.filter((user) => user.id !== action.payload.id)
+    // },
     selectUser: (state, action: PayloadAction<string>) => {
       state.selectedUserId = action.payload
     },
@@ -63,13 +78,27 @@ export const usersSlice = createSlice({
     builder.addCase(addUser.pending, (state, action) => {
       state.addUserStatus = 'pending'
     })
-    builder.addCase(addUser.rejected, (state, action) => {
-      state.addUserStatus = 'error'
-    })
     builder.addCase(addUser.fulfilled, (state, action) => {
       const { user } = action.payload
       state.users.push(user)
       state.addUserStatus = 'success'
+    })
+    builder.addCase(addUser.rejected, (state, action) => {
+      state.addUserStatus = 'error'
+    })
+    builder.addCase(removeUser.pending, (state, action) => {
+      console.log('in action remove user pending', action)
+      state.deleteUserStatus = 'pending'
+    })
+    builder.addCase(removeUser.fulfilled, (state, action) => {
+      const user = action.payload
+      state.users.filter((_user) => _user.id !== user.id)
+      state.deleteUserStatus = 'success'
+      state.deleteUserId = null
+    })
+    builder.addCase(removeUser.rejected, (state, action) => {
+      state.deleteUserStatus = 'error'
+      state.deleteUserId = null
     })
   },
 })
@@ -77,7 +106,7 @@ export const usersSlice = createSlice({
 export const {
   setUsers,
   // addUser,
-  removeUser,
+  // removeUser,
   selectUser,
 } = usersSlice.actions
 

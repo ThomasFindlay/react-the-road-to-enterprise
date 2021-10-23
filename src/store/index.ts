@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import usersReducer from '@/components/UsersManager/usersSlice'
-import { useDispatch, useSelector } from 'react-redux'
 
 export const store = configureStore({
   reducer: {
