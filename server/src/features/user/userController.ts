@@ -55,7 +55,7 @@ export const getUsers = async (
 ) => {
   await sleep()
   return {
-    users: usersOriginal,
+    users: await readUsers(),
   }
 }
 
