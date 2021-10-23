@@ -41,8 +41,7 @@ export const addUser = createAsyncThunk(
 export const removeUser = createAsyncThunk(
   'users/removeUser',
   async (userData: User) => {
-    const result = await deleteUser(userData.id)
-    console.log('delete result', result)
+    await deleteUser(userData.id)
     return userData
   }
 )
@@ -54,12 +53,6 @@ export const usersSlice = createSlice({
     setUsers: (state, action: PayloadAction<User[]>) => {
       state.users = action.payload
     },
-    // addUser: (state, action: PayloadAction<User>) => {
-    //   state.users.push(action.payload)
-    // },
-    // removeUser: (state, action: PayloadAction<User>) => {
-    //   state.users = state.users.filter((user) => user.id !== action.payload.id)
-    // },
     selectUser: (state, action: PayloadAction<string>) => {
       state.selectedUserId = action.payload
     },
@@ -104,12 +97,7 @@ export const usersSlice = createSlice({
   },
 })
 
-export const {
-  setUsers,
-  // addUser,
-  // removeUser,
-  selectUser,
-} = usersSlice.actions
+export const { setUsers, selectUser } = usersSlice.actions
 
 export const getSelectedUser = createSelector(
   (state: RootState) => state.users,
