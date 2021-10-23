@@ -10,6 +10,7 @@ import {
   registerUser,
   registerUserSchema,
   resetUsers,
+  deleteUser,
 } from './userController'
 
 function userRoutes(
@@ -21,6 +22,7 @@ function userRoutes(
   fastify.get('/all', getUsers)
   fastify.post('/', { schema: registerUserSchema }, registerUser)
   fastify.post('/reset', resetUsers)
+  fastify.delete('/:id', deleteUser)
   done()
 }
 
