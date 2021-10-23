@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useEffect } from 'react'
+import Spinner from '../Spinner'
 import AddUsers from './components/AddUsers'
 import DisplayUsers from './components/DisplayUsers'
 import SelectedUserDetails from './components/SelectedUserDetails'
@@ -19,7 +20,7 @@ const UsersManager = (props: UsersManagerProps) => {
 
   return (
     <div className="container py-8 mx-auto">
-      {fetchUsersStatus === 'pending' ? <p>Loading users...</p> : null}
+      {fetchUsersStatus === 'pending' ? <Spinner show /> : null}
       {fetchUsersStatus === 'success' ? (
         <div className="grid grid-cols-12 gap-4 px-4">
           <div className="col-span-4">

@@ -85,7 +85,6 @@ export const usersSlice = createSlice({
     })
     builder.addCase(removeUser.fulfilled, (state, action) => {
       const user = action.payload
-      console.log('in fulfilled', action.payload)
       state.users = state.users.filter((_user) => _user.id !== user.id)
       state.deleteUserStatus = 'success'
       state.deletingUserId = null
