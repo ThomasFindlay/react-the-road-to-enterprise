@@ -54,9 +54,8 @@ export const getUsers = async (
   reply: FastifyReply
 ) => {
   await sleep()
-  const users = await readUsers()
   return {
-    users,
+    users: usersOriginal,
   }
 }
 
