@@ -21,9 +21,11 @@ const DisplayUsers = (props: DisplayUsersProps) => {
               >
                 {user.email}
               </button>
-              <button onClick={() => dispatch(removeUser(user))}>
-                {deletingUserId === user.id ? <Spinner show size="sm" /> : 'X'}
-              </button>
+              {deletingUserId === user.id ? (
+                <Spinner show size="sm" />
+              ) : (
+                <button onClick={() => dispatch(removeUser(user))}>X</button>
+              )}
             </li>
           )
         })}
