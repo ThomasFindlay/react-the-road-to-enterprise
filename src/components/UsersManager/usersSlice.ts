@@ -63,8 +63,7 @@ export const usersSlice = createSlice({
       state.addUserStatus = 'PENDING'
     })
     builder.addCase(addUser.fulfilled, (state, action) => {
-      const { user } = action.payload
-      state.users.push(user)
+      state.users.push(action.payload.user)
       state.addUserStatus = 'SUCCESS'
     })
     builder.addCase(addUser.rejected, (state, action) => {
@@ -75,8 +74,9 @@ export const usersSlice = createSlice({
       state.deleteUserStatus = 'PENDING'
     })
     builder.addCase(removeUser.fulfilled, (state, action) => {
-      const user = action.payload
-      state.users = state.users.filter((_user) => _user.id !== user.id)
+      state.users = state.users.filter(
+        (_user) => _user.id !== action.payload.id
+      )
       state.deleteUserStatus = 'SUCCESS'
       state.deletingUserId = null
     })
