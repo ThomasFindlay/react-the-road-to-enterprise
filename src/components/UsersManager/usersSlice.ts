@@ -45,7 +45,7 @@ export const removeUser = createAsyncThunk(
     return userData
   }
 )
-
+console.log('thunk', fetchUsers)
 export const usersSlice = createSlice({
   name: 'users',
   initialState,

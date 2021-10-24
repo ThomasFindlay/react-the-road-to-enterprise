@@ -20,8 +20,8 @@ const UsersManager = (props: UsersManagerProps) => {
 
   return (
     <div className="container py-8 mx-auto">
-      {fetchUsersStatus === 'pending' ? <Spinner show /> : null}
-      {fetchUsersStatus === 'success' ? (
+      {fetchUsersStatus === 'PENDING' ? <Spinner show /> : null}
+      {fetchUsersStatus === 'SUCCESS' ? (
         <div className="grid grid-cols-12 gap-4 px-4">
           <div className="col-span-4">
             <AddUsers />
