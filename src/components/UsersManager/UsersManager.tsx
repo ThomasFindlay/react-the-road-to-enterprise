@@ -34,6 +34,9 @@ const UsersManager = (props: UsersManagerProps) => {
           </div>
         </div>
       ) : null}
+      {fetchUsersStatus === 'ERROR' ? (
+        <p>There was a problem fetching users</p>
+      ) : null}
     </div>
   )
 }
