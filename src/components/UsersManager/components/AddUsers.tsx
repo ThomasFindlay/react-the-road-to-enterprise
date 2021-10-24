@@ -13,8 +13,9 @@ const initialState = {
 
 const AddUsers = (props: AddUsersProps) => {
   const dispatch = useAppDispatch()
-  const addUserStatus = useAppSelector((state) => state.users.addUserStatus)
-  const isAddingUser = addUserStatus === 'PENDING'
+  const isAddingUser = useAppSelector(
+    (state) => state.users.addUserStatus === 'PENDING'
+  )
   const [form, setForm] = useState(initialState)
 
   const onAddUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
