@@ -29,15 +29,7 @@ const initialState: UsersState = {
 }
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', listUsers)
-
-export const addUser = createAsyncThunk(
-  'users/addUser',
-  async (userData: User) => {
-    const user = await createUser(userData)
-    return user
-  }
-)
-
+export const addUser = createAsyncThunk('users/addUser', createUser)
 export const removeUser = createAsyncThunk(
   'users/removeUser',
   async (userData: User) => {
