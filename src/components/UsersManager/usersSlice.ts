@@ -8,7 +8,7 @@ import {
 } from '@reduxjs/toolkit'
 import { User } from './UsersManager.types'
 
-type ApiStatus = 'idle' | 'pending' | 'success' | 'error'
+type ApiStatus = 'IDLE' | 'PENDING' | 'SUCCESS' | 'ERROR'
 
 export type UsersState = {
   users: User[]
@@ -22,9 +22,9 @@ export type UsersState = {
 const initialState: UsersState = {
   users: [],
   selectedUserId: null,
-  fetchUsersStatus: 'idle',
-  addUserStatus: 'idle',
-  deleteUserStatus: 'idle',
+  fetchUsersStatus: 'IDLE',
+  addUserStatus: 'IDLE',
+  deleteUserStatus: 'IDLE',
   deletingUserId: null,
 }
 
@@ -59,38 +59,38 @@ export const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.pending, (state, action) => {
-      state.fetchUsersStatus = 'pending'
+      state.fetchUsersStatus = 'PENDING'
     })
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.fetchUsersStatus = 'success'
+      state.fetchUsersStatus = 'SUCCESS'
       state.users = action.payload
     })
     builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.fetchUsersStatus = 'error'
+      state.fetchUsersStatus = 'ERROR'
     })
     builder.addCase(addUser.pending, (state, action) => {
-      state.addUserStatus = 'pending'
+      state.addUserStatus = 'PENDING'
     })
     builder.addCase(addUser.fulfilled, (state, action) => {
       const { user } = action.payload
       state.users.push(user)
-      state.addUserStatus = 'success'
+      state.addUserStatus = 'SUCCESS'
     })
     builder.addCase(addUser.rejected, (state, action) => {
-      state.addUserStatus = 'error'
+      state.addUserStatus = 'ERROR'
     })
     builder.addCase(removeUser.pending, (state, action) => {
       state.deletingUserId = action.meta.arg.id
-      state.deleteUserStatus = 'pending'
+      state.deleteUserStatus = 'PENDING'
     })
     builder.addCase(removeUser.fulfilled, (state, action) => {
       const user = action.payload
       state.users = state.users.filter((_user) => _user.id !== user.id)
-      state.deleteUserStatus = 'success'
+      state.deleteUserStatus = 'SUCCESS'
       state.deletingUserId = null
     })
     builder.addCase(removeUser.rejected, (state, action) => {
-      state.deleteUserStatus = 'error'
+      state.deleteUserStatus = 'ERROR'
       state.deletingUserId = null
     })
   },
