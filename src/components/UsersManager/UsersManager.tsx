@@ -10,9 +10,9 @@ type UsersManagerProps = {}
 
 const UsersManager = (props: UsersManagerProps) => {
   const dispatch = useAppDispatch()
-  const fetchUsersStatus = useAppSelector(
-    (state) => state.users.fetchUsersStatus
-  )
+  const fetchUsersStatus = useAppSelector((state) => {
+    return state.users.fetchUsersStatus
+  })
 
   useEffect(() => {
     dispatch(fetchUsers())
