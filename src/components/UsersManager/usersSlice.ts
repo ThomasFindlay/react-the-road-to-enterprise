@@ -88,9 +88,9 @@ export const usersSlice = createSlice({
 
 export const { setUsers, selectUser } = usersSlice.actions
 
-export const usersSelector = usersAdapter.getSelectors<RootState>((state) => {
-  return state.users
-})
+export const usersSelector = usersAdapter.getSelectors<RootState>(
+  (state) => state.users
+)
 
 export const getSelectedUser = (state: RootState) => {
   return state.users.selectedUserId
