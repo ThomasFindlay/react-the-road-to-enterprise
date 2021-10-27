@@ -36,7 +36,9 @@ export const removeUser = createAsyncThunk(
   }
 )
 
-const usersAdapter = createEntityAdapter<User>()
+const usersAdapter = createEntityAdapter<User>({
+  sortComparer: (a, b) => a.email.localeCompare(b.email),
+})
 
 export const usersSlice = createSlice({
   name: 'users',
@@ -98,6 +100,7 @@ export const getSelectedUser = (state: RootState) => {
     : null
 }
 
-export const { selectAll: selectAllUsers } = usersSelector
+export const { selectAll: selectAllUsers, selectTotal: selectTotalUsers } =
+  usersSelector
 
 export default usersSlice.reducer
