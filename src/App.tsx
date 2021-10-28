@@ -15,7 +15,7 @@ function App() {
         <div className="space-x-4 my-8">
           <button
             className="shadow px-4 py-3 bg-blue-100"
-            onClick={() => dispatch(resetUsers(null))}
+            onClick={() => dispatch(resetUsers())}
           >
             Reset users slice
           </button>

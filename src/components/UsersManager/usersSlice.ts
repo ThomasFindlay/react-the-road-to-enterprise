@@ -50,7 +50,7 @@ export const usersSlice = createSlice({
     selectUser: (state, action: PayloadAction<string>) => {
       state.selectedUserId = action.payload
     },
-    resetUsers: (state, action) => {
+    resetUsers: () => {
       return usersAdapter.getInitialState<UsersState>(initialState)
     },
   },
