@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import React, { useState } from 'react'
-import { addUser } from '../usersSlice'
+import React, { useEffect, useState } from 'react'
+import { addUser, useCreateUserMutation } from '../usersSlice'
 
 type AddUsersProps = {}
 
@@ -12,23 +12,30 @@ const initialState = {
 }
 
 const AddUsers = (props: AddUsersProps) => {
-  const dispatch = useAppDispatch()
-  const isAddingUser = useAppSelector(
-    (state) => state.users.addUserStatus === 'PENDING'
-  )
+  // const dispatch = useAppDispatch()
+  // const isAddingUser = useAppSelector(
+  //   (state) => state.users.addUserStatus === 'PENDING'
+  // )
   const [form, setForm] = useState(initialState)
+  const [addUser, { isLoading: isAddingUser, isSuccess: isAddUserSuccess }] =
+    useCreateUserMutation()
 
   const onAddUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (!form.name || !form.email) return
-    await dispatch(
-      addUser({
-        id: createId(),
-        ...form,
-      })
-    )
-    setForm(initialState)
+
+    addUser({
+      id: createId(),
+      ...form,
+    })
+    // setForm(initialState)
   }
+
+  useEffect(() => {
+    if (isAddUserSuccess) {
+      setForm(initialState)
+    }
+  }, [isAddUserSuccess])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((state) => ({
