@@ -1,29 +1,23 @@
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { useEffect } from 'react'
 import Spinner from '../Spinner'
 import AddUsers from './components/AddUsers'
 import DisplayUsers from './components/DisplayUsers'
 import SelectedUserDetails from './components/SelectedUserDetails'
-import { fetchUsers, selectTotalUsers, useFetchUsersQuery } from './usersSlice'
+import { useFetchUsersQuery } from './usersSlice'
 
 type UsersManagerProps = {}
 
 const UsersManager = (props: UsersManagerProps) => {
-  // const dispatch = useAppDispatch()
-  // const fetchUsersStatus = useAppSelector((state) => {
-  //   return state.users.fetchUsersStatus
-  // })
-  // const totalUsers = useAppSelector(selectTotalUsers)
   const {
+    data: users,
     isError: isFetchUsersError,
     isLoading: isFetchUsersPending,
     isSuccess: isFetchUsersSuccess,
   } = useFetchUsersQuery()
-
+  console.log('users', users)
   return (
     <div className="container py-8 mx-auto">
       {isFetchUsersPending ? <Spinner show /> : null}
-      {isFetchUsersSuccess ? (
+      {isFetchUsersSuccess && users?.length ? (
         <div className="grid grid-cols-12 gap-4 px-4">
           <div className="col-span-4">
             <AddUsers />

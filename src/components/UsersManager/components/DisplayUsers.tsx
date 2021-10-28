@@ -11,7 +11,11 @@ type DisplayUsersProps = {}
 const DisplayUsers = (props: DisplayUsersProps) => {
   const dispatch = useAppDispatch()
   const deletingUserId = useAppSelector((state) => state.users.deletingUserId)
-  const { data: users, isSuccess: isFetchUsersSuccess } = useFetchUsersQuery()
+  const {
+    data: users,
+    isSuccess: isFetchUsersSuccess,
+    isFetching: isFetchingUsers,
+  } = useFetchUsersQuery()
   const [removeUser, { isLoading: isRemoveUserPending }] =
     useRemoveUserMutation()
   return (
@@ -38,6 +42,7 @@ const DisplayUsers = (props: DisplayUsersProps) => {
             })
           : null}
       </ul>
+      {isFetchingUsers ? <Spinner show /> : null}
     </div>
   )
 }

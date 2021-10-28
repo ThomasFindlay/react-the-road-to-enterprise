@@ -5,6 +5,7 @@ import {
   PayloadAction,
   createAsyncThunk,
   createEntityAdapter,
+  current,
 } from '@reduxjs/toolkit'
 import { User } from './UsersManager.types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
@@ -47,8 +48,6 @@ export const userApi = createApi({
   }),
   tagTypes: ['Users'],
   endpoints: (builder) => ({
-    // We pass `void` for the args type, as otherwise we get a TypeScript
-    // error that the query hook expects us to provide arguments
     fetchUsers: builder.query<User[], void>({
       query: () => `user/all`,
       transformResponse: (response: { users: User[] }) => {
@@ -56,7 +55,7 @@ export const userApi = createApi({
       },
       providesTags: ['Users'],
     }),
-    createUser: builder.mutation<User, User>({
+    createUser: builder.mutation<{ user: User }, User>({
       query: (user) => ({
         url: `user`,
         method: 'POST',
@@ -64,12 +63,17 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
-    removeUser: builder.mutation<User, User>({
+    removeUser: builder.mutation<boolean, User>({
       query: (user) => ({
         url: `user/${user.id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Users'],
+      onQueryStarted: async (user, { dispatch, queryFulfilled }) => {
+        dispatch(setDeletingUserId(user.id))
+        await queryFulfilled
+        dispatch(setDeletingUserId(null))
+      },
     }),
   }),
 })
@@ -79,60 +83,27 @@ export const {
   useCreateUserMutation,
   useRemoveUserMutation,
 } = userApi
+
 console.log('user api args', userApi)
+
+export const resetUsers = () => userApi.util.resetApiState()
+
+export const initialiseUsersApi = () => userApi.endpoints.fetchUsers.initiate()
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState: usersAdapter.getInitialState<UsersState>(initialState),
   reducers: {
-    // setUsers: (state, action: PayloadAction<User[]>) => {
-    //   usersAdapter.setAll(state, action.payload)
-    // },
     selectUser: (state, action: PayloadAction<string>) => {
       state.selectedUserId = action.payload
     },
-    // resetUsers: (state, action) => {
-    //   return usersAdapter.getInitialState<UsersState>(initialState)
-    // },
+    setDeletingUserId(state, action: PayloadAction<string | null>) {
+      state.deletingUserId = action.payload
+    },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(fetchUsers.pending, (state, action) => {
-  //     state.fetchUsersStatus = 'PENDING'
-  //   })
-  //   builder.addCase(fetchUsers.fulfilled, (state, action) => {
-  //     state.fetchUsersStatus = 'SUCCESS'
-  //     usersAdapter.setAll(state, action.payload)
-  //   })
-  //   builder.addCase(fetchUsers.rejected, (state, action) => {
-  //     state.fetchUsersStatus = 'ERROR'
-  //   })
-  //   builder.addCase(addUser.pending, (state, action) => {
-  //     state.addUserStatus = 'PENDING'
-  //   })
-  //   builder.addCase(addUser.fulfilled, (state, action) => {
-  //     usersAdapter.addOne(state, action.payload.user)
-  //     state.addUserStatus = 'SUCCESS'
-  //   })
-  //   builder.addCase(addUser.rejected, (state, action) => {
-  //     state.addUserStatus = 'ERROR'
-  //   })
-  //   builder.addCase(removeUser.pending, (state, action) => {
-  //     state.deletingUserId = action.meta.arg.id
-  //     state.deleteUserStatus = 'PENDING'
-  //   })
-  //   builder.addCase(removeUser.fulfilled, (state, action) => {
-  //     usersAdapter.removeOne(state, action.payload.id)
-  //     state.deleteUserStatus = 'SUCCESS'
-  //     state.deletingUserId = null
-  //   })
-  //   builder.addCase(removeUser.rejected, (state, action) => {
-  //     state.deleteUserStatus = 'ERROR'
-  //     state.deletingUserId = null
-  //   })
-  // },
 })
 
-export const { selectUser } = usersSlice.actions
+export const { selectUser, setDeletingUserId } = usersSlice.actions
 
 export const usersSelector = usersAdapter.getSelectors<RootState>(
   (state) => state.users
@@ -143,8 +114,5 @@ export const getSelectedUser = (state: RootState) => {
     ? usersSelector.selectById(state, state.users.selectedUserId)
     : null
 }
-
-export const { selectAll: selectAllUsers, selectTotal: selectTotalUsers } =
-  usersSelector
 
 export default usersSlice.reducer
