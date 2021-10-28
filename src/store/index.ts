@@ -12,11 +12,12 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import usersReducer from '@/components/UsersManager/usersSlice'
-
+import { counterReducer } from './counterSlice'
 export const resetStore = createAction('resetStore')
 
 const rootReducer = combineReducers({
   users: usersReducer,
+  counter: counterReducer,
 })
 
 const appReducer: typeof rootReducer = (state, action) => {

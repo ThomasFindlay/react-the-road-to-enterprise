@@ -42,7 +42,6 @@ export const getUser = async (
   if (!email) throw new Error('Please provide email.')
   await sleep()
   const users = await readUsers()
-  console.log('users', users)
   const user = users.find((user) => user.email === email)
   return {
     user,
