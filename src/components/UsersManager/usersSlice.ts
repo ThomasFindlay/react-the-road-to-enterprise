@@ -1,45 +1,18 @@
 import { listUsers, createUser, deleteUser } from '@/api/userApi'
 import { RootState } from '@/store'
-import {
-  createSlice,
-  PayloadAction,
-  createAsyncThunk,
-  createEntityAdapter,
-} from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User } from './UsersManager.types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-type ApiStatus = 'IDLE' | 'PENDING' | 'SUCCESS' | 'ERROR'
-
 export type UsersState = {
   selectedUserId: User['id'] | null
-  fetchUsersStatus: ApiStatus
-  addUserStatus: ApiStatus
-  deleteUserStatus: ApiStatus
   deletingUserId: User['id'] | null
 }
 
 const initialState: UsersState = {
   selectedUserId: null,
-  fetchUsersStatus: 'IDLE',
-  addUserStatus: 'IDLE',
-  deleteUserStatus: 'IDLE',
   deletingUserId: null,
 }
-
-export const fetchUsers = createAsyncThunk('users/fetchUsers', listUsers)
-export const addUser = createAsyncThunk('users/addUser', createUser)
-export const removeUser = createAsyncThunk(
-  'users/removeUser',
-  async (userData: User) => {
-    await deleteUser(userData.id)
-    return userData
-  }
-)
-
-const usersAdapter = createEntityAdapter<User>({
-  sortComparer: (a, b) => a.email.localeCompare(b.email),
-})
 
 export const userApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -89,7 +62,7 @@ export const initialiseUsersApi = () => userApi.endpoints.fetchUsers.initiate()
 
 export const usersSlice = createSlice({
   name: 'users',
-  initialState: usersAdapter.getInitialState<UsersState>(initialState),
+  initialState,
   reducers: {
     selectUser: (state, action: PayloadAction<string>) => {
       state.selectedUserId = action.payload
@@ -102,13 +75,9 @@ export const usersSlice = createSlice({
 
 export const { selectUser, setDeletingUserId } = usersSlice.actions
 
-export const usersSelector = usersAdapter.getSelectors<RootState>(
-  (state) => state.users
-)
-
-export const getSelectedUser = (state: RootState) => {
-  return state.users.selectedUserId
-    ? usersSelector.selectById(state, state.users.selectedUserId)
+export const getSelectedUser = (users?: User[]) => (state: RootState) => {
+  return users && state.users.selectedUserId
+    ? users.find((user) => user.id === state.users.selectedUserId)
     : null
 }
 

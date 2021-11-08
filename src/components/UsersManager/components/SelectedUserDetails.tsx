@@ -1,10 +1,11 @@
 import { useAppSelector } from '@/store/hooks'
-import { getSelectedUser } from '../usersSlice'
+import { getSelectedUser, useFetchUsersQuery } from '../usersSlice'
 
 type SelectedUserDetailsProps = {}
 
 const SelectedUserDetails = (props: SelectedUserDetailsProps) => {
-  const selectedUser = useAppSelector(getSelectedUser)
+  const { data: users } = useFetchUsersQuery()
+  const selectedUser = useAppSelector(getSelectedUser(users))
   return (
     <div>
       <h2 className="font-semibold text-xl mb-4">Selected User Details</h2>
