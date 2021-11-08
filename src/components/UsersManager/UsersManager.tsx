@@ -13,7 +13,7 @@ const UsersManager = (props: UsersManagerProps) => {
     isLoading: isFetchUsersPending,
     isSuccess: isFetchUsersSuccess,
   } = useFetchUsersQuery()
-  console.log('users', users)
+
   return (
     <div className="container py-8 mx-auto">
       {isFetchUsersPending ? <Spinner show /> : null}

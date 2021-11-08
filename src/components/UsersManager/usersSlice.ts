@@ -5,7 +5,6 @@ import {
   PayloadAction,
   createAsyncThunk,
   createEntityAdapter,
-  current,
 } from '@reduxjs/toolkit'
 import { User } from './UsersManager.types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
@@ -83,8 +82,6 @@ export const {
   useCreateUserMutation,
   useRemoveUserMutation,
 } = userApi
-
-console.log('user api args', userApi)
 
 export const resetUsers = () => userApi.util.resetApiState()
 
