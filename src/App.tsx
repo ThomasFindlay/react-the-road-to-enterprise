@@ -1,7 +1,8 @@
 import './App.css'
 import UsersManager from './components/UsersManager/UsersManager'
 import {
-  resetUsers,
+  resetUsersSlice,
+  resetUsersApiSlice,
   initialiseUsersApi,
 } from './components/UsersManager/usersSlice'
 import { resetStore } from './store'
@@ -17,9 +18,12 @@ function App() {
         <div className="space-x-4 my-8">
           <button
             className="shadow px-4 py-3 bg-blue-100"
-            onClick={() => dispatch(resetUsers())}
+            onClick={() => {
+              dispatch(resetUsersSlice())
+              dispatch(resetUsersApiSlice())
+            }}
           >
-            Reset users API
+            Reset users slice
           </button>
           <button
             className="shadow px-4 py-3 bg-blue-100"

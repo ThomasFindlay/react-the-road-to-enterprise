@@ -66,11 +66,6 @@ export const {
   useRemoveUserMutation,
 } = userApiSlice
 
-export const resetUsers = () => userApiSlice.util.resetApiState()
-
-export const initialiseUsersApi = () =>
-  userApiSlice.endpoints.fetchUsers.initiate()
-
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -78,13 +73,22 @@ export const usersSlice = createSlice({
     selectUser: (state, action: PayloadAction<string>) => {
       state.selectedUserId = action.payload
     },
-    setDeletingUserId(state, action: PayloadAction<string | null>) {
+    setDeletingUserId: (state, action: PayloadAction<string | null>) => {
       state.deletingUserId = action.payload
+    },
+    resetUsersSlice: () => {
+      return initialState
     },
   },
 })
 
-export const { selectUser, setDeletingUserId } = usersSlice.actions
+export const resetUsersApiSlice = () => userApiSlice.util.resetApiState()
+
+export const initialiseUsersApi = () =>
+  userApiSlice.endpoints.fetchUsers.initiate()
+
+export const { selectUser, setDeletingUserId, resetUsersSlice } =
+  usersSlice.actions
 
 export const getSelectedUser = (users?: User[]) => (state: RootState) => {
   return users && state.users.selectedUserId
