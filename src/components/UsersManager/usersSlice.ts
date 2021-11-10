@@ -14,7 +14,7 @@ const initialState: UsersState = {
   deletingUserId: null,
 }
 
-export const userApi = createApi({
+export const userApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:4000/api/',
   }),
@@ -43,6 +43,16 @@ export const userApi = createApi({
       invalidatesTags: ['Users'],
       onQueryStarted: async (user, { dispatch, queryFulfilled }) => {
         dispatch(setDeletingUserId(user.id))
+        // const patchResult = dispatch(
+        //   userApiSlice.util.updateQueryData('fetchUsers', undefined, (draftUsers) =>
+        //     draftUsers.filter((_user) => _user.id !== user.id)
+        //   )
+        // )
+        // try {
+        //   await queryFulfilled
+        // } catch {
+        //   patchResult.undo()
+        // }
         await queryFulfilled
         dispatch(setDeletingUserId(null))
       },
@@ -54,11 +64,12 @@ export const {
   useFetchUsersQuery,
   useCreateUserMutation,
   useRemoveUserMutation,
-} = userApi
+} = userApiSlice
 
-export const resetUsers = () => userApi.util.resetApiState()
+export const resetUsers = () => userApiSlice.util.resetApiState()
 
-export const initialiseUsersApi = () => userApi.endpoints.fetchUsers.initiate()
+export const initialiseUsersApi = () =>
+  userApiSlice.endpoints.fetchUsers.initiate()
 
 export const usersSlice = createSlice({
   name: 'users',

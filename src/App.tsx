@@ -19,7 +19,7 @@ function App() {
             className="shadow px-4 py-3 bg-blue-100"
             onClick={() => dispatch(resetUsers())}
           >
-            Reset users slice
+            Reset users API
           </button>
           <button
             className="shadow px-4 py-3 bg-blue-100"

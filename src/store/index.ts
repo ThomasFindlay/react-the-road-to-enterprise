@@ -11,13 +11,15 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import usersReducer, { userApi } from '@/components/UsersManager/usersSlice'
+import usersReducer, {
+  userApiSlice,
+} from '@/components/UsersManager/usersSlice'
 
 export const resetStore = createAction('resetStore')
 
 const rootReducer = combineReducers({
   users: usersReducer,
-  [userApi.reducerPath]: userApi.reducer,
+  [userApiSlice.reducerPath]: userApiSlice.reducer,
 })
 
 const appReducer: typeof rootReducer = (state, action) => {
@@ -43,7 +45,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApi.middleware),
+    }).concat(userApiSlice.middleware),
 })
 
 export const persistor = persistStore(store)
