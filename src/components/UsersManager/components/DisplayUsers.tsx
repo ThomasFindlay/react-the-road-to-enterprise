@@ -14,7 +14,7 @@ const DisplayUsers = (props: DisplayUsersProps) => {
   const {
     data: users,
     isSuccess: isFetchUsersSuccess,
-    isFetching: isFetchingUsers,
+    isLoading: isLoadingUsers,
   } = useFetchUsersQuery()
   const [removeUser, { isLoading: isRemoveUserPending }] =
     useRemoveUserMutation()
@@ -42,7 +42,7 @@ const DisplayUsers = (props: DisplayUsersProps) => {
             })
           : null}
       </ul>
-      {isFetchingUsers ? <Spinner show /> : null}
+      {isLoadingUsers ? <Spinner show /> : null}
     </div>
   )
 }

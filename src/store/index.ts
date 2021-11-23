@@ -12,14 +12,14 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import usersReducer, {
-  userApiSlice,
+  usersApiSlice,
 } from '@/components/UsersManager/usersSlice'
 
 export const resetStore = createAction('resetStore')
 
 const rootReducer = combineReducers({
   users: usersReducer,
-  [userApiSlice.reducerPath]: userApiSlice.reducer,
+  [usersApiSlice.reducerPath]: usersApiSlice.reducer,
 })
 
 const appReducer: typeof rootReducer = (state, action) => {
@@ -34,6 +34,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
+  blacklist: [usersApiSlice.reducerPath],
 }
 
 const persistedReducer = persistReducer(persistConfig, appReducer)
@@ -45,7 +46,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApiSlice.middleware),
+    }).concat(usersApiSlice.middleware),
 })
 
 export const persistor = persistStore(store)

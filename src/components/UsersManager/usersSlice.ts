@@ -1,4 +1,3 @@
-import { listUsers, createUser, deleteUser } from '@/api/userApi'
 import { RootState } from '@/store'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User } from './UsersManager.types'
@@ -14,9 +13,12 @@ const initialState: UsersState = {
   deletingUserId: null,
 }
 
-export const userApiSlice = createApi({
+export const usersApiSlice = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4000/api/',
+    baseUrl:
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4000/api/'
+        : '/api/',
   }),
   tagTypes: ['Users'],
   endpoints: (builder) => ({
@@ -44,7 +46,7 @@ export const userApiSlice = createApi({
       onQueryStarted: async (user, { dispatch, queryFulfilled }) => {
         dispatch(setDeletingUserId(user.id))
         // const patchResult = dispatch(
-        //   userApiSlice.util.updateQueryData('fetchUsers', undefined, (draftUsers) =>
+        //   usersApiSlice.util.updateQueryData('fetchUsers', undefined, (draftUsers) =>
         //     draftUsers.filter((_user) => _user.id !== user.id)
         //   )
         // )
@@ -64,7 +66,7 @@ export const {
   useFetchUsersQuery,
   useCreateUserMutation,
   useRemoveUserMutation,
-} = userApiSlice
+} = usersApiSlice
 
 export const usersSlice = createSlice({
   name: 'users',
@@ -82,10 +84,10 @@ export const usersSlice = createSlice({
   },
 })
 
-export const resetUsersApiSlice = () => userApiSlice.util.resetApiState()
+export const resetUsersApiSlice = () => usersApiSlice.util.resetApiState()
 
 export const initialiseUsersApi = () =>
-  userApiSlice.endpoints.fetchUsers.initiate()
+  usersApiSlice.endpoints.fetchUsers.initiate()
 
 export const { selectUser, setDeletingUserId, resetUsersSlice } =
   usersSlice.actions
