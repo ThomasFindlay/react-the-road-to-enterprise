@@ -45,16 +45,6 @@ export const usersApiSlice = createApi({
       invalidatesTags: ['Users'],
       onQueryStarted: async (user, { dispatch, queryFulfilled }) => {
         dispatch(setDeletingUserId(user.id))
-        // const patchResult = dispatch(
-        //   usersApiSlice.util.updateQueryData('fetchUsers', undefined, (draftUsers) =>
-        //     draftUsers.filter((_user) => _user.id !== user.id)
-        //   )
-        // )
-        // try {
-        //   await queryFulfilled
-        // } catch {
-        //   patchResult.undo()
-        // }
         await queryFulfilled
         dispatch(setDeletingUserId(null))
       },
