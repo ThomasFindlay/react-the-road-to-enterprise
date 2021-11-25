@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc -p -w tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run clean && tsc-watch --onSuccess \"node build/src/index.js\" --noClear",
+    "clean": "rimraf build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/pino": "^6.3.11",
+    "fastify": "^3.20.2",
+    "fastify-cors": "^6.0.2",
+    "nanoid": "^3.1.25",
+    "pino": "^6.13.2",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.6",
+    "concurrently": "^6.2.1",
+    "tsc-watch": "^4.5.0",
+    "typescript": "^4.4.2"
+  }
+}
