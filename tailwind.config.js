@@ -12,6 +12,7 @@ module.exports = {
       },
     },
     colors: {
+      transparent: 'transparent',
       ...colors,
     },
   },

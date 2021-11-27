@@ -15,6 +15,7 @@
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "react": "^17.0.2",
+    "react-datetime-picker": "^3.4.3",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1",
@@ -79,7 +80,7 @@
     "stylelint-config-recommended": "^5.0.0",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-scss": "^3.19.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "typescript": "^4.3.2"
   }
 }
