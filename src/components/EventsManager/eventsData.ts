@@ -2,7 +2,8 @@ import type { Event } from './eventTypes'
 
 export const createEventDate = (days = 10, hours = 0) => {
   let date = new Date()
-  date.setDate(date.getDate() + days)
+  let day = date.getDate() + days
+  date.setDate(day)
   date.setHours(date.getHours() + hours)
   return new Intl.DateTimeFormat().format(date)
 }
@@ -35,9 +36,9 @@ export const events: Event[] = [
   {
     id: '4',
     title: 'Board Games Night',
-    startDate: createEventDate(-5),
+    startDate: createEventDate(-15),
     startTime: '20:00',
-    endDate: createEventDate(-5, 3),
+    endDate: createEventDate(-15, 3),
     endTime: '23:00',
   },
 ]

@@ -8,9 +8,9 @@ import { useEventsStore, usePastEventsStore } from './eventsStore'
 interface EventsManagerProps {}
 
 const EventsManager = (props: EventsManagerProps) => {
-  const events = useEventsStore()
-  const pastEvents = usePastEventsStore()
-  console.log('ev', events, pastEvents)
+  // const events = useEventsStore()
+  // const pastEvents = usePastEventsStore()
+  // console.log('ev', events, pastEvents)
 
   useEffect(() => {
     // setTimeout(() => {

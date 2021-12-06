@@ -19,7 +19,7 @@ const EventDetails = (props: EventDetailsProps) => {
           <li>End Time: {event.endTime}</li>
         </ul>
       ) : (
-        <p>Select a user to see more details</p>
+        <p>Select an event to see more details</p>
       )}
     </div>
   )

@@ -8,7 +8,7 @@ import { devtools } from 'zustand/middleware'
 import { events } from './eventsData'
 import type { Event } from './eventTypes'
 
-type EventsState = {
+export type EventsState = {
   events: typeof events
   selectedEvent: Event['id']
   selectEvent: (id: string) => void
@@ -41,7 +41,7 @@ export const useEventsStore = create<
   )
 )
 
-type PastEventsState = {
+export type PastEventsState = {
   events: typeof events
 }
 
@@ -65,7 +65,11 @@ useEventsStore.subscribe(
   (state) => state.events,
   (events) => {
     const pastEvents = events.filter((event) => {
-      return new Date(event.startDate).getTime() < new Date().getTime()
+      const [day, month, year] = event.startDate
+        .split('/')
+        .map((item) => parseInt(item))
+
+      return new Date(year, month - 1, day) < new Date()
     })
     usePastEventsStore.setState({
       events: pastEvents,

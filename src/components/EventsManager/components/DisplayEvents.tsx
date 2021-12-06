@@ -1,6 +1,11 @@
-import { useEventsStore, usePastEventsStore } from '../eventsStore'
+import {
+  EventsState,
+  PastEventsState,
+  useEventsStore,
+  usePastEventsStore,
+} from '../eventsStore'
 import shallow from 'zustand/shallow'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import EventsTabs, { EventTab } from './EventsTabs'
 import type { Event } from '../eventTypes'
 import clsx from 'clsx'
@@ -15,24 +20,32 @@ const pick = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
   return picked
 }
 
+const pastEventsSelector = (state: PastEventsState) => state.events
+
 const DisplayEvents = (props: DisplayEventsProps) => {
-  const [eventsToShow, setEventsToShow] = useState<EventTab>('upcoming')
-  const { allEvents, upcomingEvents, selectEvent } = useEventsStore(
-    (state) => ({
+  const [eventsToShow, setEventsToShow] = useState<EventTab>('past')
+  const { allEvents, selectEvent } = useEventsStore(
+    (state: EventsState) => ({
       allEvents: state.events,
-      upcomingEvents: state.events.filter(
-        (event) => new Date(event.startDate).getTime() > Date.now()
-      ),
       selectEvent: state.selectEvent,
     }),
     shallow
   )
-  const pastEvents = usePastEventsStore((state) => state.events)
-
+  const upcomingEvents = useEventsStore((state) => {
+    return state.events.filter((event) => {
+      const [day, month, year] = event.endDate
+        .split('/')
+        .map((item) => parseInt(item))
+      return new Date(year, month - 1, day) > new Date()
+    })
+  }, shallow)
+  const pastEvents = usePastEventsStore(pastEventsSelector)
+  console.log('display events re-rendered')
   // const { events, selectEvent } = useEventsStore(
   //   (state) => pick(state, 'events', 'selectEvent'),
   //   shallow
   // )
+
   const eventsMap: Record<EventTab, Event[]> = {
     all: allEvents,
     past: pastEvents,
@@ -40,6 +53,8 @@ const DisplayEvents = (props: DisplayEventsProps) => {
   }
 
   const events = eventsMap[eventsToShow]
+
+  console.log('event to show', eventsToShow)
 
   return (
     <div>
@@ -55,7 +70,7 @@ const DisplayEvents = (props: DisplayEventsProps) => {
                       className="hover:underline"
                       onClick={() => selectEvent(event.id)}
                     >
-                      {event.title}
+                      {event.title} - {event.startDate}
                     </button>
                   </li>
                 )
