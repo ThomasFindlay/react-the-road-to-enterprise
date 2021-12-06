@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useEventsStore } from '../eventsStore'
-import { Event } from '../eventTypes'
+import { Event } from '../eventsTypes'
 
 type CreateEventProps = {}
 

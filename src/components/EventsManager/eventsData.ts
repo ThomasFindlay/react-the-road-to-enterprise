@@ -1,4 +1,4 @@
-import type { Event } from './eventTypes'
+import type { Event } from './eventsTypes'
 
 export const createEventDate = (days = 10, hours = 0) => {
   let date = new Date()

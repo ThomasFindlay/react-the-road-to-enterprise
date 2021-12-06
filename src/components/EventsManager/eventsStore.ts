@@ -6,7 +6,7 @@ import {
 } from 'zustand/middleware'
 import { devtools } from 'zustand/middleware'
 import { events } from './eventsData'
-import type { Event } from './eventTypes'
+import type { Event } from './eventsTypes'
 
 export type EventsState = {
   events: typeof events

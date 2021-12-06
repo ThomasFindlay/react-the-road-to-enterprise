@@ -5,10 +5,9 @@ import {
   usePastEventsStore,
 } from '../eventsStore'
 import shallow from 'zustand/shallow'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import EventsTabs, { EventTab } from './EventsTabs'
-import type { Event } from '../eventTypes'
-import clsx from 'clsx'
+import type { Event } from '../eventsTypes'
 type DisplayEventsProps = {}
 
 const pick = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
@@ -21,7 +20,14 @@ const pick = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
 }
 
 const pastEventsSelector = (state: PastEventsState) => state.events
-
+const upcomingEventsSelector = (state: EventsState) => {
+  return state.events.filter((event) => {
+    const [day, month, year] = event.endDate
+      .split('/')
+      .map((item) => parseInt(item))
+    return new Date(year, month - 1, day) > new Date()
+  })
+}
 const DisplayEvents = (props: DisplayEventsProps) => {
   const [eventsToShow, setEventsToShow] = useState<EventTab>('past')
   const { allEvents, selectEvent } = useEventsStore(
@@ -31,14 +37,7 @@ const DisplayEvents = (props: DisplayEventsProps) => {
     }),
     shallow
   )
-  const upcomingEvents = useEventsStore((state) => {
-    return state.events.filter((event) => {
-      const [day, month, year] = event.endDate
-        .split('/')
-        .map((item) => parseInt(item))
-      return new Date(year, month - 1, day) > new Date()
-    })
-  }, shallow)
+  const upcomingEvents = useEventsStore(upcomingEventsSelector, shallow)
   const pastEvents = usePastEventsStore(pastEventsSelector)
   console.log('display events re-rendered')
   // const { events, selectEvent } = useEventsStore(
