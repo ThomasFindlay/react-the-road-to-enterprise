@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useEventsStore } from '../eventsStore'
 import { Event } from '../eventsTypes'
 
@@ -17,6 +17,7 @@ const initialState: Omit<Event, 'id'> = {
 const CreateEvent = (props: CreateEventProps) => {
   const [form, setForm] = useState(initialState)
   const createEvent = useEventsStore((state) => state.createEvent)
+
   const onCreateEvent = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (
