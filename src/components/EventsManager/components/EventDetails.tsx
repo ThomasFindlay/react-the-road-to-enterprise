@@ -9,14 +9,6 @@ const EventDetails = (props: EventDetailsProps) => {
 
   return (
     <div>
-      {/* <ul className="text-left">
-          <li>ID: {event.id}</li>
-          <li>Title: {event.title}</li>
-          <li>Start Date: {event.startDate}</li>
-          <li>Start Time: {event.startTime}</li>
-          <li>End Date: {event.endDate}</li>
-          <li>End Time: {event.endTime}</li>
-        </ul> */}
       <h2 className="font-semibold text-xl mb-6">Selected Event Details</h2>
       {event ? (
         <div className="rounded shadow-md overflow-hidden text-left">
