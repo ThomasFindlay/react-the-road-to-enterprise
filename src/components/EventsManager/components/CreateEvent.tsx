@@ -44,7 +44,7 @@ const CreateEvent = (props: CreateEventProps) => {
 
   return (
     <div>
-      <h2 className="font-semibold text-xl mb-4">Create event</h2>
+      <h2 className="font-semibold text-xl mb-6">Create event</h2>
       <form className="space-y-3">
         <div className="flex flex-col items-stretch text-left space-y-2">
           <label className="font-semibold" htmlFor="title">

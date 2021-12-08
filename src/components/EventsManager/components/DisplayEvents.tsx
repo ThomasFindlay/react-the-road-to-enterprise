@@ -29,7 +29,7 @@ const upcomingEventsSelector = (state: EventsState) => {
   })
 }
 const DisplayEvents = (props: DisplayEventsProps) => {
-  const [eventsToShow, setEventsToShow] = useState<EventTab>('past')
+  const [eventsToShow, setEventsToShow] = useState<EventTab>('all')
   const { allEvents, selectEvent } = useEventsStore(
     (state: EventsState) => ({
       allEvents: state.events,
@@ -53,20 +53,18 @@ const DisplayEvents = (props: DisplayEventsProps) => {
 
   const events = eventsMap[eventsToShow]
 
-  console.log('event to show', eventsToShow)
-
   return (
     <div>
-      <h2 className="font-semibold text-xl mb-4">Events</h2>
+      <h2 className="font-semibold text-xl mb-6">Events</h2>
       <EventsTabs activeTab={eventsToShow} setActiveTab={setEventsToShow} />
       <div className="mt-4">
-        <ul className="space-y-3 text-left">
+        <ul className="text-left shadow py-4 space-y-3 divide-y">
           {Array.isArray(events)
             ? events.map((event) => {
                 return (
-                  <li key={event.id} className="space-x-3">
+                  <li key={event.id} className="-mt-3">
                     <button
-                      className="hover:underline"
+                      className="hover:underline pt-3 px-4"
                       onClick={() => selectEvent(event.id)}
                     >
                       {event.title} - {event.startDate}
