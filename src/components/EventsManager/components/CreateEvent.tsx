@@ -33,6 +33,7 @@ const CreateEvent = (props: CreateEventProps) => {
       id: createId(),
       ...form,
     })
+    setForm(initialState)
   }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
