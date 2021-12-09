@@ -3,9 +3,10 @@ import { useEventsStore } from '../eventsStore'
 type EventDetailsProps = {}
 
 const EventDetails = (props: EventDetailsProps) => {
-  const event = useEventsStore((state) =>
-    state.events.find((event) => event.id === state.selectedEvent)
-  )
+  const event = useEventsStore((state) => {
+    if (!state.selectedEvent) return
+    return state.events.find((event) => event.id === state.selectedEvent)
+  })
 
   return (
     <div>
