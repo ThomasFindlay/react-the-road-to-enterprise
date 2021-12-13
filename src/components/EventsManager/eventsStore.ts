@@ -65,11 +65,14 @@ useEventsStore.subscribe(
   (state) => state.events,
   (events) => {
     const pastEvents = events.filter((event) => {
-      const [day, month, year] = event.startDate
+      const [day, month, year] = event.endDate
         .split('/')
         .map((item) => parseInt(item))
-
-      return new Date(year, month - 1, day) < new Date()
+      const [hour, minute] = event.endTime.split(':')
+      return (
+        new Date(year, month - 1, day, parseInt(hour), parseInt(minute)) <
+        new Date()
+      )
     })
     usePastEventsStore.setState({
       events: pastEvents,
