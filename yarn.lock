@@ -6615,6 +6615,11 @@
   "resolved" "https://registry.npmjs.org/ignore/-/ignore-5.1.8.tgz"
   "version" "5.1.8"
 
+"immer@^9.0.7":
+  "integrity" "sha512-KGllzpbamZDvOIxnmJ0jI840g7Oikx58lBPWV0hUh7dtAyZpFqqrBZdKka5GlTwMTZ1Tjc/bKKW4VSFAt6BqMA=="
+  "resolved" "https://registry.npmjs.org/immer/-/immer-9.0.7.tgz"
+  "version" "9.0.7"
+
 "immer@8.0.1":
   "integrity" "sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA=="
   "resolved" "https://registry.npmjs.org/immer/-/immer-8.0.1.tgz"
