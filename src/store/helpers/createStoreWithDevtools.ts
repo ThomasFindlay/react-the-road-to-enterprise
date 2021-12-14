@@ -1,6 +1,5 @@
 import create, { GetState, SetState, State, StateCreator } from 'zustand'
 import { devtools, StoreApiWithDevtools } from 'zustand/middleware'
-import { ZustandDevtoolsOptions } from '../types'
 
 export const createStoreWithDevtools = <TState extends State>(
   fn: StateCreator<
@@ -9,7 +8,7 @@ export const createStoreWithDevtools = <TState extends State>(
     GetState<TState>,
     StoreApiWithDevtools<TState>
   >,
-  options?: ZustandDevtoolsOptions
+  options?: Parameters<typeof devtools>[1]
 ) => {
   return create(devtools(fn, options))
 }

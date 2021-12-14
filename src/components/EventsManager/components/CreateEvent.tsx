@@ -14,6 +14,10 @@ const initialState: Omit<Event, 'id'> = {
   endTime: '',
 }
 
+const formatDate = (date: string) => {
+  return date.split('-').reverse().join('/')
+}
+
 const CreateEvent = (props: CreateEventProps) => {
   const [form, setForm] = useState(initialState)
   const createEvent = useEventsStore((state) => state.createEvent)
@@ -30,8 +34,10 @@ const CreateEvent = (props: CreateEventProps) => {
       return
 
     createEvent({
-      id: createId(),
       ...form,
+      id: createId(),
+      startDate: formatDate(form.startDate),
+      endDate: formatDate(form.endDate),
     })
     setForm(initialState)
   }

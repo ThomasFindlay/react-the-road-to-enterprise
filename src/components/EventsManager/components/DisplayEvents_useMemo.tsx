@@ -1,14 +1,33 @@
-import { pick } from '@/helpers'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import shallow from 'zustand/shallow'
-import {
-  EventsState,
-  useEventsStore,
-  useUpcomingAndPastEventsStore,
-} from '../eventsStore'
+import { EventsState, useEventsStore } from '../eventsStore'
 import type { Event } from '../eventsTypes'
 import EventsTabs, { EventTab } from './EventsTabs'
+
 type DisplayEventsProps = {}
+
+const pastAndUpcomingEventsSelector = (events: Event[]) => {
+  const upcomingEvents: Event[] = []
+  const pastEvents: Event[] = []
+  for (const event of events) {
+    const [day, month, year] = event.endDate
+      .split('/')
+      .map((item) => parseInt(item))
+    const [hour, minute] = event.endTime.split(':')
+    const isUpcoming =
+      new Date(year, month - 1, day, parseInt(hour), parseInt(minute)) >
+      new Date()
+    if (isUpcoming) {
+      upcomingEvents.push(event)
+    } else {
+      pastEvents.push(event)
+    }
+  }
+  return {
+    upcomingEvents,
+    pastEvents,
+  }
+}
 
 const DisplayEvents = (props: DisplayEventsProps) => {
   const [eventsToShow, setEventsToShow] = useState<EventTab>('all')
@@ -20,9 +39,9 @@ const DisplayEvents = (props: DisplayEventsProps) => {
     shallow
   )
 
-  const { upcomingEvents, pastEvents } = useUpcomingAndPastEventsStore(
-    (state) => pick(state, 'upcomingEvents', 'pastEvents'),
-    shallow
+  const { upcomingEvents, pastEvents } = useMemo(
+    () => pastAndUpcomingEventsSelector(allEvents),
+    [allEvents]
   )
 
   const eventsMap: Record<EventTab, Event[]> = {

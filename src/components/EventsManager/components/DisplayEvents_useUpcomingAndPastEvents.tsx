@@ -1,15 +1,46 @@
-import { pick } from '@/helpers'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import shallow from 'zustand/shallow'
-import {
-  EventsState,
-  useEventsStore,
-  useUpcomingAndPastEventsStore,
-} from '../eventsStore'
+import { EventsState, useEventsStore } from '../eventsStore'
 import type { Event } from '../eventsTypes'
 import EventsTabs, { EventTab } from './EventsTabs'
+
 type DisplayEventsProps = {}
 
+const pastAndUpcomingEventsSelector = (events: Event[]) => {
+  const upcomingEvents: Event[] = []
+  const pastEvents: Event[] = []
+  for (const event of events) {
+    const [day, month, year] = event.endDate
+      .split('/')
+      .map((item) => parseInt(item))
+    const [hour, minute] = event.endTime.split(':')
+    const isUpcoming =
+      new Date(year, month - 1, day, parseInt(hour), parseInt(minute)) >
+      new Date()
+    if (isUpcoming) {
+      upcomingEvents.push(event)
+    } else {
+      pastEvents.push(event)
+    }
+  }
+  return {
+    upcomingEvents,
+    pastEvents,
+  }
+}
+
+const useUpcomingAndPastEvents = (events: Event[]) => {
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([])
+  const [pastEvents, setPastEvents] = useState<Event[]>([])
+
+  useEffect(() => {
+    const { upcomingEvents, pastEvents } = pastAndUpcomingEventsSelector(events)
+    setUpcomingEvents(upcomingEvents)
+    setPastEvents(pastEvents)
+  }, [events])
+
+  return { upcomingEvents, pastEvents, setUpcomingEvents, setPastEvents }
+}
 const DisplayEvents = (props: DisplayEventsProps) => {
   const [eventsToShow, setEventsToShow] = useState<EventTab>('all')
   const { allEvents, selectEvent } = useEventsStore(
@@ -20,10 +51,7 @@ const DisplayEvents = (props: DisplayEventsProps) => {
     shallow
   )
 
-  const { upcomingEvents, pastEvents } = useUpcomingAndPastEventsStore(
-    (state) => pick(state, 'upcomingEvents', 'pastEvents'),
-    shallow
-  )
+  const { upcomingEvents, pastEvents } = useUpcomingAndPastEvents(allEvents)
 
   const eventsMap: Record<EventTab, Event[]> = {
     all: allEvents,

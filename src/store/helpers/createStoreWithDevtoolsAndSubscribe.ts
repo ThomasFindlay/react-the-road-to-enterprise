@@ -5,16 +5,15 @@ import {
   StoreApiWithSubscribeWithSelector,
   subscribeWithSelector,
 } from 'zustand/middleware'
-import { ZustandDevtoolsOptions } from '../types'
 
-export const createStoreWithDevtoolsAndSubscribe = <TState extends object>(
+export const createStoreWithDevtoolsAndSubscribe = <TState extends State>(
   fn: StateCreator<
     TState,
     SetState<TState>,
     GetState<TState>,
     StoreApiWithSubscribeWithSelector<TState> & StoreApiWithDevtools<TState>
   >,
-  options?: ZustandDevtoolsOptions
+  options?: Parameters<typeof devtools>[1]
 ) => {
   return create(devtools(subscribeWithSelector(fn), options))
 }

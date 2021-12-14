@@ -29,6 +29,7 @@ export const useEventsStore = create<
         set({ selectedEvent: id })
       },
       createEvent: (event) => {
+        console.log('create event', event)
         set((state) => ({
           events: [...state.events, event],
         }))
@@ -42,10 +43,11 @@ export const useEventsStore = create<
 )
 
 export type PastEventsState = {
-  events: typeof events
+  pastEvents: typeof events
+  upcomingEvents: typeof events
 }
 
-export const usePastEventsStore = create<
+export const useUpcomingAndPastEventsStore = create<
   PastEventsState,
   SetState<PastEventsState>,
   GetState<PastEventsState>,
@@ -53,10 +55,11 @@ export const usePastEventsStore = create<
 >(
   devtools(
     (set) => ({
-      events: [],
+      pastEvents: [],
+      upcomingEvents: [],
     }),
     {
-      name: 'PastEvents',
+      name: 'UpcomingAndPastEvents',
     }
   )
 )
@@ -64,18 +67,27 @@ export const usePastEventsStore = create<
 useEventsStore.subscribe(
   (state) => state.events,
   (events) => {
-    const pastEvents = events.filter((event) => {
+    const upcomingEvents: Event[] = []
+    const pastEvents: Event[] = []
+    for (const event of events) {
       const [day, month, year] = event.endDate
         .split('/')
         .map((item) => parseInt(item))
       const [hour, minute] = event.endTime.split(':')
-      return (
-        new Date(year, month - 1, day, parseInt(hour), parseInt(minute)) <
+      const isUpcoming =
+        new Date(year, month - 1, day, parseInt(hour), parseInt(minute)) >
         new Date()
-      )
-    })
-    usePastEventsStore.setState({
-      events: pastEvents,
+
+      if (isUpcoming) {
+        upcomingEvents.push(event)
+      } else {
+        pastEvents.push(event)
+      }
+    }
+
+    useUpcomingAndPastEventsStore.setState({
+      pastEvents,
+      upcomingEvents,
     })
   },
   { fireImmediately: true }
