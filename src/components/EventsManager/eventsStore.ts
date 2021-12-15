@@ -1,3 +1,4 @@
+import { withImmer } from '@/store/middleware/withImmer'
 import create, { GetState, SetState } from 'zustand'
 import {
   StoreApiWithDevtools,
@@ -23,19 +24,20 @@ export const useEventsStore = create<
     StoreApiWithDevtools<EventsState>
 >(
   devtools(
-    subscribeWithSelector((set) => ({
-      events: [...events],
-      selectEvent: (id: string) => {
-        set({ selectedEvent: id })
-      },
-      createEvent: (event) => {
-        console.log('create event', event)
-        set((state) => ({
-          events: [...state.events, event],
-        }))
-      },
-      selectedEvent: '',
-    })),
+    subscribeWithSelector(
+      withImmer((set) => ({
+        events: [...events],
+        selectEvent: (id: string) => {
+          set({ selectedEvent: id })
+        },
+        createEvent: (event) => {
+          set((state) => {
+            state.events.push(event)
+          })
+        },
+        selectedEvent: '',
+      }))
+    ),
     {
       name: 'Events',
     }
