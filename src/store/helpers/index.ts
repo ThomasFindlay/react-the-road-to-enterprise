@@ -1,2 +1,4 @@
-export { createStoreWithDevtools } from './createStoreWithDevtools'
-export { createStoreWithDevtoolsAndSubscribe } from './createStoreWithDevtoolsAndSubscribe'
+export { createStore } from './createStore'
+export { createStoreWithSubscribe } from './createStoreWithSubscribe'
+export { createStoreWithPersist } from './createStoreWithPersist'
+export { createStoreWithPersistAndSubscribe } from './createStoreWithPersistAndSubscribe'

@@ -1,11 +1,7 @@
-import { withImmer } from '@/store/middleware/withImmer'
-import create, { GetState, SetState } from 'zustand'
 import {
-  StoreApiWithDevtools,
-  StoreApiWithSubscribeWithSelector,
-  subscribeWithSelector,
-} from 'zustand/middleware'
-import { devtools } from 'zustand/middleware'
+  createStoreWithPersist,
+  createStoreWithPersistAndSubscribe,
+} from '@/store/helpers'
 import { events } from './eventsData'
 import type { Event } from './eventsTypes'
 
@@ -16,32 +12,25 @@ export type EventsState = {
   createEvent: (event: Event) => void
 }
 
-export const useEventsStore = create<
-  EventsState,
-  SetState<EventsState>,
-  GetState<EventsState>,
-  StoreApiWithSubscribeWithSelector<EventsState> &
-    StoreApiWithDevtools<EventsState>
->(
-  devtools(
-    subscribeWithSelector(
-      withImmer((set) => ({
-        events: [...events],
-        selectEvent: (id: string) => {
-          set({ selectedEvent: id })
-        },
-        createEvent: (event) => {
-          set((state) => {
-            state.events.push(event)
-          })
-        },
-        selectedEvent: '',
-      }))
-    ),
-    {
-      name: 'Events',
-    }
-  )
+export const useEventsStore = createStoreWithPersistAndSubscribe<EventsState>(
+  (set) => ({
+    events: [...events],
+    selectEvent: (id: string) => {
+      set({ selectedEvent: id })
+    },
+    createEvent: (event) => {
+      set((state) => {
+        state.events.push(event)
+      })
+    },
+    selectedEvent: '',
+  }),
+  {
+    name: 'STORAGE_Events',
+  },
+  {
+    name: 'Events',
+  }
 )
 
 export type UpcomingAndPastEventsState = {
@@ -49,22 +38,19 @@ export type UpcomingAndPastEventsState = {
   upcomingEvents: typeof events
 }
 
-export const useUpcomingAndPastEventsStore = create<
-  UpcomingAndPastEventsState,
-  SetState<UpcomingAndPastEventsState>,
-  GetState<UpcomingAndPastEventsState>,
-  StoreApiWithDevtools<UpcomingAndPastEventsState>
->(
-  devtools(
+export const useUpcomingAndPastEventsStore =
+  createStoreWithPersist<UpcomingAndPastEventsState>(
     (set) => ({
       pastEvents: [],
       upcomingEvents: [],
     }),
     {
+      name: 'STORAGE_UpcomingAndPastEvents',
+    },
+    {
       name: 'UpcomingAndPastEvents',
     }
   )
-)
 
 useEventsStore.subscribe(
   (state) => state.events,

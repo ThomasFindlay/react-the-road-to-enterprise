@@ -1,11 +1,4 @@
-import {
-  GetState,
-  PartialState,
-  SetState,
-  State,
-  StateCreator,
-  StoreApi,
-} from 'zustand'
+import { GetState, SetState, State, StateCreator, StoreApi } from 'zustand'
 import { produce, Draft } from 'immer'
 
 export const withImmer =
