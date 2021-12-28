@@ -50,7 +50,13 @@ const events = [
 
 type Event = typeof events[0]
 
-fs.writeFile(eventsFilePath, JSON.stringify(events), 'utf-8')
+fs.writeFile(
+  eventsFilePath,
+  JSON.stringify({
+    events,
+  }),
+  'utf-8'
+)
 
 const sleep = (time = 1000) =>
   new Promise((resolve) => setTimeout(resolve, time))
@@ -102,6 +108,14 @@ const getEventsByCursor = async (cursor: number, limit: number) => {
     events,
     nextCursor: endIndex < eventsData.events.length - 1 ? endIndex + 1 : null,
   }
+}
+
+export const getAllEvents = async (
+  request: FastifyRequest<GetEvents>,
+  reply: FastifyReply
+) => {
+  await sleep()
+  return await readEvents()
 }
 
 export const getEvents = async (

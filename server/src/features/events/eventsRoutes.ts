@@ -5,6 +5,7 @@ import {
 } from 'fastify'
 import {
   getEvents,
+  getAllEvents,
   getTopEvents,
   createEvent,
   resetEvents,
@@ -15,8 +16,9 @@ function eventsRoutes(
   opts: FastifyPluginOptions,
   done: HookHandlerDoneFunction
 ) {
-  fastify.get('/top_quotes', getTopEvents)
+  fastify.get('/top_events', getTopEvents)
   fastify.get('/', getEvents)
+  fastify.get('/all', getAllEvents)
   fastify.post('/', createEvent)
   fastify.post('/reset', resetEvents)
   done()
