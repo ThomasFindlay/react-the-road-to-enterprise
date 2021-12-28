@@ -15,6 +15,9 @@ function routes(
   fastify.register(import('./features/user/userRoutes'), {
     prefix: '/user',
   })
+  fastify.register(import('./features/events/eventsRoutes'), {
+    prefix: '/events',
+  })
   done()
 }
 

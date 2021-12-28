@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
   "scripts": {
-    "start": "craco start",
+    "start": "concurrently \"craco start\" \"cd server && npm run start\"",
     "build": "craco build",
     "test:unit": "craco test",
     "test:e2e:open": "start-server-and-test start http-get://localhost:3000 cypress:open",
