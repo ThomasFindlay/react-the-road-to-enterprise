@@ -1,9 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { nanoid } from 'nanoid'
-import eventsJSON from './events.json'
 import fs from 'fs/promises'
 import path from 'path'
 // Force ts to copy events to the build folder
+import eventsJSON from './events.json'
 const eventsFilePath = path.resolve(__dirname, './events.json')
 
 const createEventDate = (days = 10, hours = 0) => {
@@ -50,7 +49,9 @@ const events = [
 ]
 
 type Event = typeof events[0]
+
 fs.writeFile(eventsFilePath, JSON.stringify(events), 'utf-8')
+
 const sleep = (time = 1000) =>
   new Promise((resolve) => setTimeout(resolve, time))
 
