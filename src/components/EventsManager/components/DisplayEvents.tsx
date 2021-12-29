@@ -1,29 +1,17 @@
-import { pick } from '@/helpers'
 import { useState } from 'react'
-import shallow from 'zustand/shallow'
-import {
-  EventsState,
-  useEventsStore,
-  useUpcomingAndPastEventsStore,
-} from '../eventsStore'
 import type { Event } from '../eventsTypes'
 import EventsTabs, { EventTab } from './EventsTabs'
 type DisplayEventsProps = {}
 
 const DisplayEvents = (props: DisplayEventsProps) => {
   const [eventsToShow, setEventsToShow] = useState<EventTab>('all')
-  const { allEvents, selectEvent } = useEventsStore(
-    (state: EventsState) => ({
-      allEvents: state.events,
-      selectEvent: state.selectEvent,
-    }),
-    shallow
-  )
+  const allEvents: Event[] = []
+  const selectEvent = (id: string) => {}
 
-  const { upcomingEvents, pastEvents } = useUpcomingAndPastEventsStore(
-    (state) => pick(state, 'upcomingEvents', 'pastEvents'),
-    shallow
-  )
+  const { upcomingEvents, pastEvents } = {
+    upcomingEvents: [],
+    pastEvents: [],
+  }
 
   const eventsMap: Record<EventTab, Event[]> = {
     all: allEvents,
