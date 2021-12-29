@@ -1,5 +1,4 @@
 import { atom } from 'jotai'
-
 import { events } from './eventsData'
 import { Event } from './eventsTypes'
 
