@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useEventsStore } from '../eventsStore'
+import { useAtom } from 'jotai'
+import { createEventAtom } from '../eventsAtoms'
 import { Event } from '../eventsTypes'
 
 type CreateEventProps = {}
@@ -20,7 +21,7 @@ const formatDate = (date: string) => {
 
 const CreateEvent = (props: CreateEventProps) => {
   const [form, setForm] = useState(initialState)
-  const createEvent = useEventsStore((state) => state.createEvent)
+  const [, createEvent] = useAtom(createEventAtom)
 
   const onCreateEvent = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()

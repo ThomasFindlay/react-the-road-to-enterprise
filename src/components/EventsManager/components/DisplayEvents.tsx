@@ -1,29 +1,20 @@
 import { pick } from '@/helpers'
 import { useState } from 'react'
-import shallow from 'zustand/shallow'
+import { useAtom } from 'jotai'
 import {
-  EventsState,
-  useEventsStore,
-  useUpcomingAndPastEventsStore,
-} from '../eventsStore'
+  eventsAtom,
+  selectEventAtom,
+  upcomingAndPastEventsAtom,
+} from '../eventsAtoms'
 import type { Event } from '../eventsTypes'
 import EventsTabs, { EventTab } from './EventsTabs'
 type DisplayEventsProps = {}
 
 const DisplayEvents = (props: DisplayEventsProps) => {
   const [eventsToShow, setEventsToShow] = useState<EventTab>('all')
-  const { allEvents, selectEvent } = useEventsStore(
-    (state: EventsState) => ({
-      allEvents: state.events,
-      selectEvent: state.selectEvent,
-    }),
-    shallow
-  )
-
-  const { upcomingEvents, pastEvents } = useUpcomingAndPastEventsStore(
-    (state) => pick(state, 'upcomingEvents', 'pastEvents'),
-    shallow
-  )
+  const [allEvents] = useAtom(eventsAtom)
+  const [, selectEvent] = useAtom(selectEventAtom)
+  const [{ upcomingEvents, pastEvents }] = useAtom(upcomingAndPastEventsAtom)
 
   const eventsMap: Record<EventTab, Event[]> = {
     all: allEvents,
