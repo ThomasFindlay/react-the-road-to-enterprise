@@ -1,12 +1,10 @@
-import { useEventsStore } from '../eventsStore'
+import { useAtom } from 'jotai'
+import { selectedEventAtom } from '../eventsAtoms'
 
 type EventDetailsProps = {}
 
 const EventDetails = (props: EventDetailsProps) => {
-  const event = useEventsStore((state) => {
-    if (!state.selectedEvent) return
-    return state.events.find((event) => event.id === state.selectedEvent)
-  })
+  const [event] = useAtom(selectedEventAtom)
 
   return (
     <div>
