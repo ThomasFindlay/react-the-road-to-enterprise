@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import shallow from 'zustand/shallow'
 import { EventsState, useEventsStore } from '../eventsStore'
 import type { Event } from '../eventsTypes'
 import EventsTabs, { EventTab } from './EventsTabs'
@@ -57,12 +56,7 @@ const DisplayEvents = (props: DisplayEventsProps) => {
     pastEvents = [],
   } = eventsData || {}
 
-  const { selectEvent } = useEventsStore(
-    (state: EventsState) => ({
-      selectEvent: state.selectEvent,
-    }),
-    shallow
-  )
+  const selectEvent = useEventsStore((state: EventsState) => state.selectEvent)
 
   const eventsMap: Record<EventTab, Event[]> = {
     all: allEvents,
