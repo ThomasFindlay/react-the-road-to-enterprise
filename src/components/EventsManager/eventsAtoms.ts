@@ -26,14 +26,18 @@ const getUpcomingAndPastEvents = (events: Event[]) => {
   }
 }
 
+// Events array state
 export const eventsAtom = atom(events)
 
+// Add a new event to the events array
 export const createEventAtom = atom(null, (get, set, event: Event) => {
   set(eventsAtom, [...get(eventsAtom), event])
 })
 
+// Store the currently selected event ID
 export const selectedEventIdAtom = atom<Event['id'] | null>(null)
 
+// Return the selected event based on the selectedEventIdAtom
 export const selectedEventAtom = atom((get) => {
   const selectedEventId = get(selectedEventIdAtom)
   if (!selectedEventId) return
@@ -42,6 +46,7 @@ export const selectedEventAtom = atom((get) => {
   })
 })
 
+// Update the selectedEventIdAtom with the currently selected event ID
 export const selectEventAtom = atom(
   null,
   (get, set, eventId: Event['id'] | null) => {
@@ -49,6 +54,7 @@ export const selectEventAtom = atom(
   }
 )
 
+// Derive upcoming and past events from the eventsAtom
 export const upcomingAndPastEventsAtom = atom((get) => {
   return getUpcomingAndPastEvents(get(eventsAtom))
 })
