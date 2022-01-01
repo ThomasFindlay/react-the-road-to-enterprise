@@ -2,7 +2,12 @@ import { useStepper } from '@/hooks/useStepper'
 import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import AccountInformation from './components/steps/AccountInformation'
+import ActivityLevel from './components/steps/ActivityLevel'
 import PersonalDetails from './components/steps/PersonalDetails'
+import BodyDetails from './components/steps/bodyDetails/BodyDetails'
+import YourGoal from './components/steps/YourGoal'
+import TargetWeight from './components/steps/TargetWeight'
+
 type OnboardingProps = {}
 /**
  * Onboading
@@ -32,6 +37,7 @@ type OnboardingProps = {}
  *
  * How tall are you?
  * - cm, feet/inches
+ *
  * How much do you weight?
  * - kg, st/lbs,
  *
@@ -39,16 +45,18 @@ type OnboardingProps = {}
  *  - kg, st,lbs (Depending on what was selected for the goal, the target should be lower than current weight for lose weight, or higher for gain weight)
  */
 
-const MAX_STEPS = 5
+const MAX_STEPS = 6
 
 type HeightInCm = {
   unit: 'cm'
-  value: number
+  value?: {
+    cm: number
+  }
 }
 
 type HeightInFeet = {
   unit: 'feet/inches'
-  value: {
+  value?: {
     feet: number
     inches: number
   }
@@ -56,12 +64,14 @@ type HeightInFeet = {
 
 type WeightInKg = {
   unit: 'kg'
-  value: number
+  value?: {
+    kg: number
+  }
 }
 
 type WeightInSt = {
   unit: 'st/lbs'
-  value: {
+  value?: {
     st: number
     lbs: number
   }
@@ -73,27 +83,35 @@ type OnboardingFormData = {
   name: string
   dateOfBirth: string
   gender: 'male' | 'female'
-  weightGoal: 'Maintain' | 'Lose' | 'Gain'
-  activityLevel: 'Not very active' | 'Lightly active' | 'Active' | 'Very active'
+  weightGoal: 'maintain-weight' | 'lose-weight' | 'gain-weight'
+  activityLevel: 'not-very-active' | 'lightly-active' | 'active' | 'very-active'
   height: HeightInCm | HeightInFeet
   weight: WeightInKg | WeightInSt
   targetWeight: WeightInKg['value'] | WeightInSt['value']
 }
 
-const initialState = {
+const initialState: Partial<OnboardingFormData> = {
   email: 'test@gmail.com',
   password: 'password',
   name: 'Thomas',
+  height: {
+    unit: 'cm',
+  },
+  weight: {
+    unit: 'kg',
+  },
 }
 
 const Onboarding = (props: OnboardingProps) => {
-  const { step, nextStep, prevStep } = useStepper(1, MAX_STEPS)
-  const methods = useForm<OnboardingFormData>({ defaultValues: initialState })
+  const { step, nextStep, prevStep } = useStepper(6, MAX_STEPS)
+  const methods = useForm<OnboardingFormData>({
+    mode: 'onBlur',
+    defaultValues: initialState,
+  })
+
   const onSubmit: SubmitHandler<OnboardingFormData> = (data) => {
     console.log('on submit', data)
   }
-
-  console.log('form re-render', methods)
 
   const onNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -110,6 +128,10 @@ const Onboarding = (props: OnboardingProps) => {
         >
           {step === 1 ? <AccountInformation /> : null}
           {step === 2 ? <PersonalDetails /> : null}
+          {step === 3 ? <YourGoal /> : null}
+          {step === 4 ? <ActivityLevel /> : null}
+          {step === 5 ? <BodyDetails /> : null}
+          {step === 6 ? <TargetWeight /> : null}
 
           <div className="flex justify-between mt-6">
             <button

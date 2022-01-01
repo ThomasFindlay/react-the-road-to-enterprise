@@ -16,19 +16,6 @@ const PersonalDetails = (props: PersonalDetailsProps) => {
         {...register('dateOfBirth')}
       />
 
-      {/* <div className="flex flex-col items-start w-full space-y-2">
-        <label htmlFor="gender">Gender</label>
-        <select
-          id="gender"
-          className="shadow-sm outline-none block rounded-md border border-gray-300 w-full px-3 py-2  focus:ring-indigo-500 focus:border-indigo-500"
-          {...register('gender')}
-        >
-          <option value="">Choose option</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-      </div> */}
-
       <Select
         id="gender"
         label="Gender"
