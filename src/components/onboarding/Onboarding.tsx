@@ -2,6 +2,7 @@ import { useStepper } from '@/hooks/useStepper'
 import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import AccountInformation from './components/steps/AccountInformation'
+import PersonalDetails from './components/steps/PersonalDetails'
 type OnboardingProps = {}
 /**
  * Onboading
@@ -25,7 +26,7 @@ type OnboardingProps = {}
  *
  * How active are you?
  *  - Not very active
- *  - Lightly Active
+ *  - Lightly active
  *  - Active
  *  - Very active
  *
@@ -40,14 +41,54 @@ type OnboardingProps = {}
 
 const MAX_STEPS = 5
 
+type HeightInCm = {
+  unit: 'cm'
+  value: number
+}
+
+type HeightInFeet = {
+  unit: 'feet/inches'
+  value: {
+    feet: number
+    inches: number
+  }
+}
+
+type WeightInKg = {
+  unit: 'kg'
+  value: number
+}
+
+type WeightInSt = {
+  unit: 'st/lbs'
+  value: {
+    st: number
+    lbs: number
+  }
+}
+
 type OnboardingFormData = {
-  name: string
   email: string
+  password: string
+  name: string
+  dateOfBirth: string
+  gender: 'male' | 'female'
+  weightGoal: 'Maintain' | 'Lose' | 'Gain'
+  activityLevel: 'Not very active' | 'Lightly active' | 'Active' | 'Very active'
+  height: HeightInCm | HeightInFeet
+  weight: WeightInKg | WeightInSt
+  targetWeight: WeightInKg['value'] | WeightInSt['value']
+}
+
+const initialState = {
+  email: 'test@gmail.com',
+  password: 'password',
+  name: 'Thomas',
 }
 
 const Onboarding = (props: OnboardingProps) => {
   const { step, nextStep, prevStep } = useStepper(1, MAX_STEPS)
-  const methods = useForm<OnboardingFormData>()
+  const methods = useForm<OnboardingFormData>({ defaultValues: initialState })
   const onSubmit: SubmitHandler<OnboardingFormData> = (data) => {
     console.log('on submit', data)
   }
@@ -67,7 +108,8 @@ const Onboarding = (props: OnboardingProps) => {
           className="w-1/2 shadow bg-white border border-coolGray-200 p-6 mx-auto my-4"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <AccountInformation />
+          {step === 1 ? <AccountInformation /> : null}
+          {step === 2 ? <PersonalDetails /> : null}
 
           <div className="flex justify-between mt-6">
             <button

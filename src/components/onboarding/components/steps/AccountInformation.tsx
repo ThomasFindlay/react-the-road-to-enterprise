@@ -7,8 +7,8 @@ const AccountInformation = (props: AccountInformationProps) => {
   const { register } = useFormContext()
   return (
     <div className="space-y-4">
-      <Input id="name" label="Name" {...register('name')} />
       <Input id="email" label="Email" {...register('email')} />
+      <Input id="password" label="Password" {...register('password')} />
     </div>
   )
 }
