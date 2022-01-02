@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^2.8.5",
     "@tailwindcss/forms": "^0.3.3",
     "axios": "^0.21.1",
+    "clsx": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.22.5",
