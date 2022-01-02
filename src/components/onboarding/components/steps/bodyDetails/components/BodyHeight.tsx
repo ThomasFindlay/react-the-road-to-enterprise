@@ -38,7 +38,7 @@ const BodyHeight = (props: BodyHeightProps) => {
             }
           }}
           error={!!errors.height?.value.cm}
-          errorMessage={errors.height?.value.cm.message}
+          errorMessage={errors.height?.value?.cm?.message}
         />
       ) : (
         <div className="flex gap-4">
@@ -52,6 +52,8 @@ const BodyHeight = (props: BodyHeightProps) => {
               setValue('height.value.feet', e.target.value)
             }}
             ref={(ref) => ref && register('height.value.feet')}
+            error={!!errors.height?.value?.feet}
+            errorMessage={errors.height?.value?.feet?.message}
           />
           <Input
             id="height-inches"
@@ -64,6 +66,8 @@ const BodyHeight = (props: BodyHeightProps) => {
               setValue('height.value.inches', e.target.value)
             }}
             ref={(ref) => ref && register('height.value.inches')}
+            error={!!errors.height?.value?.inches}
+            errorMessage={errors.height?.value?.inches?.message}
           />
         </div>
       )}

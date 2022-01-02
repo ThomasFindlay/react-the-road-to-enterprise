@@ -1,5 +1,5 @@
 import React from 'react'
-
+import clsx from 'clsx'
 type InputProps = {
   label?: string
   labelProps?: React.DetailedHTMLProps<
@@ -26,11 +26,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </label>
         ) : null}
         <input
-          className="shadow-sm outline-none block rounded-md border border-gray-300 w-full px-3 py-2  focus:ring-indigo-500 focus:border-indigo-500"
+          className={clsx(
+            'shadow-sm outline-none block rounded-md border border-gray-300 w-full px-3 py-2  focus:ring-indigo-500 focus:border-indigo-500',
+            error && 'border-red-400'
+          )}
           ref={ref}
           id={id}
           {...inputProps}
         />
+        {error ? <span className="text-red-500">{errorMessage}</span> : null}
       </div>
     )
   }
