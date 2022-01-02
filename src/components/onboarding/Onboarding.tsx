@@ -7,7 +7,8 @@ import PersonalDetails from './components/steps/PersonalDetails'
 import BodyDetails from './components/steps/bodyDetails/BodyDetails'
 import YourGoal from './components/steps/YourGoal'
 import TargetWeight from './components/steps/TargetWeight'
-
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 type OnboardingProps = {}
 /**
  * Onboading
@@ -91,9 +92,9 @@ type OnboardingFormData = {
 }
 
 const initialState: Partial<OnboardingFormData> = {
-  email: 'test@gmail.com',
-  password: 'password',
-  name: 'Thomas',
+  // email: 'test@gmail.com',
+  // password: 'password',
+  // name: 'Thomas',
   height: {
     unit: 'cm',
   },
@@ -102,17 +103,67 @@ const initialState: Partial<OnboardingFormData> = {
   },
 }
 
+const schema = z.object({
+  email: z.string().nonempty({ message: 'Required' }),
+  password: z.string().nonempty({ message: 'Required' }),
+  name: z.string().nonempty({ message: 'Required' }),
+  dateOfBirth: z.string().nonempty({ message: 'Required' }),
+  gender: z.enum(['male', 'female']),
+  weightGoal: z.enum(['maintain-weight', 'lose-weight', 'gain-weight']),
+  activityLevel: z.enum([
+    'not-very-active',
+    'lightly-active',
+    'active',
+    'very-active',
+  ]),
+  height:
+    // .object({
+    //   unit: z.enum(['cm', 'feet/inches']),
+    //   value: z.object({
+    //     cm: z.string(),
+    //     feet: z.string(),
+    //     inches: z.string(),
+    //   }),
+    // })
+    // z.union([
+    //   z.object({
+    //     unit: z.literal('cm'),
+    //     value: z.object({
+    //       cm: z.string(),
+    //     }),
+    //   }),
+    //   z.object({
+    //     unit: z.literal('feet/inches'),
+    //     value: z.object({
+    //       feet: z.string(),
+    //       inches: z.string(),
+    //     }),
+    //   }),
+    // ]),
+    z.object({
+      unit: z.enum(['cm', 'feet/inches']),
+      value: z.union([
+        z.object({
+          cm: z.string(),
+        }),
+        z.object({
+          feet: z.string(),
+          inches: z.string(),
+        }),
+      ]),
+    }),
+})
+
 const Onboarding = (props: OnboardingProps) => {
-  const { step, nextStep, prevStep } = useStepper(6, MAX_STEPS)
+  const { step, nextStep, prevStep } = useStepper(5, MAX_STEPS)
   const methods = useForm<OnboardingFormData>({
     mode: 'onBlur',
     defaultValues: initialState,
+    resolver: zodResolver(schema),
   })
-
   const onSubmit: SubmitHandler<OnboardingFormData> = (data) => {
     console.log('on submit', data)
   }
-
   const onNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     nextStep()
