@@ -78,39 +78,18 @@ type WeightInSt = {
   }
 }
 
-type OnboardingFormData = {
-  email: string
-  password: string
-  name: string
-  dateOfBirth: string
-  gender: 'male' | 'female'
-  weightGoal: 'maintain-weight' | 'lose-weight' | 'gain-weight'
-  activityLevel: 'not-very-active' | 'lightly-active' | 'active' | 'very-active'
-  height: HeightInCm | HeightInFeet
-  weight: WeightInKg | WeightInSt
-  targetWeight: Pick<WeightInKg, 'value'> | Pick<WeightInSt, 'value'>
-}
-
-const initialState: Partial<OnboardingFormData> = {
-  // name: 'Hello',
-  height: {
-    unit: 'cm',
-    // value: {
-    //   cm: 188,
-    // },
-  },
-  weight: {
-    unit: 'kg',
-    // value: {
-    //   st: 15,
-    //   lbs: 10,
-    // },
-  },
-  // targetWeight: {
-  //   st: 25,
-  //   lbs: 15,
-  // },
-}
+// export type OnboardingFormData = {
+//   email: string
+//   password: string
+//   name: string
+//   dateOfBirth: string
+//   gender: 'male' | 'female'
+//   weightGoal: 'maintain-weight' | 'lose-weight' | 'gain-weight'
+//   activityLevel: 'not-very-active' | 'lightly-active' | 'active' | 'very-active'
+//   height: HeightInCm | HeightInFeet
+//   weight: WeightInKg | WeightInSt
+//   targetWeight: Pick<WeightInKg, 'value'> | Pick<WeightInSt, 'value'>
+// }
 
 const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
   if (issue.code === z.ZodIssueCode.invalid_enum_value) {
@@ -238,6 +217,35 @@ const schema = z.object({
     ]),
   }),
 })
+
+export type OnboardingFormData = z.infer<typeof schema>
+
+type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>
+}
+
+// type T = OnboardingFormData['targetWeight']['value']['kg']
+const initialState: DeepPartial<OnboardingFormData> = {
+  // name: 'Hello',
+  weightGoal: 'gain-weight',
+  height: {
+    unit: 'cm',
+    // value: {
+    //   cm: 188,
+    // },
+  },
+  weight: {
+    unit: 'kg',
+    // value: {
+    //   st: 15,
+    //   lbs: 10,
+    // },
+  },
+  // targetWeight: {
+  //   st: 25,
+  //   lbs: 15,
+  // },
+}
 
 const Onboarding = (props: OnboardingProps) => {
   const { step, nextStep, prevStep } = useStepper(6, MAX_STEPS)
