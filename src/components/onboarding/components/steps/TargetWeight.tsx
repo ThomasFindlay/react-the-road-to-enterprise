@@ -4,7 +4,12 @@ import { useFormContext } from 'react-hook-form'
 type TargetWeightProps = {}
 
 const TargetWeight = (props: TargetWeightProps) => {
-  const { register, watch } = useFormContext()
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext()
+
   const weightUnit = watch('weight.unit')
 
   return (
@@ -14,19 +19,33 @@ const TargetWeight = (props: TargetWeightProps) => {
         <Input
           id="weight"
           label="Kilograms"
-          {...register('targetWeight.value.kg')}
+          {...register('targetWeight.value.kg', {
+            valueAsNumber: true,
+          })}
+          error={!!errors.targetWeight?.kg}
+          errorMessage={errors.targetWeight?.kg?.message}
         />
       ) : (
         <div className="flex gap-4">
           <Input
             id="weight-feet"
             label="Stones"
-            {...register('targetWeight.value.st')}
+            type="number"
+            {...register('targetWeight.st', {
+              valueAsNumber: true,
+            })}
+            error={!!errors.targetWeight?.st}
+            errorMessage={errors.targetWeight?.st?.message}
           />
           <Input
             id="weight-inches"
             label="Pounds"
-            {...register('targetWeight.value.lbs')}
+            type="number"
+            {...register('targetWeight.lbs', {
+              valueAsNumber: true,
+            })}
+            error={!!errors.targetWeight?.lbs}
+            errorMessage={errors.targetWeight?.lbs?.message}
           />
         </div>
       )}

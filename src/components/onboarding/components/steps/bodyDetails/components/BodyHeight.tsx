@@ -1,5 +1,4 @@
 import Input from '@/components/common/form/Input'
-import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
 type BodyHeightProps = {}
@@ -9,14 +8,11 @@ const BodyHeight = (props: BodyHeightProps) => {
     register,
     watch,
     formState: { errors },
-    trigger,
     setValue,
     clearErrors,
   } = useFormContext()
   const heightUnit = watch('height.unit')
-  console.log('height errors', errors)
-  const heightValue = watch('height.value')
-  console.log('hei val', heightValue)
+
   return (
     <div className="space-y-4">
       <h2>What's your height?</h2>
@@ -25,19 +21,11 @@ const BodyHeight = (props: BodyHeightProps) => {
         <Input
           id="height"
           label="Centimiters"
-          name="height.value.cm"
-          onBlur={(e) => {
-            trigger('height.value.cm')
-          }}
-          onChange={(e) => {
-            setValue('height.value.cm', e.target.value)
-          }}
-          ref={(ref) => {
-            if (ref) {
-              register('height.value.cm')
-            }
-          }}
-          error={!!errors.height?.value.cm}
+          type="number"
+          {...register('height.value.cm', {
+            valueAsNumber: true,
+          })}
+          error={!!errors.height?.value?.cm}
           errorMessage={errors.height?.value?.cm?.message}
         />
       ) : (
@@ -45,27 +33,20 @@ const BodyHeight = (props: BodyHeightProps) => {
           <Input
             id="height-feet"
             label="Feet"
-            onBlur={() => {
-              trigger('height.value.feet')
-            }}
-            onChange={(e) => {
-              setValue('height.value.feet', e.target.value)
-            }}
-            ref={(ref) => ref && register('height.value.feet')}
+            type="number"
+            {...register('height.value.feet', {
+              valueAsNumber: true,
+            })}
             error={!!errors.height?.value?.feet}
             errorMessage={errors.height?.value?.feet?.message}
           />
           <Input
             id="height-inches"
             label="Inches"
-            {...register('height.value.inches')}
-            onBlur={(e) => {
-              trigger('height.value.inches')
-            }}
-            onChange={(e) => {
-              setValue('height.value.inches', e.target.value)
-            }}
-            ref={(ref) => ref && register('height.value.inches')}
+            type="number"
+            {...register('height.value.inches', {
+              valueAsNumber: true,
+            })}
             error={!!errors.height?.value?.inches}
             errorMessage={errors.height?.value?.inches?.message}
           />
@@ -81,7 +62,6 @@ const BodyHeight = (props: BodyHeightProps) => {
             value="cm"
             {...register('height.unit')}
             onChange={(e) => {
-              console.log('clear errors!')
               setValue('height.unit', e.target.value)
               clearErrors(['height.value.feet', 'height.value.inches'])
             }}

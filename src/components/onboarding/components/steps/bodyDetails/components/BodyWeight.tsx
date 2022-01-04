@@ -4,26 +4,50 @@ import { useFormContext } from 'react-hook-form'
 type BodyWeightProps = {}
 
 const BodyWeight = (props: BodyWeightProps) => {
-  const { register, watch } = useFormContext()
+  const {
+    register,
+    watch,
+    formState: { errors },
+    setValue,
+    clearErrors,
+  } = useFormContext()
   const weightUnit = watch('weight.unit')
-
   return (
     <div className="space-y-4">
       <h2>What's your weight?</h2>
 
       {weightUnit === 'kg' ? (
-        <Input id="weight" label="Kilograms" {...register('weight.value.kg')} />
+        <Input
+          id="weight"
+          label="Kilograms"
+          type="number"
+          {...register('weight.value.kg', {
+            valueAsNumber: true,
+          })}
+          error={!!errors.weight?.value.kg}
+          errorMessage={errors.weight?.value?.kg?.message}
+        />
       ) : (
         <div className="flex gap-4">
           <Input
             id="weight-feet"
             label="Stones"
-            {...register('weight.value.st')}
+            type="number"
+            {...register('weight.value.st', {
+              valueAsNumber: true,
+            })}
+            error={!!errors.weight?.value?.st}
+            errorMessage={errors.weight?.value?.st?.message}
           />
           <Input
             id="weight-inches"
             label="Pounds"
-            {...register('weight.value.lbs')}
+            type="number"
+            {...register('weight.value.lbs', {
+              valueAsNumber: true,
+            })}
+            error={!!errors.weight?.value?.lbs}
+            errorMessage={errors.weight?.value?.lbs?.message}
           />
         </div>
       )}
@@ -36,6 +60,10 @@ const BodyWeight = (props: BodyWeightProps) => {
             type="radio"
             value="kg"
             {...register('weight.unit')}
+            onChange={(e) => {
+              setValue('weight.unit', e.target.value)
+              clearErrors(['weight.value.st', 'weight.value.lbs'])
+            }}
           />
           kg
         </label>
@@ -46,6 +74,10 @@ const BodyWeight = (props: BodyWeightProps) => {
             type="radio"
             value="st/lbs"
             {...register('weight.unit')}
+            onChange={(e) => {
+              setValue('weight.unit', e.target.value)
+              clearErrors(['weight.value.kg'])
+            }}
           />
           st/lbs
         </label>

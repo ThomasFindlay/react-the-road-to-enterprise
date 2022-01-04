@@ -92,22 +92,63 @@ type OnboardingFormData = {
 }
 
 const initialState: Partial<OnboardingFormData> = {
-  // email: 'test@gmail.com',
-  // password: 'password',
-  // name: 'Thomas',
+  // name: 'Hello',
   height: {
     unit: 'cm',
+    // value: {
+    //   cm: 188,
+    // },
   },
   weight: {
     unit: 'kg',
+    // value: {
+    //   st: 15,
+    //   lbs: 10,
+    // },
   },
+  // targetWeight: {
+  //   st: 25,
+  //   lbs: 15,
+  // },
 }
 
+const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
+  if (issue.code === z.ZodIssueCode.invalid_enum_value) {
+    return {
+      message: 'Select one of the options.',
+    }
+  }
+  return {
+    message: ctx.defaultError,
+  }
+}
+
+z.setErrorMap(customErrorMap)
+
 const schema = z.object({
-  email: z.string().nonempty({ message: 'Required' }),
-  password: z.string().nonempty({ message: 'Required' }),
-  name: z.string().nonempty({ message: 'Required' }),
-  dateOfBirth: z.string().nonempty({ message: 'Required' }),
+  email: z
+    .string({ required_error: 'Please enter your email' })
+    .email({
+      message: 'Invalid email address',
+    })
+    .min(1),
+  password: z
+    .string({
+      required_error: 'Please enter password',
+    })
+    .min(8, {
+      message: 'Password must have at least 8 characters',
+    }),
+  name: z
+    .string({
+      required_error: 'Please enter your name',
+    })
+    .min(1),
+  dateOfBirth: z
+    .string({
+      required_error: 'Please enter your date of birth.',
+    })
+    .min(1),
   gender: z.enum(['male', 'female']),
   weightGoal: z.enum(['maintain-weight', 'lose-weight', 'gain-weight']),
   activityLevel: z.enum([
@@ -116,48 +157,87 @@ const schema = z.object({
     'active',
     'very-active',
   ]),
-  height:
-    // .object({
-    //   unit: z.enum(['cm', 'feet/inches']),
-    //   value: z.object({
-    //     cm: z.string(),
-    //     feet: z.string(),
-    //     inches: z.string(),
-    //   }),
-    // })
-    // z.union([
-    //   z.object({
-    //     unit: z.literal('cm'),
-    //     value: z.object({
-    //       cm: z.string(),
-    //     }),
-    //   }),
-    //   z.object({
-    //     unit: z.literal('feet/inches'),
-    //     value: z.object({
-    //       feet: z.string(),
-    //       inches: z.string(),
-    //     }),
-    //   }),
-    // ]),
-    z.object({
-      unit: z.enum(['cm', 'feet/inches']),
-      value: z.union([
-        z.object({
-          cm: z.string(),
-        }),
-        z.object({
-          feet: z.string(),
-          inches: z.string(),
-        }),
-      ]),
-    }),
+  height: z.object({
+    unit: z.enum(['cm', 'feet/inches']),
+    value: z.union([
+      z.object({
+        cm: z
+          .number({
+            required_error: 'Please provide centimiters',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+      }),
+      z.object({
+        feet: z
+          .number({
+            required_error: 'Please provide feet',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+        inches: z
+          .number({
+            required_error: 'Please provide inches',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+      }),
+    ]),
+  }),
+  weight: z.object({
+    unit: z.enum(['kg', 'st/lbs']),
+    value: z.union([
+      z.object({
+        kg: z
+          .number({
+            required_error: 'Please provide kilograms',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+      }),
+      z.object({
+        st: z
+          .number({
+            required_error: 'Please provide stones',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+        lbs: z
+          .number({
+            required_error: 'Please provide pounds',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+      }),
+    ]),
+  }),
+  targetWeight: z.object({
+    value: z.union([
+      z.object({
+        kg: z.number().min(1),
+      }),
+      z.object({
+        st: z
+          .number({
+            required_error: 'Please provide stones',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+        lbs: z
+          .number({
+            required_error: 'Please provide feet',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
+      }),
+    ]),
+  }),
 })
 
 const Onboarding = (props: OnboardingProps) => {
-  const { step, nextStep, prevStep } = useStepper(5, MAX_STEPS)
+  const { step, nextStep, prevStep } = useStepper(4, MAX_STEPS)
   const methods = useForm<OnboardingFormData>({
-    mode: 'onBlur',
+    mode: 'onTouched',
     defaultValues: initialState,
     resolver: zodResolver(schema),
   })

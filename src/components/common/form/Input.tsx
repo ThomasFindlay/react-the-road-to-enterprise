@@ -17,7 +17,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (props: InputProps, ref) => {
     const { id, label, labelProps, error, errorMessage, ...inputProps } = props
 
-    console.log('in input', error, errorMessage)
     return (
       <div className="flex flex-col items-start w-full space-y-2">
         {label ? (
