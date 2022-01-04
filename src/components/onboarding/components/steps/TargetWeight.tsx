@@ -19,11 +19,12 @@ const TargetWeight = (props: TargetWeightProps) => {
         <Input
           id="weight"
           label="Kilograms"
+          type="number"
           {...register('targetWeight.value.kg', {
             valueAsNumber: true,
           })}
-          error={!!errors.targetWeight?.kg}
-          errorMessage={errors.targetWeight?.kg?.message}
+          error={!!errors.targetWeight?.value?.kg}
+          errorMessage={errors.targetWeight?.value?.kg?.message}
         />
       ) : (
         <div className="flex gap-4">
@@ -31,21 +32,21 @@ const TargetWeight = (props: TargetWeightProps) => {
             id="weight-feet"
             label="Stones"
             type="number"
-            {...register('targetWeight.st', {
+            {...register('targetWeight.value.st', {
               valueAsNumber: true,
             })}
-            error={!!errors.targetWeight?.st}
-            errorMessage={errors.targetWeight?.st?.message}
+            error={!!errors.targetWeight?.value?.st}
+            errorMessage={errors.targetWeight?.value?.st?.message}
           />
           <Input
             id="weight-inches"
             label="Pounds"
             type="number"
-            {...register('targetWeight.lbs', {
+            {...register('targetWeight.value.lbs', {
               valueAsNumber: true,
             })}
-            error={!!errors.targetWeight?.lbs}
-            errorMessage={errors.targetWeight?.lbs?.message}
+            error={!!errors.targetWeight?.value?.lbs}
+            errorMessage={errors.targetWeight?.value?.lbs?.message}
           />
         </div>
       )}

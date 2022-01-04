@@ -27,7 +27,10 @@ const activityOptions = [
 ]
 
 const ActivityLevel = (props: ActivityLevelProps) => {
-  const { register } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <div className="space-y-4">
@@ -46,6 +49,7 @@ const ActivityLevel = (props: ActivityLevelProps) => {
           )
         })}
       </RadioGroup.Root>
+      {errors.activityLevel ? <p>{errors.activityLevel.message}</p> : null}
     </div>
   )
 }

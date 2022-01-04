@@ -11,6 +11,7 @@ const BodyWeight = (props: BodyWeightProps) => {
     setValue,
     clearErrors,
   } = useFormContext()
+  console.log('errors', errors)
   const weightUnit = watch('weight.unit')
   return (
     <div className="space-y-4">

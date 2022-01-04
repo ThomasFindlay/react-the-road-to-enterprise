@@ -88,7 +88,7 @@ type OnboardingFormData = {
   activityLevel: 'not-very-active' | 'lightly-active' | 'active' | 'very-active'
   height: HeightInCm | HeightInFeet
   weight: WeightInKg | WeightInSt
-  targetWeight: WeightInKg['value'] | WeightInSt['value']
+  targetWeight: Pick<WeightInKg, 'value'> | Pick<WeightInSt, 'value'>
 }
 
 const initialState: Partial<OnboardingFormData> = {
@@ -214,7 +214,12 @@ const schema = z.object({
   targetWeight: z.object({
     value: z.union([
       z.object({
-        kg: z.number().min(1),
+        kg: z
+          .number({
+            required_error: 'Please provide stones',
+            invalid_type_error: 'Please provide a number',
+          })
+          .min(1),
       }),
       z.object({
         st: z
@@ -235,7 +240,7 @@ const schema = z.object({
 })
 
 const Onboarding = (props: OnboardingProps) => {
-  const { step, nextStep, prevStep } = useStepper(4, MAX_STEPS)
+  const { step, nextStep, prevStep } = useStepper(6, MAX_STEPS)
   const methods = useForm<OnboardingFormData>({
     mode: 'onTouched',
     defaultValues: initialState,
@@ -267,6 +272,7 @@ const Onboarding = (props: OnboardingProps) => {
           <div className="flex justify-between mt-6">
             <button
               className="px-4 py-2 shadow font-semibold border border-coolGray-200 hover:bg-coolGray-100 disabled:bg-coolGray-200 disabled:cursor-not-allowed disabled:text-gray-50"
+              type="button"
               disabled={step === 1}
               onClick={prevStep}
             >
@@ -275,6 +281,7 @@ const Onboarding = (props: OnboardingProps) => {
             {step !== MAX_STEPS ? (
               <button
                 className="px-4 py-2 shadow border border-indigo-200 bg-indigo-100 text-indigo-800 hover:bg-indigo-200 font-semibold"
+                type="button"
                 onClick={onNextStep}
               >
                 Next
