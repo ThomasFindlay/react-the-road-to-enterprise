@@ -1,5 +1,6 @@
 import RadioGroup from '@/components/common/form/RadioGroup'
 import { useFormContext } from 'react-hook-form'
+import { OnboardingFormData } from '../../onboardingSchema'
 
 type YourGoalProps = {}
 
@@ -22,7 +23,7 @@ const goalOptions = [
 ]
 
 const YourGoal = (props: YourGoalProps) => {
-  const { register } = useFormContext()
+  const { register } = useFormContext<OnboardingFormData>()
 
   return (
     <div className="space-y-4">

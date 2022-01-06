@@ -1,0 +1,1 @@
+export { getErrorProps } from './getErrorProps'

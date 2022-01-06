@@ -1,7 +1,9 @@
 import Input from '@/components/common/form/Input'
 import { useEffect } from 'react'
-import { FieldError, useFormContext, UseFormSetError } from 'react-hook-form'
-import { OnboardingFormData } from '../../Onboarding'
+import { useFormContext } from 'react-hook-form'
+import { get } from 'lodash-es'
+import { getErrorProps } from '@/helpers/getErrorProps'
+import { OnboardingFormData } from '../../onboardingSchema'
 
 type TargetWeightProps = {}
 
@@ -40,6 +42,7 @@ const TargetWeight = (props: TargetWeightProps) => {
     watch,
     formState: { errors },
     setError,
+    clearErrors,
     getValues,
   } = useFormContext<OnboardingFormData>()
   const values = getValues()
@@ -47,8 +50,8 @@ const TargetWeight = (props: TargetWeightProps) => {
   const weightGoal = watch('weightGoal')
   const weightValue = watch('weight.value')
   const targetWeightValue = watch('targetWeight.value')
-  console.log('weight value', weightGoal, weightValue, targetWeightValue)
-
+  console.log('check', targetWeightValue, errors)
+  // Use useMemo to derive custom errors
   useEffect(() => {
     if (
       weightUnit === 'kg' &&
@@ -58,17 +61,20 @@ const TargetWeight = (props: TargetWeightProps) => {
       let error = handleCompareKg(
         weightGoal,
         weightValue.kg,
-        (targetWeightValue as { kg: number }).kg
+        (targetWeightValue as { kg: number })?.kg
       )
-      error &&
+      console.log('compare kg', error)
+
+      if (error) {
+        clearErrors('targetWeight.value.kg')
         setError('targetWeight.value.kg', {
           message: error,
         })
+      }
     } else {
       // handleCompareStLbs(weightValue, targetWeightValue)
     }
-  }, [])
-
+  }, [get(targetWeightValue, 'kg')])
   // const getErrorProps = <P extends unknown, A extends unknown>(
   //   path: P,
   //   ...paths: A[]
@@ -107,29 +113,6 @@ const TargetWeight = (props: TargetWeightProps) => {
 
     return null
   }
-  /**
-   * TODO:
-   * Make this more reusable. Accept extractErrorField as a param and make it a factory that returns getErrorProps method
-   * You can call it errorPropsHelper
-   */
-  const getErrorProps = <T extends object | undefined>(
-    value: T,
-    prop: 'kg' | 'st' | 'lbs'
-  ) => {
-    const errorField = extractErrorField(value, prop)
-
-    if (errorField) {
-      return {
-        error: true,
-        errorMessage: errorField.message,
-      }
-    } else {
-      return {
-        error: false,
-        errorMessage: '',
-      }
-    }
-  }
 
   return (
     <div className="space-y-4">
@@ -142,7 +125,7 @@ const TargetWeight = (props: TargetWeightProps) => {
           {...register('targetWeight.value.kg', {
             valueAsNumber: true,
           })}
-          {...getErrorProps(errors.targetWeight, 'kg')}
+          {...getErrorProps(errors.targetWeight?.value, 'kg')}
         />
       ) : (
         <div className="flex gap-4">
@@ -153,7 +136,7 @@ const TargetWeight = (props: TargetWeightProps) => {
             {...register('targetWeight.value.st', {
               valueAsNumber: true,
             })}
-            {...getErrorProps(errors.targetWeight, 'st')}
+            {...getErrorProps(errors.targetWeight?.value, 'st')}
           />
           <Input
             id="weight-inches"
@@ -162,7 +145,7 @@ const TargetWeight = (props: TargetWeightProps) => {
             {...register('targetWeight.value.lbs', {
               valueAsNumber: true,
             })}
-            {...getErrorProps(errors.targetWeight, 'lbs')}
+            {...getErrorProps(errors.targetWeight?.value, 'lbs')}
           />
         </div>
       )}

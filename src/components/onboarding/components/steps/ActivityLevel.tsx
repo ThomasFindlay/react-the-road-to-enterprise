@@ -1,5 +1,6 @@
 import RadioGroup from '@/components/common/form/RadioGroup'
 import { useFormContext } from 'react-hook-form'
+import { OnboardingFormData } from '../../onboardingSchema'
 
 type ActivityLevelProps = {}
 
@@ -30,7 +31,7 @@ const ActivityLevel = (props: ActivityLevelProps) => {
   const {
     register,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext<OnboardingFormData>()
 
   return (
     <div className="space-y-4">

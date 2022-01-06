@@ -1,4 +1,6 @@
 import Input from '@/components/common/form/Input'
+import { OnboardingFormData } from '@/components/onboarding/onboardingSchema'
+import { getErrorProps } from '@/helpers'
 import { useFormContext } from 'react-hook-form'
 
 type BodyWeightProps = {}
@@ -10,9 +12,10 @@ const BodyWeight = (props: BodyWeightProps) => {
     formState: { errors },
     setValue,
     clearErrors,
-  } = useFormContext()
-  console.log('errors', errors)
+  } = useFormContext<OnboardingFormData>()
+
   const weightUnit = watch('weight.unit')
+
   return (
     <div className="space-y-4">
       <h2>What's your weight?</h2>
@@ -25,8 +28,7 @@ const BodyWeight = (props: BodyWeightProps) => {
           {...register('weight.value.kg', {
             valueAsNumber: true,
           })}
-          error={!!errors.weight?.value.kg}
-          errorMessage={errors.weight?.value?.kg?.message}
+          {...getErrorProps(errors.weight?.value, 'kg')}
         />
       ) : (
         <div className="flex gap-4">
@@ -37,8 +39,7 @@ const BodyWeight = (props: BodyWeightProps) => {
             {...register('weight.value.st', {
               valueAsNumber: true,
             })}
-            error={!!errors.weight?.value?.st}
-            errorMessage={errors.weight?.value?.st?.message}
+            {...getErrorProps(errors.weight?.value, 'st')}
           />
           <Input
             id="weight-inches"
@@ -47,8 +48,7 @@ const BodyWeight = (props: BodyWeightProps) => {
             {...register('weight.value.lbs', {
               valueAsNumber: true,
             })}
-            error={!!errors.weight?.value?.lbs}
-            errorMessage={errors.weight?.value?.lbs?.message}
+            {...getErrorProps(errors.weight?.value, 'lbs')}
           />
         </div>
       )}
@@ -62,7 +62,7 @@ const BodyWeight = (props: BodyWeightProps) => {
             value="kg"
             {...register('weight.unit')}
             onChange={(e) => {
-              setValue('weight.unit', e.target.value)
+              setValue('weight.unit', e.target.value as 'kg')
               clearErrors(['weight.value.st', 'weight.value.lbs'])
             }}
           />
@@ -76,7 +76,7 @@ const BodyWeight = (props: BodyWeightProps) => {
             value="st/lbs"
             {...register('weight.unit')}
             onChange={(e) => {
-              setValue('weight.unit', e.target.value)
+              setValue('weight.unit', e.target.value as 'st/lbs')
               clearErrors(['weight.value.kg'])
             }}
           />

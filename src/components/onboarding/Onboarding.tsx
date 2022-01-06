@@ -1,14 +1,15 @@
 import { useStepper } from '@/hooks/useStepper'
-import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import AccountInformation from './components/steps/AccountInformation'
 import ActivityLevel from './components/steps/ActivityLevel'
 import PersonalDetails from './components/steps/PersonalDetails'
 import BodyDetails from './components/steps/bodyDetails/BodyDetails'
 import YourGoal from './components/steps/YourGoal'
 import TargetWeight from './components/steps/TargetWeight'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
+import OnboardingStepperActions from './components/OnboardingStepperActions'
+
+import { OnboardingFormData, onboardingFormSchema } from './onboardingSchema'
 type OnboardingProps = {}
 /**
  * Onboading
@@ -78,153 +79,10 @@ type WeightInSt = {
   }
 }
 
-// export type OnboardingFormData = {
-//   email: string
-//   password: string
-//   name: string
-//   dateOfBirth: string
-//   gender: 'male' | 'female'
-//   weightGoal: 'maintain-weight' | 'lose-weight' | 'gain-weight'
-//   activityLevel: 'not-very-active' | 'lightly-active' | 'active' | 'very-active'
-//   height: HeightInCm | HeightInFeet
-//   weight: WeightInKg | WeightInSt
-//   targetWeight: Pick<WeightInKg, 'value'> | Pick<WeightInSt, 'value'>
-// }
-
-const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
-  if (issue.code === z.ZodIssueCode.invalid_enum_value) {
-    return {
-      message: 'Select one of the options.',
-    }
-  }
-  return {
-    message: ctx.defaultError,
-  }
-}
-
-z.setErrorMap(customErrorMap)
-
-const schema = z.object({
-  email: z
-    .string({ required_error: 'Please enter your email' })
-    .email({
-      message: 'Invalid email address',
-    })
-    .min(1),
-  password: z
-    .string({
-      required_error: 'Please enter password',
-    })
-    .min(8, {
-      message: 'Password must have at least 8 characters',
-    }),
-  name: z
-    .string({
-      required_error: 'Please enter your name',
-    })
-    .min(1),
-  dateOfBirth: z
-    .string({
-      required_error: 'Please enter your date of birth.',
-    })
-    .min(1),
-  gender: z.enum(['male', 'female']),
-  weightGoal: z.enum(['maintain-weight', 'lose-weight', 'gain-weight']),
-  activityLevel: z.enum([
-    'not-very-active',
-    'lightly-active',
-    'active',
-    'very-active',
-  ]),
-  height: z.object({
-    unit: z.enum(['cm', 'feet/inches']),
-    value: z.union([
-      z.object({
-        cm: z
-          .number({
-            required_error: 'Please provide centimiters',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-      }),
-      z.object({
-        feet: z
-          .number({
-            required_error: 'Please provide feet',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-        inches: z
-          .number({
-            required_error: 'Please provide inches',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-      }),
-    ]),
-  }),
-  weight: z.object({
-    unit: z.enum(['kg', 'st/lbs']),
-    value: z.union([
-      z.object({
-        kg: z
-          .number({
-            required_error: 'Please provide kilograms',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-      }),
-      z.object({
-        st: z
-          .number({
-            required_error: 'Please provide stones',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-        lbs: z
-          .number({
-            required_error: 'Please provide pounds',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-      }),
-    ]),
-  }),
-  targetWeight: z.object({
-    value: z.union([
-      z.object({
-        kg: z
-          .number({
-            required_error: 'Please provide stones',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-      }),
-      z.object({
-        st: z
-          .number({
-            required_error: 'Please provide stones',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-        lbs: z
-          .number({
-            required_error: 'Please provide feet',
-            invalid_type_error: 'Please provide a number',
-          })
-          .min(1),
-      }),
-    ]),
-  }),
-})
-
-export type OnboardingFormData = z.infer<typeof schema>
-
 type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>
 }
 
-// type T = OnboardingFormData['targetWeight']['value']['kg']
 const initialState: DeepPartial<OnboardingFormData> = {
   // name: 'Hello',
   weightGoal: 'gain-weight',
@@ -236,6 +94,9 @@ const initialState: DeepPartial<OnboardingFormData> = {
   },
   weight: {
     unit: 'kg',
+    value: {
+      kg: 120,
+    },
     // value: {
     //   st: 15,
     //   lbs: 10,
@@ -247,20 +108,27 @@ const initialState: DeepPartial<OnboardingFormData> = {
   // },
 }
 
+const stepComponents = [
+  AccountInformation,
+  PersonalDetails,
+  ActivityLevel,
+  BodyDetails,
+  YourGoal,
+  TargetWeight,
+]
+
 const Onboarding = (props: OnboardingProps) => {
-  const { step, nextStep, prevStep } = useStepper(6, MAX_STEPS)
+  const { step, nextStep, prevStep } = useStepper(4, MAX_STEPS)
   const methods = useForm<OnboardingFormData>({
     mode: 'onTouched',
     defaultValues: initialState,
-    resolver: zodResolver(schema),
+    resolver: zodResolver(onboardingFormSchema),
   })
   const onSubmit: SubmitHandler<OnboardingFormData> = (data) => {
     console.log('on submit', data)
   }
-  const onNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    nextStep()
-  }
+
+  const CurrentStepComponent = stepComponents[step - 1]
 
   return (
     <div className="container mx-auto p-6">
@@ -270,39 +138,19 @@ const Onboarding = (props: OnboardingProps) => {
           className="w-1/2 shadow bg-white border border-coolGray-200 p-6 mx-auto my-4"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          {step === 1 ? <AccountInformation /> : null}
-          {step === 2 ? <PersonalDetails /> : null}
-          {step === 3 ? <YourGoal /> : null}
-          {step === 4 ? <ActivityLevel /> : null}
-          {step === 5 ? <BodyDetails /> : null}
-          {step === 6 ? <TargetWeight /> : null}
-
-          <div className="flex justify-between mt-6">
-            <button
-              className="px-4 py-2 shadow font-semibold border border-coolGray-200 hover:bg-coolGray-100 disabled:bg-coolGray-200 disabled:cursor-not-allowed disabled:text-gray-50"
-              type="button"
-              disabled={step === 1}
-              onClick={prevStep}
-            >
-              Back
-            </button>
-            {step !== MAX_STEPS ? (
-              <button
-                className="px-4 py-2 shadow border border-indigo-200 bg-indigo-100 text-indigo-800 hover:bg-indigo-200 font-semibold"
-                type="button"
-                onClick={onNextStep}
-              >
-                Next
-              </button>
-            ) : (
-              <button
-                className="px-4 py-2 shadow border border-indigo-200 bg-indigo-100 text-indigo-800 hover:bg-indigo-200 font-semibold"
-                type="submit"
-              >
-                Submit
-              </button>
-            )}
-          </div>
+          <CurrentStepComponent
+            actions={(isValid: () => Promise<boolean>) => {
+              return (
+                <OnboardingStepperActions
+                  step={step}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                  isValid={isValid}
+                  maxSteps={MAX_STEPS}
+                />
+              )
+            }}
+          />
         </form>
       </FormProvider>
     </div>
