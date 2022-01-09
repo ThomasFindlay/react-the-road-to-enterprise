@@ -1,5 +1,5 @@
 import { OnboardingFormData } from '@/components/onboarding/onboardingSchema'
-import { useFormContext } from 'react-hook-form'
+import { FieldPath, useFormContext } from 'react-hook-form'
 import BodyHeight from './components/BodyHeight'
 import BodyWeight from './components/BodyWeight'
 
@@ -13,7 +13,7 @@ const BodyDetails = (props: BodyDetailsProps) => {
 
   const isValid = () => {
     const { height, weight } = getValues()
-    let triggerValues: Parameters<typeof trigger> = []
+    let triggerValues: FieldPath<OnboardingFormData>[] = []
 
     if (height.unit === 'cm') {
       triggerValues.push('height.value.cm')
@@ -27,7 +27,6 @@ const BodyDetails = (props: BodyDetailsProps) => {
       triggerValues.push('weight.value.st', 'weight.value.lbs')
     }
 
-    // TODO: FIX THIS
     return trigger(triggerValues)
   }
 
