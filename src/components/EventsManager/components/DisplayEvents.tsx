@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useAtom } from 'jotai'
+import { useUpdateAtom, useAtomValue } from 'jotai/utils'
+
 import {
   eventsAtom,
   selectEventAtom,
@@ -12,8 +14,8 @@ type DisplayEventsProps = {}
 const DisplayEvents = (props: DisplayEventsProps) => {
   const [eventsToShow, setEventsToShow] = useState<EventTab>('all')
   const [allEvents] = useAtom(eventsAtom)
-  const [, selectEvent] = useAtom(selectEventAtom)
-  const [{ upcomingEvents, pastEvents }] = useAtom(upcomingAndPastEventsAtom)
+  const selectEvent = useUpdateAtom(selectEventAtom)
+  const { upcomingEvents, pastEvents } = useAtomValue(upcomingAndPastEventsAtom)
 
   const eventsMap: Record<EventTab, Event[]> = {
     all: allEvents,

@@ -1,4 +1,6 @@
 import { atom } from 'jotai'
+import { atomWithStorage } from 'jotai/utils'
+import { withImmer } from 'jotai/immer'
 import { events } from './eventsData'
 import { Event } from './eventsTypes'
 
@@ -27,11 +29,11 @@ const getUpcomingAndPastEvents = (events: Event[]) => {
 }
 
 // Events array state
-export const eventsAtom = atom(events)
+export const eventsAtom = withImmer(atomWithStorage('events', events))
 
 // Add a new event to the events array
 export const createEventAtom = atom(null, (get, set, event: Event) => {
-  set(eventsAtom, [...get(eventsAtom), event])
+  set(eventsAtom, (eventsDraft) => eventsDraft.push(event))
 })
 
 // Store the currently selected event ID
