@@ -1,0 +1,30 @@
+{
+  "name": "semver-store",
+  "version": "0.3.0",
+  "description": "An extremely fast semver based store",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && tap test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delvedor/semver-store.git"
+  },
+  "keywords": [
+    "semver",
+    "store",
+    "tree"
+  ],
+  "author": "Tomas Della Vedova - @delvedor (http://delved.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/delvedor/semver-store/issues"
+  },
+  "homepage": "https://github.com/delvedor/semver-store#readme",
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "pre-commit": "^1.2.2",
+    "standard": "^11.0.1",
+    "tap": "^12.0.1"
+  }
+}
