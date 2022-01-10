@@ -37,8 +37,8 @@ const CreateEvent = (props: CreateEventProps) => {
       if (previousEvents) {
         queryClient.setQueryData(['events'], {
           ...previousEvents,
-          allEvents: [...previousEvents.allEvents, event],
-          upcomingEvents: [...previousEvents.allEvents, event],
+          allEvents: [event, ...previousEvents.allEvents],
+          upcomingEvents: [event, ...previousEvents.allEvents],
         })
       }
 
