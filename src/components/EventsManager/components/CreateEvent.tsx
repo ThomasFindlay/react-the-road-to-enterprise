@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useUpdateAtom } from 'jotai/utils'
-import { createEventAtom } from '../eventsAtoms'
-import { Event } from '../eventsTypes'
+import { useMutation, useQueryClient } from 'react-query'
+import { createEvent } from '@/api/eventApi'
+import { Event, EventsQueryState } from '../eventsTypes'
 
 type CreateEventProps = {}
 
@@ -21,7 +21,46 @@ const formatDate = (date: string) => {
 
 const CreateEvent = (props: CreateEventProps) => {
   const [form, setForm] = useState(initialState)
-  const createEvent = useUpdateAtom(createEventAtom)
+  const queryClient = useQueryClient()
+  const {
+    mutate: initCreateEvent,
+    isLoading: createEventLoading,
+    isError: createEventError,
+  } = useMutation(['createEvent'], createEvent, {
+    onMutate: async (event) => {
+      await queryClient.cancelQueries(['events'])
+
+      const previousEvents = queryClient.getQueryData<EventsQueryState>([
+        'events',
+      ])
+
+      if (previousEvents) {
+        queryClient.setQueryData(['events'], {
+          ...previousEvents,
+          allEvents: [event, ...previousEvents.allEvents],
+          upcomingEvents: [event, ...previousEvents.allEvents],
+        })
+      }
+
+      return {
+        previousEvents,
+      }
+    },
+    onError: (
+      err,
+      variables,
+      context?: {
+        previousEvents?: EventsQueryState
+      }
+    ) => {
+      if (context?.previousEvents) {
+        queryClient.setQueryData(['events'], context.previousEvents)
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(['events'])
+    },
+  })
 
   const onCreateEvent = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -34,7 +73,7 @@ const CreateEvent = (props: CreateEventProps) => {
     )
       return
 
-    createEvent({
+    initCreateEvent({
       ...form,
       id: createId(),
       startDate: formatDate(form.startDate),
@@ -119,11 +158,13 @@ const CreateEvent = (props: CreateEventProps) => {
             onChange={onChange}
           />
         </div>
+        {createEventError ? <p>Could not create the event</p> : null}
         <button
           className="w-36 self-end bg-blue-700 text-blue-100 px-4 py-3"
+          disabled={createEventLoading}
           onClick={onCreateEvent}
         >
-          Create Event
+          {createEventLoading ? 'Creating...' : 'Create Event'}
         </button>
       </form>
     </div>

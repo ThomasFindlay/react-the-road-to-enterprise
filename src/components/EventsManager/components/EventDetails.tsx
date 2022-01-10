@@ -1,10 +1,18 @@
-import { useAtom } from 'jotai'
-import { selectedEventAtom } from '../eventsAtoms'
+import { useAtomValue } from 'jotai/utils'
+import { useMemo } from 'react'
+import { useQuery } from 'react-query'
+import { selectedEventIdAtom } from '../eventsAtoms'
+import { EventsQueryState } from '../eventsTypes'
 
 type EventDetailsProps = {}
 
 const EventDetails = (props: EventDetailsProps) => {
-  const [event] = useAtom(selectedEventAtom)
+  const { data } = useQuery<EventsQueryState>(['events'])
+  const selectedEventId = useAtomValue(selectedEventIdAtom)
+  const event = useMemo(() => {
+    if (!selectedEventId) return
+    return data?.allEvents.find((event) => event.id === selectedEventId)
+  }, [selectedEventId])
 
   return (
     <div>
