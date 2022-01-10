@@ -1,8 +1,11 @@
+import { Suspense, lazy } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
-import About from './views/About'
-import Contact from './views/Contact'
-import Home from './views/Home'
+import Spinner from './components/Spinner'
+
+const About = lazy(() => import('./views/About'))
+const Contact = lazy(() => import('./views/Contact'))
+const Home = lazy(() => import('./views/Home'))
 
 function App() {
   return (
@@ -17,11 +20,19 @@ function App() {
         </nav>
       </div>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+      <Suspense
+        fallback={
+          <div className="flex justify-center">
+            <Spinner show delay={500} />
+          </div>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </Suspense>
     </div>
   )
 }
