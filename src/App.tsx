@@ -41,14 +41,14 @@ function App() {
       <h1 className="font-semibold text-2xl">React - The Road To Enterprise</h1>
       <div
         ref={parentRef}
-        className="h-64 w-1/2 mx-auto overflow-y-auto mt-16 flex justify-center text-left"
+        className="h-64 w-2/3 mx-auto overflow-y-auto mt-16 flex justify-center text-left"
       >
         <div className="w-full relative">
           <div className="flex gap-6 mb-3 font-semibold">
             <span className="w-8">ID</span>
-            <span className="w-16">Name</span>
-            <span className="w-16">Surname</span>
-            <span className="w-16">Email</span>
+            <span className="w-24">Name</span>
+            <span className="w-24">Surname</span>
+            <span className="w-24">Email</span>
           </div>
           <div
             className="relative"
@@ -72,9 +72,9 @@ function App() {
                   }}
                 >
                   <span className="w-8">{item.id}</span>
-                  <span className="w-16">{item.name}</span>
-                  <span className="w-16">{item.surname}</span>
-                  <span className="w-16">{item.email}</span>
+                  <span className="w-24">{item.name}</span>
+                  <span className="w-24">{item.surname}</span>
+                  <span className="w-24">{item.email}</span>
                 </div>
               )
             })}
