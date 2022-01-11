@@ -12,10 +12,13 @@
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@tailwindcss/forms": "^0.3.3",
+    "@types/faker": "5.5.9",
     "axios": "^0.21.1",
+    "faker": "5.5.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "react-virtual": "^2.10.0",
     "web-vitals": "^1.0.1"
   },
   "husky": {
