@@ -42,7 +42,7 @@ function App() {
           <tbody>
             {items.map((item) => {
               return (
-                <tr className="py-4 " key={item.id}>
+                <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.name}</td>
                   <td>{item.surname}</td>
