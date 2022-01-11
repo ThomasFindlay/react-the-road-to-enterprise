@@ -1,5 +1,5 @@
 import faker from 'faker'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useVirtual } from 'react-virtual'
 
 import './App.css'
