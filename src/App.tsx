@@ -1,5 +1,6 @@
 import faker from 'faker'
-import { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useVirtual } from 'react-virtual'
 
 import './App.css'
 
@@ -12,6 +13,14 @@ type User = {
 
 function App() {
   const [items, setItems] = useState<User[]>([])
+  const parentRef = useRef<HTMLDivElement>(null)
+
+  const rowVirtualizer = useVirtual({
+    size: items.length,
+    parentRef,
+    estimateSize: useCallback(() => 35, []),
+    overscan: 5,
+  })
 
   useEffect(() => {
     let users = []
@@ -26,32 +35,51 @@ function App() {
     setItems(users)
     console.log('data ready')
   }, [])
+
   return (
     <div className="App mx-auto max-w-6xl text-center my-8">
       <h1 className="font-semibold text-2xl">React - The Road To Enterprise</h1>
-      <div className="h-64 overflow-y-auto mt-16 flex justify-center">
-        <table className="w-full">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Surname</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => {
+      <div
+        ref={parentRef}
+        className="h-64 w-1/2 mx-auto overflow-y-auto mt-16 flex justify-center text-left"
+      >
+        <div className="w-full relative">
+          <div className="flex gap-6 mb-3 font-semibold">
+            <span className="w-8">ID</span>
+            <span className="w-16">Name</span>
+            <span className="w-16">Surname</span>
+            <span className="w-16">Email</span>
+          </div>
+          <div
+            className="relative"
+            style={{
+              height: `${rowVirtualizer.totalSize}px`,
+            }}
+          >
+            {rowVirtualizer.virtualItems.map((virtualRow) => {
+              const item = items[virtualRow.index]
               return (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.surname}</td>
-                  <td>{item.email}</td>
-                </tr>
+                <div
+                  key={virtualRow.index}
+                  className="flex gap-6"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: `${virtualRow.size}px`,
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                >
+                  <span className="w-8">{item.id}</span>
+                  <span className="w-16">{item.name}</span>
+                  <span className="w-16">{item.surname}</span>
+                  <span className="w-16">{item.email}</span>
+                </div>
               )
             })}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
   )
