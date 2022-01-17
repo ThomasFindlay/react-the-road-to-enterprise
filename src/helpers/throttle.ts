@@ -1,12 +1,12 @@
-export const throttle = <T extends unknown[]>(
-  fn: (...args: T) => unknown,
+export const throttle = <T extends (...args: any) => unknown>(
+  fn: T,
   wait: number
 ) => {
   let timerId: ReturnType<typeof setTimeout>
   let inThrottle: boolean
   let lastTime: number
 
-  return (...args: T) => {
+  return (...args: Parameters<T>) => {
     if (!inThrottle) {
       lastTime = Date.now()
       inThrottle = true
