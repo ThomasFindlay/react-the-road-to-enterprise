@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export type UseMousePositionOptions = {
   throttleTime?: number
@@ -45,18 +45,15 @@ export const useMousePosition = (options?: UseMousePositionOptions) => {
     y: 0,
   })
 
-  const onMouseMoveThrottled = useCallback(
-    throttle((e) => {
+  useEffect(() => {
+    const onMouseMoveThrottled = throttle((e) => {
       const { clientX: x, clientY: y } = e
       setPosition({
         x,
         y,
       })
-    }, throttleTime),
-    []
-  )
+    }, throttleTime)
 
-  useEffect(() => {
     window.addEventListener('mousemove', onMouseMoveThrottled)
     return () => window.removeEventListener('mousemove', onMouseMoveThrottled)
   }, [])
