@@ -13,7 +13,7 @@ export const useMousePosition = (options?: UseMousePositionOptions) => {
   })
 
   useEffect(() => {
-    const onMouseMoveThrottled = throttle((e: MouseEvent) => {
+    const onMouseMove = throttle((e: MouseEvent) => {
       const { clientX: x, clientY: y } = e
       setPosition({
         x,
@@ -21,8 +21,8 @@ export const useMousePosition = (options?: UseMousePositionOptions) => {
       })
     }, throttleTime)
 
-    window.addEventListener('mousemove', onMouseMoveThrottled)
-    return () => window.removeEventListener('mousemove', onMouseMoveThrottled)
+    window.addEventListener('mousemove', onMouseMove)
+    return () => window.removeEventListener('mousemove', onMouseMove)
   }, [])
 
   return position
