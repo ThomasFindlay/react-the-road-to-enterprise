@@ -1,17 +1,14 @@
 import { debounce } from '@/helpers/debounce'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 
 type SearchProps = {}
 
+const initSearchApiRequest = debounce((q: string) => {
+  console.log('INITIALISE API REQUEST')
+}, 500)
+
 const Search = (props: SearchProps) => {
   const [query, setQuery] = useState('')
-
-  const initSearchApiRequest = useCallback(
-    debounce((q: string) => {
-      console.log('API REQUEST INITIALISED')
-    }, 500),
-    []
-  )
 
   const onChangeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     const q = e.target.value

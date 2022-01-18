@@ -23,7 +23,7 @@ export const useMousePosition = (options?: UseMousePositionOptions) => {
 
     window.addEventListener('mousemove', onMouseMove)
     return () => window.removeEventListener('mousemove', onMouseMove)
-  }, [])
+  }, [throttleTime])
 
   return position
 }
