@@ -25,7 +25,6 @@ type IngredientsProps = {}
 const Ingredients = (props: IngredientsProps) => {
   console.log('Ingredient rendered')
   const [ingredient, setIngredient] = useState('')
-
   const [ingredients, setIngredients] =
     useState<Ingredient[]>(initialIngredients)
 
