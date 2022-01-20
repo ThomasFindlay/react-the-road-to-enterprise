@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useMemo, useCallback, useState } from 'react'
 import { nanoid } from 'nanoid'
 import { Ingredient } from './ingredient.types'
 import IngredientsList from './IngredientsList'
@@ -43,18 +43,18 @@ const Ingredients = (props: IngredientsProps) => {
     setIngredients((ingredients) => ingredients.filter((ing) => ing.id !== id))
   }, [])
 
-  const createIngredientsHeaderText = () => {
-    console.log('ingredientsHeaderText called')
+  const ingredientsHeaderText = useMemo(() => {
+    console.log('createIngredientsHeaderText called')
     return (
       <h2 className="mb-4 font-semibold">Ingredients ({ingredients.length})</h2>
     )
-  }
+  }, [ingredients.length])
 
   return (
     <div className="mt-8 max-w-[20rem] mx-auto">
       <div className="flex justify-between">
-        {createIngredientsHeaderText()}
         {ingredientsInfoHelper}
+        {ingredientsHeaderText}
       </div>
 
       <div className="space-y-4">
