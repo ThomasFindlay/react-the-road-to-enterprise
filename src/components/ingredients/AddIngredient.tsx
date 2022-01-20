@@ -1,12 +1,13 @@
+import { useState } from 'react'
+
 type AddIngredientProps = {
   addIngredient: (ingredient: string) => void
-  ingredient: string
-  setIngredient: React.Dispatch<React.SetStateAction<string>>
 }
 
 const AddIngredient = (props: AddIngredientProps) => {
   console.log('AddIngredient rendered')
-  const { addIngredient, ingredient, setIngredient } = props
+  const { addIngredient } = props
+  const [ingredient, setIngredient] = useState('')
 
   return (
     <form className="">
