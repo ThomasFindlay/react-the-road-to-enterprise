@@ -53,8 +53,8 @@ const Ingredients = (props: IngredientsProps) => {
   return (
     <div className="mt-8 max-w-[20rem] mx-auto">
       <div className="flex justify-between">
-        {ingredientsInfoHelper}
         {ingredientsHeaderText}
+        {ingredientsInfoHelper}
       </div>
 
       <div className="space-y-4">
