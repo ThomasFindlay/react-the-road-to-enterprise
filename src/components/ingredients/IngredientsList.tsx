@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Ingredient } from './ingredient.types'
 
 type IngredientsListProps = {
@@ -27,4 +28,4 @@ const IngredientsList = (props: IngredientsListProps) => {
   )
 }
 
-export default IngredientsList
+export default memo(IngredientsList)

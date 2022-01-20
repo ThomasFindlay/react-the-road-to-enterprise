@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { nanoid } from 'nanoid'
 import { Ingredient } from './ingredient.types'
 import IngredientsList from './IngredientsList'
@@ -38,9 +38,9 @@ const Ingredients = (props: IngredientsProps) => {
     ])
   }
 
-  const deleteIngredient = (id: string) => {
+  const deleteIngredient = useCallback((id: string) => {
     setIngredients((ingredients) => ingredients.filter((ing) => ing.id !== id))
-  }
+  }, [])
 
   return (
     <div className="mt-8 max-w-[20rem] mx-auto">
