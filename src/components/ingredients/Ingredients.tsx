@@ -43,10 +43,17 @@ const Ingredients = (props: IngredientsProps) => {
     setIngredients((ingredients) => ingredients.filter((ing) => ing.id !== id))
   }, [])
 
+  const createIngredientsHeaderText = () => {
+    console.log('ingredientsHeaderText called')
+    return (
+      <h2 className="mb-4 font-semibold">Ingredients ({ingredients.length})</h2>
+    )
+  }
+
   return (
     <div className="mt-8 max-w-[20rem] mx-auto">
       <div className="flex justify-between">
-        <h2 className="mb-4 font-semibold">Ingredients</h2>
+        {createIngredientsHeaderText()}
         {ingredientsInfoHelper}
       </div>
 
