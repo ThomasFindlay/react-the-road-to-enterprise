@@ -43,7 +43,7 @@ const Ingredients = (props: IngredientsProps) => {
   }
 
   const createIngredientsHeaderText = () => {
-    console.log('ingredientsHeaderText called')
+    console.log('createIngredientsHeaderText called')
     return (
       <h2 className="mb-4 font-semibold">Ingredients ({ingredients.length})</h2>
     )
