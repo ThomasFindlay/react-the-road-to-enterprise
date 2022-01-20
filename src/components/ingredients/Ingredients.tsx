@@ -3,19 +3,20 @@ import { nanoid } from 'nanoid'
 import { Ingredient } from './ingredient.types'
 import IngredientsList from './IngredientsList'
 import AddIngredient from './AddIngredient'
+import IngredientsInfoHelper from './IngredientsInfoHelper'
 
 const initialIngredients = [
   {
     id: nanoid(),
-    name: 'Chicken',
+    name: '500g Chicken Breasts',
   },
   {
     id: nanoid(),
-    name: 'Beef',
+    name: '300 ml milk',
   },
   {
     id: nanoid(),
-    name: 'Carrot',
+    name: '1 tbsp salt',
   },
 ]
 
@@ -43,10 +44,13 @@ const Ingredients = (props: IngredientsProps) => {
   }
 
   return (
-    <div className="mt-8">
-      <h2 className="mb-4 font-semibold">Ingredients</h2>
+    <div className="mt-8 max-w-[20rem] mx-auto">
+      <div className="flex justify-between">
+        <h2 className="mb-4 font-semibold">Ingredients</h2>
+        <IngredientsInfoHelper />
+      </div>
 
-      <div className="space-y-4 max-w-[20rem] mx-auto">
+      <div className="space-y-4">
         <IngredientsList
           ingredients={ingredients}
           deleteIngredient={deleteIngredient}
