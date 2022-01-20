@@ -1,5 +1,3 @@
-import { memo } from 'react'
-
 type IngredientsInfoHelperProps = {}
 
 const IngredientsInfoHelper = (props: IngredientsInfoHelperProps) => {
@@ -11,4 +9,4 @@ const IngredientsInfoHelper = (props: IngredientsInfoHelperProps) => {
   )
 }
 
-export default memo(IngredientsInfoHelper)
+export default IngredientsInfoHelper
