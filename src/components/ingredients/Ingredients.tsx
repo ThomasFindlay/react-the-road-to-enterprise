@@ -3,7 +3,6 @@ import { nanoid } from 'nanoid'
 import { Ingredient } from './ingredient.types'
 import IngredientsList from './IngredientsList'
 import AddIngredient from './AddIngredient'
-import IngredientsInfoHelper from './IngredientsInfoHelper'
 
 const initialIngredients = [
   {
@@ -20,10 +19,13 @@ const initialIngredients = [
   },
 ]
 
-type IngredientsProps = {}
+type IngredientsProps = {
+  ingredientsInfoHelper: React.ReactNode
+}
 
 const Ingredients = (props: IngredientsProps) => {
   console.log('Ingredient rendered')
+  const { ingredientsInfoHelper } = props
   const [ingredients, setIngredients] =
     useState<Ingredient[]>(initialIngredients)
 
@@ -45,7 +47,7 @@ const Ingredients = (props: IngredientsProps) => {
     <div className="mt-8 max-w-[20rem] mx-auto">
       <div className="flex justify-between">
         <h2 className="mb-4 font-semibold">Ingredients</h2>
-        <IngredientsInfoHelper />
+        {ingredientsInfoHelper}
       </div>
 
       <div className="space-y-4">
