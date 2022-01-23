@@ -24,8 +24,8 @@ describe('Accordion.tsx', () => {
     renderAccordion()
     // Match Text content
     accordionData.forEach((data) => {
-      expect(screen.getByText(data.heading)).toHaveTextContent(data.heading)
-      expect(screen.getByText(data.content)).toHaveTextContent(data.content)
+      screen.getByText(data.heading)
+      screen.getByText(data.content)
     })
   })
 
