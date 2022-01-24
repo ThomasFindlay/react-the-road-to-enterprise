@@ -42,9 +42,9 @@ const NewsletterForm = (props: NewsletterFormProps) => {
       )
     } catch (error) {
       setJoinNewsletterApiStatus('ERROR')
-      if (error instanceof Error) {
-        setError(error.message)
-      }
+      setError(
+        'There was a problem while signing you up for the newsletter. Please try again.'
+      )
     }
   }
 
