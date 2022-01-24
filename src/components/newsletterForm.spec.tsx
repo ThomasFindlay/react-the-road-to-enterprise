@@ -2,7 +2,17 @@ import NewsletterForm from './NewsletterForm'
 import { render } from 'test-utils'
 
 const renderNewsletterForm = () => {
-  return render(<NewsletterForm />)
+  const utils = render(<NewsletterForm />)
+  const nameInput = utils.getByLabelText('Name')
+  // const emailInput = utils.getByLabelText('Email')
+  const emailInput = utils.getByTestId('emailInput')
+  const submitBtn = utils.getByText('Join')
+  return {
+    nameInput,
+    emailInput,
+    submitBtn,
+    ...utils,
+  }
 }
 
 describe('NewsletterForm.tsx', () => {
