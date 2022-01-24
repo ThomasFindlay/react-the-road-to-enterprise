@@ -40,7 +40,7 @@ describe('NewsletterForm.tsx', () => {
     screen.getByText('Please fill in all the fields.')
   })
 
-  it('Should show a success message when the users joins the newsletter', async () => {
+  it('Should show a success message when the user joins the newsletter', async () => {
     const { nameInput, emailInput, submitBtn } = renderNewsletterForm()
     fireEvent.change(emailInput, {
       target: {
