@@ -13,9 +13,10 @@ const NewsletterForm = (props: NewsletterFormProps) => {
   const [error, setError] = useState('')
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
     setForm((state) => ({
       ...state,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }))
     error && setError('')
   }
@@ -42,10 +43,10 @@ const NewsletterForm = (props: NewsletterFormProps) => {
         'There was a problem while signing you up for the newsletter. Please try again.'
       )
     } catch (error) {
-      setJoinNewsletterApiStatus('ERROR')
       setError(
         'There was a problem while signing you up for the newsletter. Please try again.'
       )
+      setJoinNewsletterApiStatus('ERROR')
     }
   }
 
@@ -68,7 +69,7 @@ const NewsletterForm = (props: NewsletterFormProps) => {
             />
           </fieldset>
           <fieldset className="mb-4 flex flex-col space-y-2 items-start">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               className="w-full"
               type="email"
@@ -76,14 +77,12 @@ const NewsletterForm = (props: NewsletterFormProps) => {
               name="email"
               value={form.email}
               onChange={onChange}
+              data-testid="emailInput"
             />
           </fieldset>
 
           {joinNewsletterApiStatus === 'ERROR' || error ? (
-            <p className="text-red-700 mb-4">
-              {error ||
-                'There was a problem while signing you up. Please try again.'}
-            </p>
+            <p className="text-red-700 mb-4">{error}</p>
           ) : null}
 
           <button
