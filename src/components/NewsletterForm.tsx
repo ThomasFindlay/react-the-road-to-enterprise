@@ -22,6 +22,7 @@ const NewsletterForm = (props: NewsletterFormProps) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (joinNewsletterApiStatus === 'PENDING') return
     setJoinNewsletterApiStatus('PENDING')
     if (!form.name || !form.email) {
       setError('Please fill in all the fields.')
@@ -90,7 +91,7 @@ const NewsletterForm = (props: NewsletterFormProps) => {
             disabled={joinNewsletterApiStatus === 'PENDING'}
             type="submit"
           >
-            Join
+            {joinNewsletterApiStatus === 'PENDING' ? 'Joining...' : 'Join'}
           </button>
         </form>
       )}
