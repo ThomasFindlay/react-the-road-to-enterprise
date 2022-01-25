@@ -1,0 +1,15 @@
+.formBlock {
+  @apply flex flex-col justify-between items-start mb-4 space-y-2;
+}
+
+.inputField {
+  @apply border w-full px-3 py-2;
+}
+
+.stepBtn {
+  @apply px-4 py-3 bg-teal-100 text-teal-900 font-semibold cursor-pointer hover:bg-teal-200;
+}
+
+.submitBtn {
+  @apply px-4 py-3 text-teal-100 bg-teal-900 font-semibold cursor-pointer hover:bg-teal-800;
+}
