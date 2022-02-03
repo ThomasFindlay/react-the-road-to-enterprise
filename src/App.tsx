@@ -2,7 +2,6 @@ import { useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
 import './App.css'
 import { useUserStore } from './store/userStore'
-import Permission from './components/common/permission/Permission'
 const Home = lazy(() => import('./views/Home'))
 const Admin = lazy(() => import('./views/Admin'))
 const Forbidden = lazy(() => import('./views/Forbidden'))
@@ -31,28 +30,8 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route
-              path="/admin"
-              element={
-                <Permission
-                  roles={['admin']}
-                  noAccess={<Navigate to="/forbidden" />}
-                >
-                  <Admin />
-                </Permission>
-              }
-            />
-            <Route
-              path="/moderator"
-              element={
-                <Permission
-                  roles={['moderator', 'admin']}
-                  noAccess={<Navigate to="/forbidden" />}
-                >
-                  <Moderator />
-                </Permission>
-              }
-            />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/moderator" element={<Moderator />} />
             <Route path="/forbidden" element={<Forbidden />} />
           </Routes>
         </Suspense>
