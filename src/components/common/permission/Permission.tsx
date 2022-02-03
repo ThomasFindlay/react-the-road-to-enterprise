@@ -1,8 +1,7 @@
 import { useUserStore, User } from '@/store/userStore'
 import { useState, useEffect } from 'react'
 import { checkPermission } from './checkPermission'
-import { Debug, EntityOwnerId, Roles } from './permission.types'
-type PermissionType = 'one-of' | 'all-of'
+import { PermissionType, Debug, EntityOwnerId, Roles } from './permission.types'
 
 export type PermissionProps = {
   children: React.ReactNode
