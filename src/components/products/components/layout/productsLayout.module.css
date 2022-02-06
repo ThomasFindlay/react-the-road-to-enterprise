@@ -1,0 +1,10 @@
+.productsGridLayout {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  @apply gap-8 grid;
+}
+
+.productsListLayout {
+  > * {
+    min-height: 150px;
+  }
+}
