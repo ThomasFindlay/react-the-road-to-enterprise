@@ -15,7 +15,7 @@ const PRODUCT_LAYOUT_COMPONENTS: Record<
   list: ProductsList,
 } as const
 
-const PRODUCT_CARD_LAYOUTS: Record<
+const PRODUCT_LAYOUTS_CARD_COMPONENTS: Record<
   Layouts,
   typeof ProductGridCard | typeof ProductListCard
 > = {
@@ -32,7 +32,7 @@ const Products = (props: ProductsProps) => {
     LayoutComponent: ProductLayout,
   } = useLayout(PRODUCT_LAYOUT_COMPONENTS, 'list')
 
-  const ProductCardComponent = PRODUCT_CARD_LAYOUTS[layout]
+  const ProductCardComponent = PRODUCT_LAYOUTS_CARD_COMPONENTS[layout]
   return (
     <div>
       <h1 className="text-xl font-semibold mt-8">Products</h1>
