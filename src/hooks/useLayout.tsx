@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const useLayout = <
-  T extends Record<string, string>,
-  L extends Record<T[keyof T], React.ReactNode>
+  L extends Record<string, (props: any) => JSX.Element>
 >(
-  LAYOUTS: T,
   LAYOUT_COMPONENTS: L,
-  initialLayout: T[keyof T]
+  initialLayout: keyof L
 ) => {
-  const [layout, setLayout] = useState<T[keyof T]>(initialLayout)
+  const [layout, setLayout] = useState(initialLayout)
   const LayoutComponent = LAYOUT_COMPONENTS[layout]
 
   return {
     layout,
     setLayout,
     LayoutComponent,
-    LAYOUTS,
   }
 }

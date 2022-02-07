@@ -5,39 +5,41 @@ import ProductGridCard from './components/ProductGridCard'
 import ProductListCard from './components/ProductListCard'
 import products from './products.json'
 
+type Layouts = 'grid' | 'list'
+
+const PRODUCT_LAYOUT_COMPONENTS: Record<
+  Layouts,
+  typeof ProductsGrid | typeof ProductsList
+> = {
+  grid: ProductsGrid,
+  list: ProductsList,
+} as const
+
+const PRODUCT_CARD_LAYOUTS: Record<
+  Layouts,
+  typeof ProductGridCard | typeof ProductListCard
+> = {
+  grid: ProductGridCard,
+  list: ProductListCard,
+} as const
+
 type ProductsProps = {}
-
-const LAYOUTS = {
-  grid: 'grid',
-  list: 'list',
-}
-
-const PRODUCT_LAYOUT_COMPONENTS = {
-  [LAYOUTS.grid]: ProductsGrid,
-  [LAYOUTS.list]: ProductsList,
-}
-
-const PRODUCT_CARD_LAYOUTS = {
-  [LAYOUTS.grid]: ProductGridCard,
-  [LAYOUTS.list]: ProductListCard,
-}
 
 const Products = (props: ProductsProps) => {
   const {
     layout,
     setLayout,
     LayoutComponent: ProductLayout,
-  } = useLayout(LAYOUTS, PRODUCT_LAYOUT_COMPONENTS, LAYOUTS.grid)
+  } = useLayout(PRODUCT_LAYOUT_COMPONENTS, 'list')
 
   const ProductCardComponent = PRODUCT_CARD_LAYOUTS[layout]
-
   return (
     <div>
       <h1 className="text-xl font-semibold mt-8">Products</h1>
 
       <div className="space-x-4 mb-8 mx-auto flex justify-center items-center mt-4">
-        <button onClick={() => setLayout(LAYOUTS.grid)}>Layout grid</button>
-        <button onClick={() => setLayout(LAYOUTS.list)}>Layout list</button>
+        <button onClick={() => setLayout('grid')}>Layout grid</button>
+        <button onClick={() => setLayout('list')}>Layout list</button>
       </div>
       <div>
         <ProductLayout className="mx-auto max-w-7xl">
