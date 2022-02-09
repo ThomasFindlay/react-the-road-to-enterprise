@@ -30,7 +30,7 @@ const Products = (props: ProductsProps) => {
     layout,
     setLayout,
     LayoutComponent: ProductLayout,
-  } = useLayout(PRODUCT_LAYOUT_COMPONENTS, 'list')
+  } = useLayout(PRODUCT_LAYOUT_COMPONENTS, 'grid')
 
   const ProductCardComponent = PRODUCT_LAYOUTS_CARD_COMPONENTS[layout]
   return (
