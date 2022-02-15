@@ -5,7 +5,7 @@ type BlogPostsProps = {} & WithPaginationProps
 
 const POSTS_PER_PAGE = 5
 
-const BlogPosts = (props: BlogPostsProps) => {
+const DisplayBlogPosts = (props: BlogPostsProps) => {
   const { page, prevPage, nextPage } = props
   const start = (page - 1) * POSTS_PER_PAGE
   const end = page * POSTS_PER_PAGE
@@ -37,4 +37,4 @@ const BlogPosts = (props: BlogPostsProps) => {
   )
 }
 
-export default withPagination(BlogPosts)
+export default withPagination(DisplayBlogPosts)
