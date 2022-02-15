@@ -1,5 +1,6 @@
 import './App.css'
 import DisplayBlogPosts from './components/hocs/DisplayBlogPosts'
+import PolymorphicComponents from './components/polymorphic/PolymorphicComponents'
 import DisplayUsers from './components/render-props/DisplayUsers'
 
 function App() {
@@ -20,6 +21,12 @@ function App() {
             Render Props
           </h2>
           <DisplayUsers />
+        </div>
+        <div>
+          <h2 className="text-lg md:text-xl font-semibold mb-4">
+            Polymorhpic Components
+          </h2>
+          <PolymorphicComponents />
         </div>
       </div>
     </div>
