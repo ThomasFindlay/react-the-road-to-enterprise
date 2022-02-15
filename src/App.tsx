@@ -2,6 +2,7 @@ import './App.css'
 import DisplayBlogPosts from './components/hocs/DisplayBlogPosts'
 import PolymorphicComponents from './components/polymorphic/PolymorphicComponents'
 import DisplayUsers from './components/render-props/DisplayUsers'
+import WrapperComponents from './components/wrapper/WrapperComponents'
 
 function App() {
   return (
@@ -27,6 +28,12 @@ function App() {
             Polymorhpic Components
           </h2>
           <PolymorphicComponents />
+        </div>
+        <div>
+          <h2 className="text-lg md:text-xl font-semibold mb-4">
+            Wrapper Components
+          </h2>
+          <WrapperComponents />
         </div>
       </div>
     </div>
