@@ -4,7 +4,6 @@ type ListManagerProps<P> = {
   items: P[]
   keyExtractor: (item: P) => string | number
   renderItem: (item: P, index: number) => React.ReactNode
-  renderContainer?: React.ReactNode | (() => React.ReactNode)
 }
 
 const ListManager = <P,>(props: ListManagerProps<P>) => {
