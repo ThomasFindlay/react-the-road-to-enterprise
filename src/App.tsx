@@ -10,7 +10,7 @@ function App() {
       <h1 className="font-semibold text-2xl mb-4">
         React - The Road To Enterprise
       </h1>
-      <div className="space-y-6">
+      <div className="space-y-12">
         <div>
           <h2 className="text-lg md:text-xl font-semibold mb-4">
             Higher Order Components
