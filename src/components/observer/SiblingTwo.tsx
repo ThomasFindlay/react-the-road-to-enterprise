@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { emitter } from './observer'
+import { emitter } from './counterObserver'
 
 type SiblingTwoProps = {}
 
