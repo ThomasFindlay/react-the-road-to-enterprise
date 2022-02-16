@@ -29,7 +29,7 @@ function App() {
           </h2>
           <PolymorphicComponents />
         </div>
-        <div>
+        <div className="pb-64">
           <h2 className="text-lg md:text-xl font-semibold mb-4">
             Wrapper Components
           </h2>

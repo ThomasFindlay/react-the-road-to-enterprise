@@ -6,7 +6,7 @@ type WrapperComponentsProps = {}
 const WrapperComponents = (props: WrapperComponentsProps) => {
   const [date, setDate] = useState<Date>()
   return (
-    <div>
+    <div className="flex justify-center">
       <DatePicker
         label="Date Of Birth"
         value={date?.toString()}

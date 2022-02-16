@@ -1,5 +1,5 @@
 import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker'
-
+import 'react-datepicker/dist/react-datepicker.css'
 type DatePickerProps = {
   label?: string
 } & ReactDatePickerProps
@@ -7,9 +7,11 @@ type DatePickerProps = {
 const DatePicker = (props: DatePickerProps) => {
   const { label, ...datePickerProps } = props
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col items-start space-y-2">
       {label ? <label>{label}</label> : null}
-      <ReactDatePicker {...datePickerProps} />
+      <div>
+        <ReactDatePicker {...datePickerProps} />
+      </div>
     </div>
   )
 }
