@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import DatePicker from './DatePicker'
 
-type WrapperComponentsProps = {}
+type WrapperComponentProps = {}
 
-const WrapperComponents = (props: WrapperComponentsProps) => {
+const WrapperComponent = (props: WrapperComponentProps) => {
   const [date, setDate] = useState<Date>()
   return (
     <div className="flex justify-center">
@@ -16,4 +16,4 @@ const WrapperComponents = (props: WrapperComponentsProps) => {
   )
 }
 
-export default WrapperComponents
+export default WrapperComponent
