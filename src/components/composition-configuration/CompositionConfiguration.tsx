@@ -76,7 +76,7 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
         </Alert>
 
         <h4 className="text-sm md:text-md font-semibold mb-4">
-          Composed Custom v2
+          Composed Alerts Custom
         </h4>
 
         <Alert show variant="error">
