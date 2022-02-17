@@ -106,7 +106,6 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
         <div>
           <CombinedAlert
             show
-            showIcon
             variant="success"
             headerText="Success"
             text="Your action was completed successfully!"

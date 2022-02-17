@@ -26,7 +26,7 @@ const CombinedAlert = (props: AlertProps) => {
     show,
     variant,
     onClose,
-    showIcon = false,
+    showIcon = true,
   } = props
 
   return show ? (
