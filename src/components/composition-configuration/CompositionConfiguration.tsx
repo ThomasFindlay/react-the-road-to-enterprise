@@ -5,6 +5,7 @@ import {
   AlertBody,
   AlertIcon,
   AlertCloseButton,
+  AlertContent,
 } from './composition/Alert'
 import CombinedAlert from './CombinedAlert'
 
@@ -50,28 +51,28 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
         <Alert show variant="success">
           <AlertIcon />
           <AlertCloseButton onClose={() => {}} />
-          <div className="flex flex-col">
+          <AlertContent>
             <AlertHeading>Success</AlertHeading>
             <AlertBody>Your action was completed successfully!</AlertBody>
-          </div>
+          </AlertContent>
         </Alert>
 
         <Alert show variant="info">
           <AlertIcon />
           <AlertCloseButton onClose={() => {}} />
-          <div className="flex flex-col">
+          <AlertContent>
             <AlertHeading>Helpful tip</AlertHeading>
             <AlertBody>This is a helpful information.</AlertBody>
-          </div>
+          </AlertContent>
         </Alert>
 
         <Alert show variant="error">
           <AlertIcon />
           <AlertCloseButton onClose={() => {}} />
-          <div className="flex flex-col">
+          <AlertContent>
             <AlertHeading>Validation Error</AlertHeading>
             <AlertBody>There was a problem with validating the form</AlertBody>
-          </div>
+          </AlertContent>
         </Alert>
 
         <h4 className="text-sm md:text-md font-semibold mb-4">
@@ -80,10 +81,10 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
 
         <Alert show variant="error">
           <AlertIcon />
-          <div className="flex flex-col flex-grow">
+          <div className="flex flex-col flex-grow py-4">
             <AlertHeading>Delete Warning</AlertHeading>
             <AlertBody>Are you sure you want to delete this record?</AlertBody>
-            <div className="px-4 pb-4 flex justify-end space-x-4">
+            <div className="px-4 pt-4 flex justify-end space-x-4">
               <button
                 className="text-rose-900 font-semibold"
                 onClick={() => {}}

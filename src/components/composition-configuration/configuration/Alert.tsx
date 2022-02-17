@@ -48,7 +48,7 @@ const Alert = (props: AlertProps) => {
           <CloseIcon className={clsx(styles.alertIcon, styles[variant])} />
         </button>
       ) : null}
-      <div>
+      <div className={styles.alertContent}>
         {/* Alert header */}
         {headerText ? (
           <div className={clsx(styles.alertHeader, styles[variant])}>

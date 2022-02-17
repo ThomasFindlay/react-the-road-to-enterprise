@@ -35,7 +35,7 @@ const CombinedAlert = (props: AlertProps) => {
       {showIcon ? <AlertIcon /> : null}
       {/* Close alert button */}
       {onClose ? <AlertCloseButton onClose={onClose} /> : null}
-      <div>
+      <div className="py-4">
         {/* CombinedAlert header */}
         {headerText ? <AlertHeading>{headerText}</AlertHeading> : null}
         {/* CombinedAlert body */}

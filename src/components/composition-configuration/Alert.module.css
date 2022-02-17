@@ -31,8 +31,12 @@
   }
 }
 
+.alertContent {
+  @apply py-4;
+}
+
 .alertHeader {
-  @apply px-4 pt-4 pb-2 font-semibold;
+  @apply px-4 pb-2 font-semibold;
   &.success {
     @apply text-emerald-800;
   }
@@ -47,5 +51,5 @@
 }
 
 .alertBody {
-  @apply px-4 pb-4;
+  @apply px-4;
 }
