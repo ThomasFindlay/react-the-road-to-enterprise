@@ -56,7 +56,9 @@ const Alert = (props: AlertProps) => {
           </div>
         ) : null}
         {/* Alert body */}
-        <div className={clsx(styles.alertBody)}>{text ? text : children}</div>
+        <div className={clsx(styles.alertBody, styles[variant])}>
+          {text ? text : children}
+        </div>
       </div>
     </div>
   ) : null

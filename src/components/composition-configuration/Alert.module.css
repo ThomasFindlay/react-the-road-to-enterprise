@@ -19,16 +19,6 @@
 
 .alertIcon {
   @apply w-6 h-6;
-  &.success {
-    @apply text-emerald-800;
-  }
-
-  &.info {
-    @apply text-indigo-800;
-  }
-  &.error {
-    @apply text-rose-800;
-  }
 }
 
 .alertContent {
@@ -37,6 +27,15 @@
 
 .alertHeader {
   @apply px-4 pb-2 font-semibold;
+}
+
+.alertBody {
+  @apply px-4;
+}
+
+.alertIcon,
+.alertHeader,
+.alertBody {
   &.success {
     @apply text-emerald-800;
   }
@@ -44,12 +43,7 @@
   &.info {
     @apply text-indigo-800;
   }
-
   &.error {
     @apply text-rose-800;
   }
-}
-
-.alertBody {
-  @apply px-4;
 }
