@@ -81,7 +81,7 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
 
         <Alert show variant="error">
           <AlertIcon />
-          <div className="flex flex-col flex-grow py-4">
+          <AlertContent>
             <AlertHeading>Delete Warning</AlertHeading>
             <AlertBody>Are you sure you want to delete this record?</AlertBody>
             <div className="px-4 pt-4 flex justify-end space-x-4">
@@ -98,7 +98,7 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
                 Confirm
               </button>
             </div>
-          </div>
+          </AlertContent>
         </Alert>
 
         <h4 className="text-sm md:text-md font-semibold mb-4">
