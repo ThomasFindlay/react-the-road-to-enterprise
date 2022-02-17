@@ -8,21 +8,15 @@ export * from './components'
 type AlertProps = {
   show: boolean
   variant: AlertVariant
-  showIcon?: boolean
-  headerText?: string
-  text?: string
   children?: React.ReactNode
-  onClose?: () => void
 }
 
 export const Alert = (props: AlertProps) => {
-  const { show, variant } = props
+  const { show, variant, children } = props
 
   return show ? (
     <VariantContextProvider variant={variant}>
-      <div className={clsx(styles.alert, styles[variant])}>
-        {props.children}
-      </div>
+      <div className={clsx(styles.alert, styles[variant])}>{children}</div>
     </VariantContextProvider>
   ) : null
 }
