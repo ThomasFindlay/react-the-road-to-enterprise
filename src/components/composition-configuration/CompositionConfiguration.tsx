@@ -23,7 +23,6 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
       <div className="max-w-[30rem] mx-auto space-y-4">
         <ConfiguredAlert
           show
-          showIcon
           variant="success"
           headerText="Success"
           text="Your action was completed successfully!"
@@ -31,7 +30,6 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
         />
         <ConfiguredAlert
           show
-          showIcon
           variant="info"
           headerText="Helpful tip"
           text="This is a helpful information."
@@ -39,7 +37,6 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
         />
         <ConfiguredAlert
           show
-          showIcon
           variant="error"
           headerText="Validation Error"
           text="There was a problem with validating the form"

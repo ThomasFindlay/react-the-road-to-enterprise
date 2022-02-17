@@ -29,7 +29,7 @@ const Alert = (props: AlertProps) => {
     show,
     variant,
     onClose,
-    showIcon = false,
+    showIcon = true,
   } = props
 
   const Icon = ICONS[variant]
