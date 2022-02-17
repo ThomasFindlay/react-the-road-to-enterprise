@@ -42,6 +42,7 @@ const Alert = (props: AlertProps) => {
           <Icon className={clsx(styles.alertIcon, styles[variant])} />
         </div>
       ) : null}
+      {/* Close alert button */}
       {onClose ? (
         <button className="absolute top-5 right-5" onClick={onClose}>
           <CloseIcon className={clsx(styles.alertIcon, styles[variant])} />
