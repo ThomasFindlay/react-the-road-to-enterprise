@@ -9,15 +9,18 @@ const ICONS = {
   error: ErrorIcon,
 }
 
-type AlertIconProps = {}
+type AlertIconProps = {
+  className?: string
+}
 
 const AlertIcon = (props: AlertIconProps) => {
+  const { className } = props
   const variant = useVariant()
   const Icon = ICONS[variant]
 
   return (
     <div className={styles.alertIconBox}>
-      <Icon className={clsx(styles.alertIcon, styles[variant])} />
+      <Icon className={clsx(styles.alertIcon, styles[variant], className)} />
     </div>
   )
 }

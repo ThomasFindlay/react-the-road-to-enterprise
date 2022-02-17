@@ -11,7 +11,7 @@ const AlertHeading = (props: AlertHeadingProps) => {
   const { children, className } = props
   const variant = useVariant()
   return (
-    <div className={clsx(className, styles.alertHeader, styles[variant])}>
+    <div className={clsx(styles.alertHeader, styles[variant], className)}>
       {children}
     </div>
   )

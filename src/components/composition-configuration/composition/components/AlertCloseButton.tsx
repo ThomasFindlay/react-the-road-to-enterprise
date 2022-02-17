@@ -5,15 +5,18 @@ import { useVariant } from '../context/VariantContextProvider'
 
 type AlertCloseButtonProps = {
   onClose: () => void
+  className?: string
 }
 
 const AlertCloseButton = (props: AlertCloseButtonProps) => {
-  const { onClose } = props
+  const { onClose, className } = props
   const variant = useVariant()
   return (
     <div>
       <button className="absolute top-5 right-5" onClick={onClose}>
-        <CloseIcon className={clsx(styles.alertIcon, styles[variant])} />
+        <CloseIcon
+          className={clsx(styles.alertIcon, styles[variant], className)}
+        />
       </button>
     </div>
   )
