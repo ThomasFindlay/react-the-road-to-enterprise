@@ -1,4 +1,5 @@
 import './App.css'
+import CompositionConfiguration from './components/composition-configuration/CompositionConfiguration'
 import DisplayBlogPosts from './components/hocs/DisplayBlogPosts'
 import SiblingCommunication from './components/observer/SiblingCommunication'
 import PolymorphicComponents from './components/polymorphic/PolymorphicComponents'
@@ -41,6 +42,12 @@ function App() {
             Observer Pattern
           </h2>
           <SiblingCommunication />
+        </div>
+        <div>
+          <h2 className="text-lg md:text-xl font-semibold mb-4">
+            Composition vs Configuration
+          </h2>
+          <CompositionConfiguration />
         </div>
       </div>
     </div>
