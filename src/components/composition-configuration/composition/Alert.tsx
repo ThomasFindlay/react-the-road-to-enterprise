@@ -3,7 +3,7 @@ import React from 'react'
 import styles from '../Alert.module.css'
 import { SuccessIcon, InfoIcon, ErrorIcon } from '../components/icons'
 import VariantContextProvider from './context/VariantContextProvider'
-import { AlertVariant } from './alert.types'
+import { AlertVariant } from '../alert.types'
 
 type AlertProps = {
   show: boolean
