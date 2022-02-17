@@ -81,7 +81,7 @@ const CompositionConfiguration = (props: CompositionConfigurationProps) => {
 
         <Alert show variant="error">
           <AlertIcon />
-          <AlertContent>
+          <AlertContent className="flex-grow">
             <AlertHeading>Delete Warning</AlertHeading>
             <AlertBody>Are you sure you want to delete this record?</AlertBody>
             <div className="px-4 pt-4 flex justify-end space-x-4">
