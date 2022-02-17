@@ -1,5 +1,5 @@
 import { contextFactory } from '@/context/helpers/contextFactory'
-import { AlertVariant } from '../alert.types'
+import { AlertVariant } from '../../alert.types'
 
 const [useVariant, VariantContext] = contextFactory<AlertVariant>()
 
