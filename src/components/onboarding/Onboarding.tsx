@@ -10,6 +10,8 @@ import TargetWeight from './components/steps/TargetWeight'
 import OnboardingStepperActions from './components/OnboardingStepperActions'
 
 import { OnboardingFormData, onboardingFormSchema } from './onboardingSchema'
+import FormProgressBar from './components/FormProgressBar'
+import FormSubmitted from './components/steps/FormSubmitted'
 
 /**
  * Onboading
@@ -47,37 +49,7 @@ import { OnboardingFormData, onboardingFormSchema } from './onboardingSchema'
  *  - kg, st,lbs (Depending on what was selected for the goal, the target should be lower than current weight for lose weight, or higher for gain weight)
  */
 
-const MAX_STEPS = 6
-
-type HeightInCm = {
-  unit: 'cm'
-  value?: {
-    cm: number
-  }
-}
-
-type HeightInFeet = {
-  unit: 'feet/inches'
-  value?: {
-    feet: number
-    inches: number
-  }
-}
-
-type WeightInKg = {
-  unit: 'kg'
-  value?: {
-    kg: number
-  }
-}
-
-type WeightInSt = {
-  unit: 'st/lbs'
-  value?: {
-    st: number
-    lbs: number
-  }
-}
+const MAX_STEPS = 7
 
 type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>
@@ -93,14 +65,14 @@ const initialState: DeepPartial<OnboardingFormData> = {
     },
   },
   weight: {
-    unit: 'kg',
-    value: {
-      kg: 120,
-    },
+    unit: 'st/lbs',
     // value: {
-    //   st: 15,
-    //   lbs: 10,
+    //   kg: 120,
     // },
+    value: {
+      st: 15,
+      lbs: 10,
+    },
   },
   // targetWeight: {
   //   st: 25,
@@ -115,12 +87,13 @@ const stepComponents = [
   BodyDetails,
   YourGoal,
   TargetWeight,
+  FormSubmitted,
 ]
 
 type OnboardingProps = {}
 
 const Onboarding = (props: OnboardingProps) => {
-  const { step, nextStep, prevStep } = useStepper(4, MAX_STEPS)
+  const { step, nextStep, prevStep } = useStepper(1, MAX_STEPS)
   const methods = useForm<OnboardingFormData>({
     mode: 'onTouched',
     defaultValues: initialState,
@@ -137,22 +110,25 @@ const Onboarding = (props: OnboardingProps) => {
       <h2 className="mb-6 text-2xl">Fitness App Onboarding</h2>
       <FormProvider {...methods}>
         <form
-          className="w-1/2 shadow bg-white border border-coolGray-200 p-6 mx-auto my-4"
+          className="w-1/2 shadow bg-white border border-coolGray-200  mx-auto my-4 rounded"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <CurrentStepComponent
-            actions={(isValid: () => Promise<boolean>) => {
-              return (
-                <OnboardingStepperActions
-                  step={step}
-                  prevStep={prevStep}
-                  nextStep={nextStep}
-                  isValid={isValid}
-                  maxSteps={MAX_STEPS}
-                />
-              )
-            }}
-          />
+          <FormProgressBar step={step} total={MAX_STEPS} />
+          <div className="p-6">
+            <CurrentStepComponent
+              actions={(isValid: () => Promise<boolean>) => {
+                return (
+                  <OnboardingStepperActions
+                    step={step}
+                    prevStep={prevStep}
+                    nextStep={nextStep}
+                    isValid={isValid}
+                    maxSteps={MAX_STEPS}
+                  />
+                )
+              }}
+            />
+          </div>
         </form>
       </FormProvider>
     </div>

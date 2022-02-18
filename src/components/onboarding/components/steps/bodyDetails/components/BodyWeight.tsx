@@ -15,7 +15,6 @@ const BodyWeight = (props: BodyWeightProps) => {
   } = useFormContext<OnboardingFormData>()
 
   const weightUnit = watch('weight.unit')
-  console.log('errors in body weight', errors)
   return (
     <div className="space-y-4">
       <h2>What's your weight?</h2>

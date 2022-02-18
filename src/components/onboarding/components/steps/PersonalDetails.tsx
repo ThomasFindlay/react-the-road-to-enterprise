@@ -17,7 +17,6 @@ const PersonalDetails = (props: PersonalDetailsProps) => {
     formState: { errors },
   } = useFormContext<OnboardingFormData>()
   const isValid = () => trigger(['name', 'dateOfBirth', 'gender'])
-  console.log('errors', errors)
   return (
     <>
       <div className="space-y-4 text-left">

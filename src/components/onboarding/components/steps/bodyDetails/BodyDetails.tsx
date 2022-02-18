@@ -10,11 +10,7 @@ type BodyDetailsProps = {
 
 const BodyDetails = (props: BodyDetailsProps) => {
   const { actions } = props
-  const {
-    getValues,
-    trigger,
-    formState: { errors },
-  } = useFormContext<OnboardingFormData>()
+  const { getValues, trigger } = useFormContext<OnboardingFormData>()
 
   const isValid = async () => {
     const { height, weight } = getValues()
@@ -32,11 +28,7 @@ const BodyDetails = (props: BodyDetailsProps) => {
       triggerValues.push('weight.value.st', 'weight.value.lbs')
     }
 
-    console.log('trigger values', triggerValues)
     return trigger(triggerValues)
-    // const res = await trigger(triggerValues)
-    // console.log('isValid', res, errors)
-    // return false
   }
 
   return (

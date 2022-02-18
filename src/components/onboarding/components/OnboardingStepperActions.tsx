@@ -8,10 +8,6 @@ export type OnboardingActionsProps = {
 
 const OnboardingActions = (props: OnboardingActionsProps) => {
   const { step, prevStep, nextStep, maxSteps, isValid } = props
-  console.log('is valid', isValid)
-  // const isValid = () => {
-
-  // }
 
   const onNextStep = async () => {
     if (!(await isValid())) return
