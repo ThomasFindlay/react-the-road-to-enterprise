@@ -1,17 +1,22 @@
+import { Actions } from '@/components/onboarding/Onboarding.types'
 import { OnboardingFormData } from '@/components/onboarding/onboardingSchema'
 import { FieldPath, useFormContext } from 'react-hook-form'
 import BodyHeight from './components/BodyHeight'
 import BodyWeight from './components/BodyWeight'
 
 type BodyDetailsProps = {
-  actions: (isValid: () => Promise<boolean>) => React.ReactNode
+  actions: Actions
 }
 
 const BodyDetails = (props: BodyDetailsProps) => {
   const { actions } = props
-  const { getValues, trigger } = useFormContext<OnboardingFormData>()
+  const {
+    getValues,
+    trigger,
+    formState: { errors },
+  } = useFormContext<OnboardingFormData>()
 
-  const isValid = () => {
+  const isValid = async () => {
     const { height, weight } = getValues()
     let triggerValues: FieldPath<OnboardingFormData>[] = []
 
@@ -27,7 +32,11 @@ const BodyDetails = (props: BodyDetailsProps) => {
       triggerValues.push('weight.value.st', 'weight.value.lbs')
     }
 
+    console.log('trigger values', triggerValues)
     return trigger(triggerValues)
+    // const res = await trigger(triggerValues)
+    // console.log('isValid', res, errors)
+    // return false
   }
 
   return (

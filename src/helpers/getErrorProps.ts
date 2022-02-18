@@ -7,9 +7,9 @@ export type FieldErrorProps = {
 
 export const getErrorProps = <T extends object | undefined, S extends string>(
   value: T,
-  path: S
+  path?: S
 ): FieldErrorProps => {
-  const errorField = get(value, path)
+  const errorField = path ? get(value, path) : value
   if (errorField) {
     return {
       error: true,

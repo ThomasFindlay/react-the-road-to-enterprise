@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 
 type SelectProps = {
@@ -7,6 +8,8 @@ type SelectProps = {
     HTMLLabelElement
   >
   options: Array<React.OptionHTMLAttributes<HTMLOptionElement>>
+  error?: boolean
+  errorMessage?: string
 } & React.DetailedHTMLProps<
   React.SelectHTMLAttributes<HTMLSelectElement>,
   HTMLSelectElement
@@ -14,8 +17,17 @@ type SelectProps = {
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props: SelectProps, ref) => {
-    const { id, value, onChange, options, label, labelProps, ...selectProps } =
-      props
+    const {
+      id,
+      value,
+      onChange,
+      options,
+      label,
+      labelProps,
+      error,
+      errorMessage,
+      ...selectProps
+    } = props
     return (
       <div className="flex flex-col items-start w-full space-y-2">
         {label ? (
@@ -24,7 +36,10 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           </label>
         ) : null}
         <select
-          className="shadow-sm outline-none block rounded-md border border-gray-300 w-full px-3 py-2  focus:ring-indigo-500 focus:border-indigo-500"
+          className={clsx(
+            'shadow-sm outline-none block rounded-md border border-gray-300 w-full px-3 py-2  focus:ring-indigo-500 focus:border-indigo-500',
+            error && 'border-red-400'
+          )}
           ref={ref}
           id={id}
           value={value}
@@ -39,6 +54,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             )
           })}
         </select>
+        {error ? <span className="text-red-500">{errorMessage}</span> : null}
       </div>
     )
   }

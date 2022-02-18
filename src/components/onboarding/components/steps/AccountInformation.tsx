@@ -1,11 +1,11 @@
 import Input from '@/components/common/form/Input'
-import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { Actions } from '../../Onboarding.types'
 import { OnboardingFormData } from '../../onboardingSchema'
-import { OnboardingActionsProps } from '../OnboardingStepperActions'
+import { getErrorProps } from '@/helpers/getErrorProps'
 
 type AccountInformationProps = {
-  actions: (isValid: () => Promise<boolean>) => React.ReactNode
+  actions: Actions
 }
 
 const AccountInformation = (props: AccountInformationProps) => {
@@ -21,8 +21,19 @@ const AccountInformation = (props: AccountInformationProps) => {
   return (
     <>
       <div className="space-y-4">
-        <Input id="email" label="Email" {...register('email')} />
-        <Input id="password" label="Password" {...register('password')} />
+        <Input
+          id="email"
+          label="Email"
+          {...register('email')}
+          {...getErrorProps(errors.email)}
+        />
+        <Input
+          id="password"
+          label="Password"
+          type="password"
+          {...register('password')}
+          {...getErrorProps(errors.password)}
+        />
       </div>
       {actions(isValid)}
     </>

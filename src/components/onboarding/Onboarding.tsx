@@ -10,7 +10,7 @@ import TargetWeight from './components/steps/TargetWeight'
 import OnboardingStepperActions from './components/OnboardingStepperActions'
 
 import { OnboardingFormData, onboardingFormSchema } from './onboardingSchema'
-type OnboardingProps = {}
+
 /**
  * Onboading
  *
@@ -88,9 +88,9 @@ const initialState: DeepPartial<OnboardingFormData> = {
   weightGoal: 'gain-weight',
   height: {
     unit: 'cm',
-    // value: {
-    //   cm: 188,
-    // },
+    value: {
+      cm: 188,
+    },
   },
   weight: {
     unit: 'kg',
@@ -116,6 +116,8 @@ const stepComponents = [
   YourGoal,
   TargetWeight,
 ]
+
+type OnboardingProps = {}
 
 const Onboarding = (props: OnboardingProps) => {
   const { step, nextStep, prevStep } = useStepper(4, MAX_STEPS)

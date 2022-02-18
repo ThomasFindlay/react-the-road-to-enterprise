@@ -1,16 +1,31 @@
+import clsx from 'clsx'
 import React from 'react'
 
 type RadioGroupRootProps = {
   children: React.ReactNode
+  className?: string
+  error?: boolean
+  errorMessage?: string
 } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >
 
 export const RadioGroupRoot = (props: RadioGroupRootProps) => {
+  const { className, error, errorMessage, children, ...radioProps } = props
   return (
-    <div role="radiogroup" tabIndex={-1} {...props}>
-      {props.children}
+    <div className="text-left space-y-2">
+      <div
+        role="radiogroup"
+        className={clsx(error && 'border border-red-400 bg-red-100', className)}
+        tabIndex={-1}
+        {...radioProps}
+      >
+        {children}
+      </div>
+      <div>
+        {error ? <span className="text-red-500 ">{errorMessage}</span> : null}
+      </div>
     </div>
   )
 }
