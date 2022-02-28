@@ -1,0 +1,13 @@
+.header {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  width: 12rem;
+}
