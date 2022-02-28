@@ -6,11 +6,10 @@ const isLoggedIn = (req: NextRequest) => {
 };
 
 const isAdmin = (req: NextRequest) => {
-  return false;
+  return true;
 };
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
-  console.log(req.nextUrl);
   if (!isLoggedIn(req) && !isAdmin(req)) {
     return NextResponse.redirect(`${req.nextUrl.origin}/forbidden`);
   }
