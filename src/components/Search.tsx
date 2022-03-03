@@ -32,7 +32,7 @@ const Search = (props: SearchProps) => {
         />
       </form>
       <ul>
-        {meals.map((meal) => {
+        {meals?.map((meal) => {
           return <li key={meal.idMeal}>{meal.strMeal}</li>
         })}
       </ul>
