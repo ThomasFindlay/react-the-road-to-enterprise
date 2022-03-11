@@ -1,14 +1,9 @@
-import { fetchTopQuotes, Quote } from '@/api/quoteApi'
+import { fetchTopQuotes } from '@/api/quoteApi'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
-import { Canceler } from '@/api/api.types'
 
-type PromiseWithCancel<T> = Promise<T> & {
-  cancel?: () => void
-}
-
-const QueryCancellation = () => {
+const QueryCancellationWithAbortSignal = () => {
   const [shouldAbort, setShouldAbort] = useState(true)
   const queryClient = useQueryClient()
   const {
@@ -17,28 +12,17 @@ const QueryCancellation = () => {
     isLoading,
     isError,
   } = useQuery(
-    'top-aborted-quotes',
-    () => {
-      // Temp variable to store the cancel method
-      // It is initialised with a noop, because of TypeScript Control Flow Analysis
-      // We can't assign the abort method on the `promise` variable directly, because
-      // it can't be accessed before it is fully initialised.
-      // That's why we need a temp variable
-      let cancel: Canceler = () => {}
-      const promise = fetchTopQuotes({
-        abort: (abort) => (cancel = abort),
-      }) as PromiseWithCancel<Quote[]>
-
-      promise.catch((error) => {
+    'top-aborted-quotes-abort-controller',
+    ({ signal }) => {
+      return fetchTopQuotes({
+        signal,
+      }).catch((error) => {
         if (error.aborted) {
-          console.log('check aborted show toast', error)
           toast.error('Request aborted')
+          return
         }
         throw error
       })
-
-      promise.cancel = cancel
-      return promise
     },
     {
       refetchOnWindowFocus: false,
@@ -47,16 +31,19 @@ const QueryCancellation = () => {
   )
 
   const onFetchQuotes = () => {
-    queryClient.refetchQueries('top-aborted-quotes')
+    queryClient.refetchQueries('top-aborted-quotes-abort-controller')
     setTimeout(() => {
-      shouldAbort && queryClient.cancelQueries('top-aborted-quotes')
+      shouldAbort &&
+        queryClient.cancelQueries('top-aborted-quotes-abort-controller')
     }, 200)
   }
 
   return (
     <div className="py-8 max-w-2xl mx-auto">
       <div>
-        <h2 className="font-bold text-2xl mb-4">Query Cancellation</h2>
+        <h2 className="font-bold text-2xl mb-4">
+          Query Cancellation With Abort Controller
+        </h2>
         <div className="mb-4">
           <label>
             <input
@@ -109,4 +96,4 @@ const QueryCancellation = () => {
   )
 }
 
-export default QueryCancellation
+export default QueryCancellationWithAbortSignal
