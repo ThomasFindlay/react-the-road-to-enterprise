@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { isApiError } from '@/api/api'
 import type { Canceler } from '@/api/api.types'
 import { Meal, searchMeals } from '@/api/mealApi'
 import { toast } from 'react-toastify'
+import { didAbort } from '@/api/api'
 
 type AbortRef = {
   abort?: Canceler
@@ -13,7 +13,7 @@ const useFetchMeals = () => {
   const abortRef = useRef<AbortRef>({})
 
   const handleQuoteError = (error: unknown) => {
-    if (isApiError(error) && error.aborted) {
+    if (didAbort(error)) {
       toast.error('Request aborted!')
     } else {
       toast.error('Oops, error!')
