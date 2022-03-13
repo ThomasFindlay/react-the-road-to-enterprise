@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios'
+import axios, { AxiosInstance, Cancel } from 'axios'
 import {
   ApiRequestConfig,
   WithAbordFn,
@@ -18,7 +18,9 @@ const axiosParams = {
 // Create axios instance with default params
 const axiosInstance = axios.create(axiosParams)
 
-const didAbort = (error: AxiosError) => axios.isCancel(error)
+export const didAbort = (
+  error: unknown
+): error is Cancel & { aborted: boolean } => axios.isCancel(error)
 
 const getCancelSource = () => axios.CancelToken.source()
 
@@ -49,13 +51,10 @@ const withAbort = <T>(fn: WithAbordFn) => {
         return await fn<T>(url, config)
       }
     } catch (error) {
-      if (!isApiError(error)) throw error
-
+      console.log('api error', error)
       // Add "aborted" property to the error if the request was cancelled
       if (didAbort(error)) {
         error.aborted = true
-      } else {
-        error.aborted = false
       }
 
       throw error
