@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, Cancel } from 'axios'
 import {
   ApiRequestConfig,
-  WithAbordFn,
+  WithAbortFn,
   ApiExecutor,
   ApiExecutorArgs,
   ApiError,
@@ -26,7 +26,7 @@ export const isApiError = (error: unknown): error is ApiError => {
   return axios.isAxiosError(error)
 }
 
-const withAbort = <T>(fn: WithAbordFn) => {
+const withAbort = <T>(fn: WithAbortFn) => {
   const executor: ApiExecutor<T> = async (...args: ApiExecutorArgs) => {
     const originalConfig = args[args.length - 1] as ApiRequestConfig
     // Extract abort property from the config
