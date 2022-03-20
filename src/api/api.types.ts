@@ -12,7 +12,7 @@ type AxiosMethods = Pick<
   AxiosInstance,
   'get' | 'put' | 'patch' | 'post' | 'delete'
 >
-export type WithAbordFn = AxiosMethods[keyof AxiosMethods]
+export type WithAbortFn = AxiosMethods[keyof AxiosMethods]
 
 export type ApiExecutor<T> = {
   (url: string, body: unknown, config: ApiRequestConfig): AxiosPromise<T>
