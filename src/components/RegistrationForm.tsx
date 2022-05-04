@@ -55,6 +55,7 @@ const RegistrationForm = (props: RegistrationFormProps) => {
                         className={styles.inputField}
                         value={form.name}
                         id="name"
+                        name="name"
                         onChange={onFieldChange}
                       />
                     </div>
@@ -64,6 +65,7 @@ const RegistrationForm = (props: RegistrationFormProps) => {
                         className={styles.inputField}
                         value={form.surname}
                         id="surname"
+                        name="surname"
                         onChange={onFieldChange}
                       />
                     </div>
@@ -77,6 +79,7 @@ const RegistrationForm = (props: RegistrationFormProps) => {
                         className={styles.inputField}
                         value={form.address}
                         id="address"
+                        name="address"
                         onChange={onFieldChange}
                       />
                     </div>
@@ -86,6 +89,7 @@ const RegistrationForm = (props: RegistrationFormProps) => {
                         className={styles.inputField}
                         value={form.city}
                         id="city"
+                        name="city"
                         onChange={onFieldChange}
                       />
                     </div>
@@ -100,6 +104,7 @@ const RegistrationForm = (props: RegistrationFormProps) => {
                         className={styles.inputField}
                         value={form.email}
                         id="email"
+                        name="email"
                         onChange={onFieldChange}
                       />
                     </div>
@@ -109,6 +114,7 @@ const RegistrationForm = (props: RegistrationFormProps) => {
                         className={styles.inputField}
                         value={form.password}
                         id="password"
+                        name="password"
                         onChange={onFieldChange}
                       />
                     </div>
