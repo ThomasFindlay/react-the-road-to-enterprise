@@ -5,7 +5,7 @@ interface Props {
   delay?: number
 }
 
-const Spinner = (props: Props) => {
+const LazySpinner = (props: Props) => {
   const { show = false, delay = 0 } = props
   const [showSpinner, setShowSpinner] = useState(false)
 
@@ -23,7 +23,7 @@ const Spinner = (props: Props) => {
     }
 
     return () => {
-      clearInterval(timeout)
+      clearTimeout(timeout)
     }
   }, [show, delay])
 
@@ -51,4 +51,4 @@ const Spinner = (props: Props) => {
   ) : null
 }
 
-export default Spinner
+export default LazySpinner
