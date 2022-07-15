@@ -1,84 +1,83 @@
 {
+  "name": "react-enterprise-boilerplate",
+  "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test:unit": "craco test",
-    "test:e2e:open": "start-server-and-test start http-get://localhost:3000 cypress:open",
-    "test:e2e:run": "start-server-and-test start http-get://localhost:3000 cypress:run",
-    "cypress:run": "cypress run",
-    "cypress:open": "cypress open"
-  },
-  "dependencies": {
-    "@craco/craco": "^6.2.0",
-    "@tailwindcss/forms": "^0.3.3",
-    "axios": "^0.21.1",
-    "clsx": "^1.1.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "npm run build && vite preview --port 4173",
+    "test:unit": "vitest --environment jsdom",
+    "test:unit:coverage": "vitest run --coverage --environment jsdom",
+    "test:e2e": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress open --e2e'",
+    "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress run --e2e'",
+    "lint": "eslint . --ext .ts,.tsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint:fix": "npm run lint -- --fix",
+    "stylelint": "npx stylelint \"./**/*.{css,scss,sass}\" --config \"./stylelint.config.js\"",
+    "stylelint:fix": "npm run stylelint -- --fix",
+    "prettier:fix": "prettier --config ./prettier.config.js --write ./src/**/*.{css,scss,ts,tsx} ",
+    "prettier:check": "prettier --config ./prettier.config.js --check ./src/**/*.{css,scss,ts,tsx}",
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint",
-    "*.{css,scss}": "stylelint",
-    "**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier -w -u"
+    "./src/*.{js,jsx,ts,tsx}": "npm run lint",
+    "./src/*.{css,scss,sass}": "npm run stylelint",
+    "./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier -w -u"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "axios": "^0.27.2",
+    "clsx": "^1.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^7.0.6",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/react-hooks": "^7.0.2",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^14.17.4",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "autoprefixer": "^9.8.6",
-    "craco-alias": "^3.0.1",
-    "cypress": "^8.2.0",
-    "husky": "^7.0.1",
-    "lint-staged": "^11.1.2",
-    "postcss": "^7.0.36",
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@testing-library/cypress": "^8.0.3",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "@vitejs/plugin-react": "^1.3.0",
+    "autoprefixer": "^10.4.7",
+    "concurrently": "^7.2.2",
+    "cypress": "^10.1.0",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-vitest-globals": "^1.1.0",
+    "husky": "^8.0.1",
+    "jsdom": "^20.0.0",
+    "postcss": "^8.4.14",
     "postcss-extend": "^1.0.5",
-    "postcss-import": "^12.0.1",
-    "postcss-nested": "^4.0.5",
-    "postcss-preset-env": "^6.7.0",
-    "postcss-reporter": "^6.0.1",
-    "precss": "^4.0.0",
-    "prettier": "^2.3.2",
-    "start-server-and-test": "^1.13.1",
-    "stylelint": "^13.13.1",
-    "stylelint-config-css-modules": "^2.2.0",
-    "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-recess-order": "^2.4.0",
-    "stylelint-config-recommended": "^5.0.0",
-    "stylelint-config-standard": "^22.0.0",
-    "stylelint-scss": "^3.19.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
-    "typescript": "^4.3.2"
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-html": "^1.4.1",
+    "postcss-import": "^14.1.0",
+    "postcss-mixins": "^9.0.3",
+    "postcss-nested": "^5.0.6",
+    "postcss-preset-env": "^7.7.2",
+    "postcss-reporter": "^7.0.5",
+    "prettier": "^2.7.1",
+    "sass": "^1.53.0",
+    "start-server-and-test": "^1.14.0",
+    "stylelint": "^14.9.1",
+    "stylelint-config-css-modules": "^4.1.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-recommended": "^8.0.0",
+    "stylelint-config-recommended-scss": "^6.0.0",
+    "stylelint-config-standard": "^26.0.0",
+    "stylelint-config-standard-scss": "^4.0.0",
+    "stylelint-scss": "^4.2.0",
+    "tailwindcss": "^3.1.4",
+    "typescript": "^4.6.3",
+    "vite": "^3.0.0",
+    "vite-plugin-eslint": "^1.6.1",
+    "vite-plugin-stylelint": "^3.0.2",
+    "vitest": "^0.18.0"
   }
 }
