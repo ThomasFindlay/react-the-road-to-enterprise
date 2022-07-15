@@ -1,22 +1,9 @@
-const colors = require('tailwindcss/colors')
-
+/* eslint-env node */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  mode: 'jit',
-  darkMode: false, // or 'media' or 'class'
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {
-      fontFamily: {
-        heading: ['Montserrat', 'sans-serif'],
-        content: ['Nunito', 'sans-serif'],
-      },
-    },
-    colors: {
-      ...colors,
-    },
-  },
-  variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/forms')],
-}
+  plugins: [],
+};
