@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type NewsletterFormProps = {};
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const NewsletterForm = (props: NewsletterFormProps) => {
   const [form, setForm] = useState({
     name: '',
