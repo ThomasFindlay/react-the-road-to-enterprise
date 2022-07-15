@@ -1,7 +1,14 @@
+import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import '@/index.css';
 
-const AllTheProviders: React.FC = ({ children }) => {
+export type AllTheProvidersProps<P> = P & {
+  children: React.ReactNode;
+};
+
+const AllTheProviders = <P extends Record<string, unknown>>({
+  children,
+}: AllTheProvidersProps<P>) => {
   return <>{children}</>;
 };
 
