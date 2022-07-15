@@ -24,6 +24,7 @@
     "./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier -w -u"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.2",
     "axios": "^0.27.2",
     "clsx": "^1.2.1",
     "react": "^18.2.0",
