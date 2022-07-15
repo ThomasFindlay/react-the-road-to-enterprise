@@ -25,12 +25,15 @@ const NewsletterForm = (props: NewsletterFormProps) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (joinNewsletterApiStatus === 'PENDING') return;
-    setJoinNewsletterApiStatus('PENDING');
+
     if (!form.name || !form.email) {
       setError('Please fill in all the fields.');
       return;
     }
+
+    if (joinNewsletterApiStatus === 'PENDING') return;
+    setJoinNewsletterApiStatus('PENDING');
+
     try {
       const response = await fetch('https://myserver.com/api/newsletter/join', {
         method: 'POST',
