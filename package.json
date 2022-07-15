@@ -80,6 +80,7 @@
     "vite": "^3.0.0",
     "vite-plugin-eslint": "^1.6.1",
     "vite-plugin-stylelint": "^3.0.2",
-    "vitest": "^0.18.0"
+    "vitest": "^0.18.0",
+    "whatwg-fetch": "^3.6.2"
   }
 }
