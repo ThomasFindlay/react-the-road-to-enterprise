@@ -8,7 +8,7 @@ export type WithPaginationProps = {
 }
 
 const withPagination =
-  <P extends unknown>(
+  <P extends {}>(
     Component: (props: P & WithPaginationProps) => JSX.Element,
     initialStep: number = 1
   ) =>
