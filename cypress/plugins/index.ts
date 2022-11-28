@@ -13,5 +13,5 @@ export default (
     screenshotsFolder: 'cypress/screenshots',
     videosFolder: 'cypress/videos',
     supportFile: 'cypress/support/index.ts',
-  })
-}
+  });
+};
