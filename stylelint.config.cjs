@@ -4,7 +4,6 @@ module.exports = {
     'stylelint-config-standard',
     'stylelint-config-recess-order',
     'stylelint-config-css-modules',
-    'stylelint-config-prettier', // Uncomment out the below if you want to use scss
     // 'stylelint-config-standard-scss',
     // 'stylelint-config-recommended-scss'
   ],
