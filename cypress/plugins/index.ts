@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-/* eslint-disable import/no-anonymous-default-export */
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -13,5 +12,5 @@ export default (
     screenshotsFolder: 'cypress/screenshots',
     videosFolder: 'cypress/videos',
     supportFile: 'cypress/support/index.ts',
-  })
-}
+  });
+};
