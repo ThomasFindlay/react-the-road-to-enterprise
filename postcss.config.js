@@ -9,8 +9,8 @@ export default {
     'postcss-import': {},
     'postcss-extend': {},
     /* Uncomment out if you want to add TailwindCSS to your project */
-    // 'tailwindcss/nesting',
-    // 'tailwindcss',
+    'tailwindcss/nesting': {},
+    tailwindcss: {},
     'postcss-preset-env': {
       autoprefixer: {
         flexbox: 'no-2009',
