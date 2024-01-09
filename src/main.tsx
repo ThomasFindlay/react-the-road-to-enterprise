@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
+import App from './App';
 
 const container = document.getElementById('root');
 
@@ -10,6 +10,7 @@ if (!container) {
 }
 
 declare global {
+  /* eslint-disable-next-line no-var */
   var __REACT_APP_ROOT__: Root | undefined;
 }
 

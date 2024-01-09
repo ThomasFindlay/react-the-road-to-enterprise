@@ -1,4 +1,5 @@
 import colors from 'tailwindcss/colors';
+import tailwindCssForms from '@tailwindcss/forms';
 
 /**
  * The following colours are depracated, so we remove them to get rid of warnings
@@ -22,5 +23,5 @@ export default {
       ...colors,
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [tailwindCssForms],
 };
