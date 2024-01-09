@@ -11,7 +11,7 @@
     "stylelint:fix": "npm run stylelint -- --fix",
     "prettier:fix": "prettier --config ./prettier.config.js --write ./src/**/*.{css,scss,ts,tsx} ",
     "prettier:check": "prettier --config ./prettier.config.js --check ./src/**/*.{css,scss,ts,tsx}",
-    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
     "test:e2e": "start-server-and-test preview http://127.0.0.1:4173/ 'npm run cypress:open'",
     "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:4173/ 'npm run cypress:run'",

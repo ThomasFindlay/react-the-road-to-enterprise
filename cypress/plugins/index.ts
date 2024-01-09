@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-/* eslint-disable import/no-anonymous-default-export */
 /**
  * @type {Cypress.PluginConfig}
  */
