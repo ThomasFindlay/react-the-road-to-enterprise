@@ -37,6 +37,7 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       reporter: ['text', 'json', 'html'],
+      provider: 'v8',
     },
     setupFiles: ['./vitest.setup.ts'],
   },

@@ -1,5 +1,5 @@
 /* eslint-env node */
-module.exports = {
+export default {
   endOfLine: 'lf',
   jsxSingleQuote: true,
   printWidth: 80,

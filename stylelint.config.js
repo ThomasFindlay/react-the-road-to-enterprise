@@ -1,9 +1,11 @@
 /* eslint-env node */
-module.exports = {
+
+export default {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-recess-order',
     'stylelint-config-css-modules',
+    // Uncomment out the below if you want to use scss
     // 'stylelint-config-standard-scss',
     // 'stylelint-config-recommended-scss'
   ],
