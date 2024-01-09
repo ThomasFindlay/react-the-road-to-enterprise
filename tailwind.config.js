@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors');
+import colors from 'tailwindcss/colors';
 
 /**
  * The following colours are depracated, so we remove them to get rid of warnings
