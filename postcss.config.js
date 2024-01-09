@@ -1,15 +1,26 @@
-module.exports = {
-  plugins: [
-    require('stylelint')({
+/* eslint-env node */
+
+export default {
+  plugins: {
+    'postcss-flexbugs-fixes': {},
+    stylelint: {
       configFile: 'stylelint.config.js',
-    }),
-    require('postcss-import'),
-    require('postcss-extend'),
-    require('precss'),
-    require('postcss-preset-env'),
-    require('tailwindcss')('tailwind.config.js'),
-    require('postcss-nested'),
-    require('autoprefixer')(),
-    require('postcss-reporter'),
-  ],
-}
+    },
+    'postcss-import': {},
+    'postcss-extend': {},
+    /* Uncomment out if you want to add TailwindCSS to your project */
+    // 'tailwindcss/nesting',
+    // 'tailwindcss',
+    'postcss-preset-env': {
+      autoprefixer: {
+        flexbox: 'no-2009',
+      },
+      stage: 3,
+      features: {
+        'custom-properties': false,
+        'nesting-rules': false,
+      },
+    },
+    'postcss-reporter': {},
+  },
+};

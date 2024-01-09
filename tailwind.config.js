@@ -1,9 +1,16 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
-module.exports = {
-  purge: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  mode: 'jit',
-  darkMode: false, // or 'media' or 'class'
+/**
+ * The following colours are depracated, so we remove them to get rid of warnings
+ */
+delete colors.lightBlue;
+delete colors.warmGray;
+delete colors.trueGray;
+delete colors.coolGray;
+delete colors.blueGray;
+
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -15,8 +22,5 @@ module.exports = {
       ...colors,
     },
   },
-  variants: {
-    extend: {},
-  },
   plugins: [require('@tailwindcss/forms')],
-}
+};
