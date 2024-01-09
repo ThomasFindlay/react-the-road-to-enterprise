@@ -33,7 +33,6 @@ module.exports = {
     'rule-empty-line-before': null,
     'comment-empty-line-before': null,
     'selector-pseudo-element-no-unknown': null,
-    'declaration-block-trailing-semicolon': null,
     'no-descending-specificity': null,
     'string-no-newline': null,
     // Limit the number of universal selectors in a selector,
