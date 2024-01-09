@@ -1,7 +1,5 @@
-type ViewProductProps = {}
+const ViewProduct = () => {
+  return <div>ViewProduct</div>;
+};
 
-const ViewProduct = (props: ViewProductProps) => {
-  return <div>ViewProduct</div>
-}
-
-export default ViewProduct
+export default ViewProduct;

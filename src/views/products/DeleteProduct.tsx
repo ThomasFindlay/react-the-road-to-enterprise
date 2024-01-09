@@ -1,7 +1,5 @@
-type DeleteProductProps = {}
+const DeleteProduct = () => {
+  return <div>DeleteProduct</div>;
+};
 
-const DeleteProduct = (props: DeleteProductProps) => {
-  return <div>DeleteProduct</div>
-}
-
-export default DeleteProduct
+export default DeleteProduct;

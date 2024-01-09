@@ -1,7 +1,5 @@
-type AddProductProps = {}
+const AddProduct = () => {
+  return <div>AddProduct</div>;
+};
 
-const AddProduct = (props: AddProductProps) => {
-  return <div>AddProduct</div>
-}
-
-export default AddProduct
+export default AddProduct;
