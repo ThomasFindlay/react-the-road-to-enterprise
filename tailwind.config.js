@@ -9,7 +9,7 @@ delete colors.trueGray;
 delete colors.coolGray;
 delete colors.blueGray;
 
-module.exports = {
+export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
